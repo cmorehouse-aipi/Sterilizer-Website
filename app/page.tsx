@@ -1,7 +1,6 @@
 ﻿import Link from "next/link";
 import { BRAND, TAGLINE, SUBLINE, SPECS, COMPARE_ROWS, FAQS, USE_CASES, PRESS_QUOTES } from "./lib/brand";
 import { Logomark } from "./components/Logomark";
-import { DeviceCylinder } from "./components/DeviceCylinder";
 import { VariantToggle } from "./components/VariantToggle";
 import { SiteFooter } from "./components/SiteFooter";
 import { ExplodedReveal } from "./components/ExplodedReveal";
@@ -162,14 +161,16 @@ export default function HomeA() {
             </dl>
           </div>
           <div className="col-span-12 flex items-center justify-center md:col-span-7">
-            <DeviceCylinder
-              className="h-[520px] w-auto md:h-[620px]"
-              body="#0F1B2D"
-              dome="#A9C4D4"
-              glow="#7FB3FF"
-              ink="#000000"
-              glowOn
-            />
+            <div className="relative flex items-center justify-center">
+              <div className="animate-glow pointer-events-none absolute left-1/2 top-0 h-44 w-44 -translate-x-1/2 -translate-y-1/3 rounded-full" style={{ backgroundColor: "#7FB3FF" }} aria-hidden />
+              <div className="animate-glow pointer-events-none absolute bottom-0 left-1/2 h-44 w-44 -translate-x-1/2 translate-y-1/3 rounded-full" style={{ backgroundColor: "#7FB3FF" }} aria-hidden />
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/renderings/forth-device-transparent-frame-00.png"
+                alt="Forth device"
+                className="relative z-10 h-[520px] w-auto object-contain md:h-[620px]"
+              />
+            </div>
           </div>
         </div>
       </section>

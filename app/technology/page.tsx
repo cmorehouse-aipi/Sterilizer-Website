@@ -38,7 +38,7 @@ export default function Technology() {
             </div>
           </div>
           <div className="mt-3 text-center text-[11.5px] uppercase tracking-[0.18em] text-neutral-500">
-            fig. 02 · multi-directional dose
+            multi-directional dose
           </div>
         </div>
       </section>
