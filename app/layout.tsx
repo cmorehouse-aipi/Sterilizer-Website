@@ -10,7 +10,7 @@ const mono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-mono", displ
 const urbanist = Urbanist({
   subsets: ["latin"],
   variable: "--font-urbanist",
-  weight: ["100", "400", "500"],
+  weight: ["300", "400", "500", "600", "700"],
   display: "swap",
 });
 

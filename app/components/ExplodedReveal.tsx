@@ -305,10 +305,9 @@ export function ExplodedReveal({
     const update = () => {
       const el = wrapRef.current;
       if (!el) return;
-      const rect = el.getBoundingClientRect();
-      const total = rect.height - window.innerHeight;
-      const scrolled = -rect.top;
-      const p = clamp(scrolled / Math.max(total, 1));
+      const scrolled = -el.getBoundingClientRect().top;
+      const animRange = window.innerHeight * 0.6;
+      const p = clamp(scrolled / Math.max(animRange, 1));
       setProgress(p);
     };
     const onScroll = () => {
@@ -440,10 +439,10 @@ export function ExplodedReveal({
     <section
       ref={wrapRef}
       className={`relative ${wrapClass}`}
-      style={{ height: "160vh" }}
+      style={{ height: "185vh" }}
       aria-label="Exploded device view"
     >
-      <div className="sticky top-0 flex h-screen w-full flex-col overflow-hidden">
+      <div className="sticky top-0 z-[1] flex w-full flex-col overflow-hidden" style={{ height: "max(100dvh, 100vh)" }}>
         <div
           className="absolute inset-0"
           aria-hidden

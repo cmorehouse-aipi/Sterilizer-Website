@@ -32,7 +32,7 @@ export default function HowItWorks() {
                   {s.n}
                 </div>
                 <div className="relative">
-                  <div className="font-mono text-[11px] uppercase tracking-[0.22em] text-neutral-400">Step {s.n}</div>
+                  <div className="font-mono text-[11px] uppercase tracking-[0.22em] text-a-ink/55">Step {s.n}</div>
                   <h2 className="mt-2 font-serif text-[32px] leading-tight tracking-tight md:text-[38px]">{s.h}</h2>
                   <p className="mt-3 max-w-xl text-[16px] leading-[1.65] text-neutral-600">{s.b}</p>
                 </div>

@@ -1,10 +1,9 @@
 "use client";
-import { useRef, useState, MouseEvent } from "react";
+import { useRef, useState, useEffect, MouseEvent, TouchEvent } from "react";
 
 const LENS_W    = 210;
 const LENS_H    = 180;
 const ZOOM      = 2;
-const SCALE_TWO = 1.5;
 const IMG_AR    = 2 / 3;  // all renders are 1600×2400
 const PAD_Y     = 20;     // internal top/bottom padding inside the card
 
@@ -27,20 +26,47 @@ export function ProductImage({ src, alt, renderTwo }: Props) {
   const [cursor, setCursor] = useState<Cursor>({
     x: 0, y: 0, w: 1, h: 1, imgW: 1, imgH: 1, imgX: 0, imgY: 0,
   });
+  const activeRef = useRef(false);
 
-  const track = (e: MouseEvent<HTMLDivElement>) => {
+  useEffect(() => { activeRef.current = active; }, [active]);
+
+  // Non-passive touchmove listener — React's synthetic onTouchMove is passive
+  // and cannot call preventDefault(). This stops page scroll while zooming.
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const handler = (e: globalThis.TouchEvent) => {
+      if (activeRef.current) e.preventDefault();
+    };
+    el.addEventListener("touchmove", handler, { passive: false });
+    return () => el.removeEventListener("touchmove", handler);
+  }, []);
+
+  const trackPoint = (clientX: number, clientY: number) => {
     const el = containerRef.current;
     if (!el) return;
     const { left, top, width, height } = el.getBoundingClientRect();
-    // Content area excludes the vertical padding
     const contentH = height - PAD_Y * 2;
     const containerAR = width / contentH;
     const imgW = containerAR > IMG_AR ? contentH * IMG_AR : width;
     const imgH = containerAR > IMG_AR ? contentH : width / IMG_AR;
     const imgX = (width - imgW) / 2;
     const imgY = PAD_Y + (contentH - imgH) / 2;
-    setCursor({ x: e.clientX - left, y: e.clientY - top, w: width, h: height, imgW, imgH, imgX, imgY });
+    setCursor({ x: clientX - left, y: clientY - top, w: width, h: height, imgW, imgH, imgX, imgY });
   };
+
+  const track = (e: MouseEvent<HTMLDivElement>) => trackPoint(e.clientX, e.clientY);
+
+  const onTouchStart = (e: TouchEvent<HTMLDivElement>) => {
+    if (e.touches.length !== 1) return;
+    setActive(true);
+    trackPoint(e.touches[0].clientX, e.touches[0].clientY);
+  };
+  const onTouchMove = (e: TouchEvent<HTMLDivElement>) => {
+    if (e.touches.length !== 1) return;
+    trackPoint(e.touches[0].clientX, e.touches[0].clientY);
+  };
+  const onTouchEnd = () => setActive(false);
 
   const indicator = (
     <div
@@ -52,7 +78,10 @@ export function ProductImage({ src, alt, renderTwo }: Props) {
         <path d="M8 8l2.5 2.5" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" />
         <path d="M5 3.5v3M3.5 5h3" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" />
       </svg>
-      <span className="font-mono text-[10px] uppercase tracking-[0.16em] text-neutral-500">Hover to zoom</span>
+      <span className="font-mono text-[10px] uppercase tracking-[0.16em] text-neutral-500">
+        <span className="[@media(hover:none)]:hidden">Hover to zoom</span>
+        <span className="[@media(hover:hover)]:hidden">Touch to zoom</span>
+      </span>
     </div>
   );
 
@@ -80,7 +109,10 @@ export function ProductImage({ src, alt, renderTwo }: Props) {
         onMouseEnter={() => setActive(true)}
         onMouseLeave={() => setActive(false)}
         onMouseMove={track}
-        className="relative w-full overflow-hidden rounded-3xl bg-gradient-to-br from-a-rule/40 to-a-bg ring-1 ring-black/5 cursor-crosshair"
+        onTouchStart={onTouchStart}
+        onTouchMove={onTouchMove}
+        onTouchEnd={onTouchEnd}
+        className="relative w-full overflow-hidden rounded-3xl bg-gradient-to-br from-a-rule/40 to-a-bg ring-1 ring-black/5 [@media(hover:hover)]:cursor-crosshair"
         style={{ height: "600px", padding: `${PAD_Y}px 0` }}
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -119,7 +151,10 @@ export function ProductImage({ src, alt, renderTwo }: Props) {
       onMouseEnter={() => setActive(true)}
       onMouseLeave={() => setActive(false)}
       onMouseMove={track}
-      className="relative w-full overflow-hidden rounded-3xl bg-gradient-to-br from-a-rule/40 to-a-bg ring-1 ring-black/5 cursor-crosshair"
+      onTouchStart={onTouchStart}
+      onTouchMove={onTouchMove}
+      onTouchEnd={onTouchEnd}
+      className="relative w-full overflow-hidden rounded-3xl bg-gradient-to-br from-a-rule/40 to-a-bg ring-1 ring-black/5 [@media(hover:hover)]:cursor-crosshair"
       style={{ height: "600px", padding: `${PAD_Y}px 0` }}
     >
       {/* eslint-disable-next-line @next/next/no-img-element */}

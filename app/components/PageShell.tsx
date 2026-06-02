@@ -18,7 +18,7 @@ export function PageShell({ children }: { children: ReactNode }) {
 
 export function Eyebrow({ children }: { children: ReactNode }) {
   return (
-    <div className="text-[12px] uppercase tracking-[0.18em] text-neutral-500">{children}</div>
+    <div className="font-mono text-[11px] uppercase tracking-[0.22em] text-a-ink/55">{children}</div>
   );
 }
 

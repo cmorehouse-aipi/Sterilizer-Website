@@ -1,4 +1,7 @@
-﻿import Link from "next/link";
+﻿"use client";
+
+import Link from "next/link";
+import { useState, FormEvent } from "react";
 import { BRAND } from "../lib/brand";
 import { HorizontalDeviceMark } from "./HorizontalDeviceMark";
 
@@ -40,8 +43,21 @@ const COLS: { title: string; items: { href: string; label: string }[] }[] = [
   },
 ];
 
+type FormState = "idle" | "loading" | "success" | "error";
+
 export function SiteFooter({ tone = "light" }: { tone?: "light" | "dark" }) {
   const isDark = tone === "dark";
+  const [email, setEmail] = useState("");
+  const [formState, setFormState] = useState<FormState>("idle");
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!email.trim().includes("@")) { setFormState("error"); return; }
+    setFormState("loading");
+    await new Promise((r) => setTimeout(r, 800));
+    setFormState("success");
+  };
+
   return (
     <footer
       className={`${
@@ -59,23 +75,40 @@ export function SiteFooter({ tone = "light" }: { tone?: "light" | "dark" }) {
             <p className={`mt-4 max-w-sm text-[13.5px] leading-relaxed ${isDark ? "text-b-mute" : "text-neutral-600"}`}>
               A submersible UV-C water sterilizer. Drops into any bottle and disinfects in 60 seconds. Patent-pending technology, designed in Scotland.
             </p>
-            <form className="mt-6 flex max-w-sm gap-2">
-              <input
-                placeholder="Email for early access"
-                className={`flex-1 rounded-full px-4 py-2 text-[13px] outline-none ${
-                  isDark
-                    ? "bg-white/5 text-b-ink ring-1 ring-white/15 placeholder:text-b-mute"
-                    : "bg-white text-neutral-900 ring-1 ring-black/10 placeholder:text-neutral-400"
-                }`}
-              />
-              <button
-                className={`rounded-full px-4 py-2 text-[13px] ${
-                  isDark ? "bg-white text-black" : "bg-neutral-900 text-white"
-                }`}
-              >
-                Join
-              </button>
-            </form>
+            {formState === "success" ? (
+              <p className={`mt-6 text-[13px] ${isDark ? "text-b-mute" : "text-neutral-500"}`}>
+                ✓ You&rsquo;re on the list.
+              </p>
+            ) : (
+              <form onSubmit={handleSubmit} noValidate className="mt-6 max-w-sm">
+                <div className="flex gap-2">
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => { setEmail(e.target.value); setFormState("idle"); }}
+                    placeholder="Email for early access"
+                    disabled={formState === "loading"}
+                    className={`flex-1 rounded-full px-4 py-2 text-[13px] outline-none disabled:opacity-50 ${
+                      isDark
+                        ? "bg-white/5 text-b-ink ring-1 ring-white/15 placeholder:text-b-mute"
+                        : "bg-white text-neutral-900 ring-1 ring-black/10 placeholder:text-neutral-400"
+                    } ${formState === "error" ? "ring-red-400" : ""}`}
+                  />
+                  <button
+                    type="submit"
+                    disabled={formState === "loading"}
+                    className={`rounded-full px-4 py-2 text-[13px] disabled:opacity-60 ${
+                      isDark ? "bg-white text-black" : "bg-neutral-900 text-white"
+                    }`}
+                  >
+                    {formState === "loading" ? "Joining…" : "Join"}
+                  </button>
+                </div>
+                {formState === "error" && (
+                  <p className="mt-2 px-1 text-[12px] text-red-500">Please enter a valid email address.</p>
+                )}
+              </form>
+            )}
           </div>
           {COLS.map((col) => (
             <div key={col.title}>

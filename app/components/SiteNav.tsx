@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { BRAND } from "../lib/brand";
 import { HorizontalDeviceMark } from "./HorizontalDeviceMark";
@@ -17,12 +18,28 @@ const NAV = [
 export function SiteNav({ tone = "light" }: { tone?: "light" | "dark" }) {
   const isDark = tone === "dark";
   const pathname = usePathname();
+  const isHome = pathname === "/";
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    if (!isHome) { setScrolled(true); return; }
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [isHome]);
 
   return (
     <header
-      className={`sticky top-0 z-30 w-full ${
-        isDark ? "bg-b-bg/80 text-b-ink ring-1 ring-white/10" : "bg-white/80 text-neutral-900 ring-1 ring-black/5"
-      } backdrop-blur`}
+      className={`sticky top-0 z-30 w-full backdrop-blur transition-[background-color,box-shadow] duration-300 ${
+        isDark
+          ? scrolled
+            ? "bg-b-bg/80 text-b-ink shadow-[inset_0_-1px_0_0_rgba(255,255,255,0.10)]"
+            : "bg-transparent text-b-ink"
+          : scrolled
+            ? "bg-white/80 text-neutral-900 shadow-[inset_0_-1px_0_0_rgba(0,0,0,0.05)]"
+            : "bg-transparent text-neutral-900"
+      }`}
     >
       <div className="mx-auto flex max-w-[1240px] items-center justify-between px-6 py-4">
         <Link href="/" className="flex items-center" aria-label={BRAND}>

@@ -85,7 +85,7 @@ export function HeroColorPicker({ alt }: { alt: string }) {
             </span>
           )}
         </span>
-        <div className="flex items-center gap-3">
+        <div role="group" aria-label="Colorway" className="flex items-center gap-3">
           {COLORWAYS.map((c) => {
             const isActive = c.id === activeId;
             return (
@@ -93,6 +93,7 @@ export function HeroColorPicker({ alt }: { alt: string }) {
                 key={c.id}
                 onClick={() => { setActiveId(c.id); setCoarse(false); }}
                 aria-label={c.label}
+                aria-pressed={isActive}
                 title={c.label}
                 className={`h-5 w-5 rounded-full transition-all duration-200 ${
                   isActive
@@ -107,9 +108,10 @@ export function HeroColorPicker({ alt }: { alt: string }) {
 
         {/* Texture toggle — only visible for Midnight */}
         {activeId === "midnight" && (
-          <div className="flex items-center gap-1 rounded-full bg-a-ink/8 p-0.5 text-[11px] font-medium tracking-wide">
+          <div role="group" aria-label="Texture" className="flex items-center gap-1 rounded-full bg-a-ink/8 p-0.5 text-[11px] font-medium tracking-wide">
             <button
               onClick={() => setCoarse(false)}
+              aria-pressed={!coarse}
               className={`rounded-full px-3 py-1 transition-all duration-200 ${
                 !coarse ? "bg-a-bg text-a-ink shadow-sm" : "text-a-ink/50 hover:text-a-ink/75"
               }`}
@@ -118,6 +120,7 @@ export function HeroColorPicker({ alt }: { alt: string }) {
             </button>
             <button
               onClick={() => setCoarse(true)}
+              aria-pressed={coarse}
               className={`rounded-full px-3 py-1 transition-all duration-200 ${
                 coarse ? "bg-a-bg text-a-ink shadow-sm" : "text-a-ink/50 hover:text-a-ink/75"
               }`}
