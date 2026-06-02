@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 
 type Tone = "light" | "dark";
 
@@ -26,8 +26,8 @@ interface Part {
   exp: Vec2;
   phase: [number, number];
   fadeIn?: [number, number];
-  anchor: Vec2;          // local-coord anchor for the leader
-  label: Vec2;           // absolute world coords for the label center
+  anchor: Vec2;      // local offset on the part's surface where the leader touches
+  labelOff: Vec2;    // local offset from part's current world position to the label center
 }
 
 // Horizontal capsule. Main housing is ONE piece (matches reference schematic).
@@ -40,20 +40,20 @@ const PARTS: Part[] = [
     n: "01",
     name: "UV LED cover",
     asm: { x: -160, y: 0 },
-    exp: { x: -380, y: 0 },
+    exp: { x: -370, y: 0 },
     phase: [0, 0.55],
-    anchor: { x: -28, y: -38 },
-    label: { x: -380, y: -110 },
+    anchor: { x: 0, y: -52 },      // top edge of dome
+    labelOff: { x: 44, y: -145 }, // L-shape, top row at world y=-145
   },
   {
     id: "left-disc",
     n: "02",
     name: "UV driver PCB",
-    asm: { x: -166, y: 0 },          // tucked inside left dome
-    exp: { x: -300, y: 0 },
+    asm: { x: -166, y: 0 },        // tucked inside left dome
+    exp: { x: -290, y: 0 },
     phase: [0.05, 0.55],
-    anchor: { x: 0, y: 42 },
-    label: { x: -300, y: 110 },
+    anchor: { x: 0, y: 40 },       // bottom edge of disc
+    labelOff: { x: 0, y: 145 },   // straight line, bottom row at world y=145
   },
   {
     // Reveal handled by the er-emerge-left clip — wipes in past the housing's inner rim.
@@ -63,8 +63,8 @@ const PARTS: Part[] = [
     asm: { x: 0, y: 0 },
     exp: { x: -180, y: -32 },
     phase: [0.32, 0.85],
-    anchor: { x: 0, y: -14 },
-    label: { x: -180, y: -120 },
+    anchor: { x: 0, y: -13 },      // top edge of PCB rect
+    labelOff: { x: 44, y: -73 }, // L-shape, top at world y=-105 (exp.y=-32) — below UV LED cover at -145
   },
   {
     id: "battery",
@@ -73,48 +73,48 @@ const PARTS: Part[] = [
     asm: { x: 0, y: 0 },
     exp: { x: -180, y: 32 },
     phase: [0.36, 0.9],
-    anchor: { x: 0, y: 14 },
-    label: { x: -180, y: 130 },
+    anchor: { x: 0, y: 14 },       // bottom edge of battery rect
+    labelOff: { x: 44, y: 153 },  // L-shape, bottom row far level y=185 (exp.y=32)
   },
   {
     id: "housing",
-    n: "05",
+    n: "06",
     name: "Main housing",
     asm: { x: 0, y: 0 },
     exp: { x: 80, y: 0 },
     phase: [0.1, 0.55],
-    anchor: { x: 0, y: 52 },
-    label: { x: 80, y: 115 },
+    anchor: { x: 0, y: 52 },       // bottom edge of housing rect
+    labelOff: { x: 0, y: 145 },   // straight line, bottom row at world y=145
   },
   {
     id: "right-disc",
-    n: "06",
+    n: "07",
     name: "UV driver PCB",
     asm: { x: 166, y: 0 },
-    exp: { x: 280, y: 0 },
+    exp: { x: 290, y: 0 },
     phase: [0.05, 0.55],
-    anchor: { x: 0, y: -42 },
-    label: { x: 280, y: -110 },
+    anchor: { x: 0, y: -40 },      // top edge of disc
+    labelOff: { x: 0, y: -185 },  // straight line, top row far level y=-185
   },
   {
     id: "right-dome",
-    n: "07",
+    n: "08",
     name: "UV LED cover",
     asm: { x: 160, y: 0 },
-    exp: { x: 360, y: 0 },
+    exp: { x: 370, y: 0 },
     phase: [0, 0.55],
-    anchor: { x: 28, y: 38 },
-    label: { x: 360, y: 110 },
+    anchor: { x: 0, y: 52 },       // bottom edge of dome
+    labelOff: { x: -44, y: 185 }, // L-shape, bottom row far level y=185
   },
   {
     id: "button",
-    n: "08",
-    name: "Charging port",
-    asm: { x: 0, y: -51 },        // centered on housing, recessed slightly into hole
-    exp: { x: 80, y: -175 },      // tracks housing's exploded x; lifts upward
+    n: "05",
+    name: "Charging contact",
+    asm: { x: 0, y: -51 },         // centered on housing, recessed slightly into hole
+    exp: { x: 80, y: -105 },       // tracks housing's exploded x; lifts upward
     phase: [0.18, 0.65],
-    anchor: { x: 12, y: 0 },
-    label: { x: 175, y: -175 },
+    anchor: { x: 0, y: -3 },       // top center of contact rect
+    labelOff: { x: 0, y: -40 },   // straight line, top row at world y=-145 (exp.y=-105)
   },
 ];
 
@@ -285,6 +285,9 @@ function ChargingPort() {
 }
 
 const VB = { x: -440, y: -240, w: 880, h: 480 };
+// Approximate half-height of a label card in SVG units. Used to route L-shape
+// polylines to the center of the card's side rather than its corner.
+const LABEL_HALF = 9;
 
 export function ExplodedReveal({
   tone = "light",
@@ -293,17 +296,18 @@ export function ExplodedReveal({
   description = "Scroll to disassemble. The cylinder resolves into its components — every part engineered to never need replacing.",
 }: Props) {
   const wrapRef = useRef<HTMLDivElement>(null);
+  const svgContainerRef = useRef<HTMLDivElement>(null);
   const [progress, setProgress] = useState(0);
+  const [svgInfo, setSvgInfo] = useState({ scale: 1, svgLeft: 0, svgTop: 0, cw: 1, ch: 1 });
 
   useEffect(() => {
     let raf = 0;
     const update = () => {
       const el = wrapRef.current;
       if (!el) return;
-      const rect = el.getBoundingClientRect();
-      const total = rect.height - window.innerHeight;
-      const scrolled = -rect.top;
-      const p = clamp(scrolled / Math.max(total, 1));
+      const scrolled = -el.getBoundingClientRect().top;
+      const animRange = window.innerHeight * 0.6;
+      const p = clamp(scrolled / Math.max(animRange, 1));
       setProgress(p);
     };
     const onScroll = () => {
@@ -318,6 +322,34 @@ export function ExplodedReveal({
       window.removeEventListener("resize", onScroll);
       if (raf) cancelAnimationFrame(raf);
     };
+  }, []);
+
+  // Compute actual SVG rendering rect (accounts for preserveAspectRatio letterboxing)
+  // so HTML label cards align exactly with SVG leader-line endpoints.
+  useEffect(() => {
+    const compute = () => {
+      const el = svgContainerRef.current;
+      if (!el) return;
+      const { width: cw, height: ch } = el.getBoundingClientRect();
+      const vbAR = VB.w / VB.h;
+      const arContainer = cw / Math.max(ch, 1);
+      let scale: number, svgLeft: number, svgTop: number;
+      if (arContainer > vbAR) {
+        // Container wider than viewBox — letterbox left/right
+        scale = ch / VB.h;
+        svgLeft = (cw - VB.w * scale) / 2;
+        svgTop = 0;
+      } else {
+        // Container taller than viewBox — letterbox top/bottom
+        scale = cw / VB.w;
+        svgLeft = 0;
+        svgTop = (ch - VB.h * scale) / 2;
+      }
+      setSvgInfo({ scale, svgLeft, svgTop, cw, ch });
+    };
+    compute();
+    window.addEventListener("resize", compute);
+    return () => window.removeEventListener("resize", compute);
   }, []);
 
   const p = progress;
@@ -407,10 +439,10 @@ export function ExplodedReveal({
     <section
       ref={wrapRef}
       className={`relative ${wrapClass}`}
-      style={{ height: "160vh" }}
+      style={{ height: "185vh" }}
       aria-label="Exploded device view"
     >
-      <div className="sticky top-0 flex h-screen w-full flex-col overflow-hidden">
+      <div className="sticky top-0 z-[1] flex w-full flex-col overflow-hidden" style={{ height: "max(100dvh, 100vh)" }}>
         <div
           className="absolute inset-0"
           aria-hidden
@@ -468,6 +500,7 @@ export function ExplodedReveal({
         {/* Stage */}
         <div className="relative z-10 mx-auto flex w-full max-w-[1280px] flex-1 items-center justify-center px-4 md:px-10">
           <div
+            ref={svgContainerRef}
             className="relative h-full w-full"
             style={{ "--part-fill": partFill } as React.CSSProperties}
           >
@@ -506,8 +539,8 @@ export function ExplodedReveal({
               <line x1={VB.x + 30} y1="0" x2={VB.x + VB.w - 30} y2="0" stroke="url(#er-axis)" strokeWidth="0.8" strokeDasharray="2 6" />
 
               {[
-                { x: VB.x + 20,        y: VB.y + 20,        dx: 18,  dy: 18 },
-                { x: VB.x + VB.w - 20, y: VB.y + 20,        dx: -18, dy: 18 },
+                { x: VB.x + 20,        y: VB.y + 20,        dx: 18,  dy: 18  },
+                { x: VB.x + VB.w - 20, y: VB.y + 20,        dx: -18, dy: 18  },
                 { x: VB.x + VB.w - 20, y: VB.y + VB.h - 20, dx: -18, dy: -18 },
                 { x: VB.x + 20,        y: VB.y + VB.h - 20, dx: 18,  dy: -18 },
               ].map((m, i) => (
@@ -529,70 +562,128 @@ export function ExplodedReveal({
 
               {RENDER_ORDER.map(renderPart)}
 
+              <g className="er-callouts">
               {partState.map((s) => {
                 const part = s.part;
                 const ax = s.x + part.anchor.x;
                 const ay = s.y + part.anchor.y;
-                const lx = part.label.x;
-                const ly = part.label.y;
+                const lx = s.x + part.labelOff.x;
+                const ly = s.y + part.labelOff.y;
+                const hOff = part.labelOff.x;
+                // For L-shape labels the card is edge-anchored; shift the dot inward
+                // by LABEL_HALF so it lands at the center of the card's side.
+                const dotY = hOff !== 0
+                  ? (part.labelOff.y < 0 ? ly - LABEL_HALF : ly + LABEL_HALF)
+                  : ly;
                 return (
                   <g key={`co-${part.id}`} style={{ opacity: calloutOpacity }}>
-                    <polyline
-                      points={`${ax},${ay} ${ax},${ly} ${lx},${ly}`}
-                      fill="none"
-                      stroke={accentHex}
-                      strokeOpacity="0.55"
-                      strokeWidth="0.8"
-                    />
+                    {hOff === 0 ? (
+                      <line x1={ax} y1={ay} x2={lx} y2={ly} fill="none" stroke={accentHex} strokeOpacity="0.55" strokeWidth="0.8" />
+                    ) : (
+                      <polyline points={`${ax},${ay} ${ax},${dotY} ${lx},${dotY}`} fill="none" stroke={accentHex} strokeOpacity="0.55" strokeWidth="0.8" />
+                    )}
                     <circle cx={ax} cy={ay} r="2.4" fill={accentHex} />
                     <circle cx={ax} cy={ay} r="6" fill={accentHex} fillOpacity="0.18" />
-                    <circle cx={lx} cy={ly} r="1.8" fill={accentHex} />
+                    <circle cx={lx} cy={dotY} r="1.8" fill={accentHex} />
                   </g>
                 );
               })}
+              </g>
             </svg>
 
             <div className="pointer-events-none absolute inset-0">
               {partState.map((s) => {
                 const part = s.part;
-                const leftPct = ((part.label.x - VB.x) / VB.w) * 100;
-                const topPct = ((part.label.y - VB.y) / VB.h) * 100;
-                const isTop = part.label.y < 0;
+                const lx = s.x + part.labelOff.x;
+                const ly = s.y + part.labelOff.y;
+                // Map SVG viewbox coords → HTML % using the measured SVG rendering rect
+                // (accounts for preserveAspectRatio letterboxing so cards align with lines)
+                const leftPct = ((lx - VB.x) * svgInfo.scale + svgInfo.svgLeft) / svgInfo.cw * 100;
+                const topPct  = ((ly - VB.y) * svgInfo.scale + svgInfo.svgTop)  / svgInfo.ch * 100;
+                const isTop = part.labelOff.y < 0;
+                const hOff = part.labelOff.x;
+                // Horizontal anchor: straight labels center on the dot; L-shape labels
+                // connect at their left or right edge so the elbow meets the card side.
+                const hTranslate = hOff > 0 ? "0%" : hOff < 0 ? "-100%" : "-50%";
+                const vTranslate = isTop ? "calc(-100% - 2px)" : "2px";
                 const slide = (1 - calloutOpacity) * (isTop ? -6 : 6);
+                const borderStyle = hOff === 0
+                  ? (isTop ? { borderBottom: `1px solid ${accentHex}` } : { borderTop: `1px solid ${accentHex}` })
+                  : (hOff > 0 ? { borderLeft: `1px solid ${accentHex}` } : { borderRight: `1px solid ${accentHex}` });
                 return (
-                  <div
-                    key={`card-${part.id}`}
-                    className="absolute"
-                    style={{
-                      left: `${leftPct}%`,
-                      top: `${topPct}%`,
-                      transform: `translate(-50%, ${isTop ? "calc(-100% - 8px)" : "8px"}) translateY(${slide}px)`,
-                      opacity: calloutOpacity,
-                    }}
-                  >
+                  <Fragment key={part.id}>
+                    {/* Desktop: full label card with leader line */}
                     <div
-                      className={`${surfaceClass} backdrop-blur-sm whitespace-nowrap`}
-                      style={{ borderTop: `1px solid ${accentHex}` }}
+                      className="absolute hidden md:block"
+                      style={{
+                        left: `${leftPct}%`,
+                        top: `${topPct}%`,
+                        transform: `translate(${hTranslate}, ${vTranslate}) translateY(${slide}px)`,
+                        opacity: calloutOpacity,
+                      }}
                     >
-                      <div className="flex items-baseline gap-2 px-3 py-1.5">
-                        <span
-                          className={`${captionFont} text-[10px] uppercase tracking-[0.22em]`}
-                          style={{ color: accentHex }}
-                        >
-                          {part.n}
-                        </span>
-                        <span
-                          className="text-[12.5px] font-medium leading-none tracking-tightish"
-                          style={{ color: inkHex }}
-                        >
-                          {part.name}
-                        </span>
+                      <div
+                        className={`${surfaceClass} backdrop-blur-sm whitespace-nowrap`}
+                        style={borderStyle}
+                      >
+                        <div className="flex items-baseline gap-2 px-3 py-1.5">
+                          <span
+                            className={`${captionFont} text-[10px] uppercase tracking-[0.22em]`}
+                            style={{ color: accentHex }}
+                          >
+                            {part.n}
+                          </span>
+                          <span
+                            className="text-[12.5px] font-medium leading-none tracking-tightish"
+                            style={{ color: inkHex }}
+                          >
+                            {part.name}
+                          </span>
+                        </div>
                       </div>
                     </div>
-                  </div>
+                    {/* Mobile: numbered badge at label offset position (clear of part surfaces) */}
+                    <div
+                      className="absolute md:hidden flex h-7 w-7 items-center justify-center rounded-full text-[10px] font-bold"
+                      style={{
+                        left: `${leftPct}%`,
+                        top: `${topPct}%`,
+                        transform: "translate(-50%, -50%)",
+                        opacity: calloutOpacity,
+                        backgroundColor: accentHex,
+                        color: "white",
+                        fontFamily: "ui-monospace, monospace",
+                      }}
+                    >
+                      {part.n}
+                    </div>
+                  </Fragment>
                 );
               })}
             </div>
+          </div>
+        </div>
+
+        {/* Mobile parts legend — pinned inside the sticky frame, synced with badge appearance */}
+        <div className="md:hidden relative z-10 mx-auto w-full max-w-[1280px] flex-shrink-0 px-4 pb-3">
+          <div className="grid grid-cols-2 gap-1.5" style={{ opacity: calloutOpacity }}>
+            {[...PARTS].sort((a, b) => a.n.localeCompare(b.n)).map((part) => (
+              <div
+                key={part.id}
+                className={`${surfaceClass} backdrop-blur-sm flex items-center gap-2 rounded-xl px-2.5 py-2`}
+                style={{ borderLeft: `2px solid ${accentHex}` }}
+              >
+                <span
+                  className={`${captionFont} shrink-0 text-[9px] uppercase tracking-[0.18em]`}
+                  style={{ color: accentHex }}
+                >
+                  {part.n}
+                </span>
+                <span className="text-[10.5px] font-medium leading-tight truncate" style={{ color: inkHex }}>
+                  {part.name}
+                </span>
+              </div>
+            ))}
           </div>
         </div>
 

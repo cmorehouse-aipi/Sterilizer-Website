@@ -5,7 +5,7 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["var(--font-inter)", "system-ui", "sans-serif"],
+        sans: ["var(--font-urbanist)", "system-ui", "sans-serif"],
         serif: ["var(--font-fraunces)", "Georgia", "serif"],
         display: ["var(--font-grotesk)", "Inter", "sans-serif"],
         mono: ["var(--font-mono)", "ui-monospace", "monospace"],

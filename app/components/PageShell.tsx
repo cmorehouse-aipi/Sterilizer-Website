@@ -1,4 +1,4 @@
-// Lightweight shell used by all dummy inner pages so they share a single skin.
+﻿// Lightweight shell used by all dummy inner pages so they share a single skin.
 
 import { ReactNode } from "react";
 import { SiteNav } from "./SiteNav";
@@ -7,9 +7,9 @@ import { VariantToggle } from "./VariantToggle";
 
 export function PageShell({ children }: { children: ReactNode }) {
   return (
-    <div className="min-h-screen bg-white text-neutral-900">
+    <div className="min-h-screen bg-a-bg bg-grain text-neutral-900">
       <SiteNav tone="light" />
-      <main className="mx-auto max-w-[1240px] px-6 py-16">{children}</main>
+      <main className="mx-auto max-w-[1240px] border-t border-a-rule px-6 pt-14 pb-24 [&>header]:border-b [&>header]:border-a-rule [&>header]:pb-14 [&>header]:mb-14">{children}</main>
       <SiteFooter tone="light" />
       <VariantToggle active="a" tone="light" />
     </div>
@@ -18,7 +18,7 @@ export function PageShell({ children }: { children: ReactNode }) {
 
 export function Eyebrow({ children }: { children: ReactNode }) {
   return (
-    <div className="text-[12px] uppercase tracking-[0.18em] text-neutral-500">{children}</div>
+    <div className="font-mono text-[11px] uppercase tracking-[0.22em] text-a-ink/55">{children}</div>
   );
 }
 
