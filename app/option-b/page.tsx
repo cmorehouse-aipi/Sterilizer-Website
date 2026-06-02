@@ -301,7 +301,7 @@ export default function HomeB() {
                 {COMPARE_ROWS.map((row) => (
                   <tr key={row.label} className="border-t border-b-line">
                     <td className="px-5 py-4 text-b-mute">{row.label}</td>
-                    <td className="px-5 py-4 font-medium text-b-ink">{row.lumen}</td>
+                    <td className="px-5 py-4 font-medium text-b-ink">{row.forth}</td>
                     <td className="px-5 py-4 text-b-ink/70">{row.steripen}</td>
                     <td className="px-5 py-4 text-b-ink/70">{row.larq}</td>
                     <td className="px-5 py-4 text-b-ink/70">{row.tabs}</td>
