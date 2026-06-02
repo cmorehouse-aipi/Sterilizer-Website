@@ -5,12 +5,12 @@ import { DeviceVisual } from "../components/DeviceVisual";
 export const metadata = { title: "Shop — Forth" };
 
 const PRODUCTS = [
-  { handle: "forth-1", title: "Forth", subtitle: "The original sterilizer", price: "$39", body: "#1A2433", dome: "#C8D4DC", render: "/renderings/forth-device-frame-00.png" },
-  { handle: "forth-1-coral", title: "Forth — Coral", subtitle: "Limited release", price: "$44", body: "#3F2424", dome: "#E89B7C", render: "/renderings/forth-device-coral-frame-00.png" },
-  { handle: "forth-multi", title: "Forth × 2", subtitle: "Family pack", price: "$72", body: "#1A2433", dome: "#A6C7B6", render: "/renderings/forth-device-frame-00.png", renderTwo: true },
-  { handle: "dome-replacement", title: "Replacement domes", subtitle: "Pack of 2", price: "$12", body: "#202020", dome: "#FFE6A1" },
-  { handle: "travel-case", title: "Travel case", subtitle: "Felt-lined, magnetic", price: "$24", body: "#262626", dome: "#9DB7C6" },
-  { handle: "induction-base", title: "Induction base", subtitle: "Spare charger", price: "$19", body: "#1F1F1F", dome: "#C8D4DC" },
+  { handle: "forth-1",          title: "Forth",               subtitle: "The original sterilizer",  price: "$39", body: "#1A2433", dome: "#C8D4DC", render: "/renderings/forth-device-frame-00.png" },
+  { handle: "forth-1-coral",    title: "Forth — Coral",       subtitle: "Limited release",           price: "$44", body: "#3F2424", dome: "#E89B7C", render: "/renderings/forth-device-coral-frame-00.png" },
+  { handle: "forth-multi",      title: "Forth × 2",           subtitle: "Family pack",               price: "$72", body: "#1A2433", dome: "#A6C7B6", render: "/renderings/forth-device-frame-00.png", renderTwo: true },
+  { handle: "dome-replacement", title: "Replacement domes",   subtitle: "Pack of 2",                 price: "$12", body: "#202020", dome: "#FFE6A1" },
+  { handle: "travel-case",      title: "Travel case",         subtitle: "Felt-lined, magnetic",      price: "$24", body: "#262626", dome: "#9DB7C6" },
+  { handle: "induction-base",   title: "Induction base",      subtitle: "Spare charger",             price: "$19", body: "#1F1F1F", dome: "#C8D4DC" },
 ];
 
 export default function Shop() {
@@ -39,8 +39,10 @@ export default function Shop() {
                     <img src={p.render} alt={p.title} className="absolute inset-0 h-full w-full object-contain -translate-x-[12%]" />
                   </div>
                 ) : p.render ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img src={p.render} alt={p.title} className="h-full w-full object-contain" />
+                  <div className="flex h-full w-full items-center justify-center">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={p.render} alt={p.title} className="max-h-[88%] max-w-[88%]" />
+                  </div>
                 ) : (
                   <DeviceVisual className="h-[260px] w-auto" body={p.body} dome={p.dome} ink="#0F1B2D" glow={p.dome} />
                 )}

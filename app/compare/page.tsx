@@ -14,8 +14,8 @@ export default function Compare() {
         </Lead>
       </header>
 
-      <section className="overflow-hidden rounded-3xl ring-1 ring-black/10">
-        <table className="w-full text-left text-[14.5px]">
+      <section className="overflow-x-auto rounded-3xl ring-1 ring-black/10">
+        <table className="w-full min-w-[580px] text-left text-[14.5px]">
           <thead>
             <tr className="text-[11.5px] uppercase tracking-[0.16em] text-neutral-500">
               <th className="bg-neutral-50/80 px-6 py-5"></th>

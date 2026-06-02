@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 
 type Tone = "light" | "dark";
 
@@ -591,7 +591,7 @@ export function ExplodedReveal({
               </g>
             </svg>
 
-            <div className="pointer-events-none absolute inset-0 hidden md:block">
+            <div className="pointer-events-none absolute inset-0">
               {partState.map((s) => {
                 const part = s.part;
                 const lx = s.x + part.labelOff.x;
@@ -611,39 +611,79 @@ export function ExplodedReveal({
                   ? (isTop ? { borderBottom: `1px solid ${accentHex}` } : { borderTop: `1px solid ${accentHex}` })
                   : (hOff > 0 ? { borderLeft: `1px solid ${accentHex}` } : { borderRight: `1px solid ${accentHex}` });
                 return (
-                  <div
-                    key={`card-${part.id}`}
-                    className="absolute"
-                    style={{
-                      left: `${leftPct}%`,
-                      top: `${topPct}%`,
-                      transform: `translate(${hTranslate}, ${vTranslate}) translateY(${slide}px)`,
-                      opacity: calloutOpacity,
-                    }}
-                  >
+                  <Fragment key={part.id}>
+                    {/* Desktop: full label card with leader line */}
                     <div
-                      className={`${surfaceClass} backdrop-blur-sm whitespace-nowrap`}
-                      style={borderStyle}
+                      className="absolute hidden md:block"
+                      style={{
+                        left: `${leftPct}%`,
+                        top: `${topPct}%`,
+                        transform: `translate(${hTranslate}, ${vTranslate}) translateY(${slide}px)`,
+                        opacity: calloutOpacity,
+                      }}
                     >
-                      <div className="flex items-baseline gap-2 px-3 py-1.5">
-                        <span
-                          className={`${captionFont} text-[10px] uppercase tracking-[0.22em]`}
-                          style={{ color: accentHex }}
-                        >
-                          {part.n}
-                        </span>
-                        <span
-                          className="text-[12.5px] font-medium leading-none tracking-tightish"
-                          style={{ color: inkHex }}
-                        >
-                          {part.name}
-                        </span>
+                      <div
+                        className={`${surfaceClass} backdrop-blur-sm whitespace-nowrap`}
+                        style={borderStyle}
+                      >
+                        <div className="flex items-baseline gap-2 px-3 py-1.5">
+                          <span
+                            className={`${captionFont} text-[10px] uppercase tracking-[0.22em]`}
+                            style={{ color: accentHex }}
+                          >
+                            {part.n}
+                          </span>
+                          <span
+                            className="text-[12.5px] font-medium leading-none tracking-tightish"
+                            style={{ color: inkHex }}
+                          >
+                            {part.name}
+                          </span>
+                        </div>
                       </div>
                     </div>
-                  </div>
+                    {/* Mobile: numbered badge at label offset position (clear of part surfaces) */}
+                    <div
+                      className="absolute md:hidden flex h-7 w-7 items-center justify-center rounded-full text-[10px] font-bold"
+                      style={{
+                        left: `${leftPct}%`,
+                        top: `${topPct}%`,
+                        transform: "translate(-50%, -50%)",
+                        opacity: calloutOpacity,
+                        backgroundColor: accentHex,
+                        color: "white",
+                        fontFamily: "ui-monospace, monospace",
+                      }}
+                    >
+                      {part.n}
+                    </div>
+                  </Fragment>
                 );
               })}
             </div>
+          </div>
+        </div>
+
+        {/* Mobile parts legend — pinned inside the sticky frame, synced with badge appearance */}
+        <div className="md:hidden relative z-10 mx-auto w-full max-w-[1280px] flex-shrink-0 px-4 pb-3">
+          <div className="grid grid-cols-2 gap-1.5" style={{ opacity: calloutOpacity }}>
+            {[...PARTS].sort((a, b) => a.n.localeCompare(b.n)).map((part) => (
+              <div
+                key={part.id}
+                className={`${surfaceClass} backdrop-blur-sm flex items-center gap-2 rounded-xl px-2.5 py-2`}
+                style={{ borderLeft: `2px solid ${accentHex}` }}
+              >
+                <span
+                  className={`${captionFont} shrink-0 text-[9px] uppercase tracking-[0.18em]`}
+                  style={{ color: accentHex }}
+                >
+                  {part.n}
+                </span>
+                <span className="text-[10.5px] font-medium leading-tight truncate" style={{ color: inkHex }}>
+                  {part.name}
+                </span>
+              </div>
+            ))}
           </div>
         </div>
 
@@ -691,9 +731,6 @@ export function ExplodedReveal({
           }
           .er-pulse {
             animation: er-pulse 1.6s ease-in-out infinite;
-          }
-          @media (max-width: 767px) {
-            .er-callouts { display: none; }
           }
         `}</style>
       </div>
