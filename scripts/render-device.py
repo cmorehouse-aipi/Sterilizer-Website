@@ -808,6 +808,13 @@ def main():
         device_root.rotation_euler = (0, 0, math.radians(angle_deg))
 
         frame_path = os.path.join(OUT_DIR, f"forth-device-frame-{i:02d}.png")
+        # Resumable: frames are deterministic (same scene, fixed Cycles seed), so
+        # an interrupted run picks up where it left off. Delete existing frames
+        # before re-rendering if the scene changed; if a run was hard-killed,
+        # also delete the newest frame in case the PNG write was cut short.
+        if os.path.exists(frame_path):
+            print(f"[render-device] skipping existing {frame_path}")
+            continue
         bpy.context.scene.render.filepath = frame_path
         bpy.ops.render.render(write_still=True)
         print(f"[render-device] wrote {frame_path}")
