@@ -30,6 +30,12 @@ npm run dev
 
 Then open [http://localhost:3000](http://localhost:3000).
 
+## Re-rendering the 3D device
+
+The rotating hero device is generated entirely by Blender Python scripts — there are no
+`.blend` files. See [`scripts/RENDERING.md`](scripts/RENDERING.md) for the full pipeline
+(render → ffmpeg encode → cleanup).
+
 ## Deploy to Vercel
 
 The fastest path:

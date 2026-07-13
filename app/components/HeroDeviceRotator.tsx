@@ -6,7 +6,10 @@ const VIDEO_WEBM = "/renderings/forth-device-rotation.webm";
 const VIDEO_MP4 = "/renderings/forth-device-rotation.mp4";
 const POSTER_SRC = "/renderings/forth-device-frame-00.png";
 
-const FULL_ROTATION_MS = 1000;
+// Time to traverse the entire video. The clip is a full 360° turn, so 4000ms
+// keeps the same angular speed as the previous 90°-in-1000ms clip. If the
+// rendered arc changes (see scripts/render-device.py), scale this with it.
+const FULL_ROTATION_MS = 4000;
 
 type Props = { alt: string };
 type Direction = "forward" | "reverse" | "idle";

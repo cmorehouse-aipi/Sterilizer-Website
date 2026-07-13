@@ -1,13 +1,29 @@
 """
-Builds and renders the FORTH sterilizer device.
+Builds and renders the FORTH sterilizer device (the blue hero model).
+The entire scene — model, materials, lights, camera — is constructed in code;
+there is no .blend file.
+
 Run: blender -b -P scripts/render-device.py
-Outputs: public/renderings/forth-device-hero.png + forth-device.glb
+Outputs: public/renderings/forth-device-frame-{00..103}.png (one full 360° turn),
+         forth-device-hero.png, forth-device.glb
+
+After rendering, encode the frames. -g 1 makes every frame a keyframe so the
+scroll scrubber in app/components/HeroDeviceRotator.tsx can seek O(1) in either
+direction:
+  ffmpeg -y -framerate 60 -i "public/renderings/forth-device-frame-%02d.png" \
+    -vf scale=800:1200 -c:v libvpx-vp9 -g 1 -b:v 0 -crf 33 -an \
+    "public/renderings/forth-device-rotation.webm"
+  ffmpeg -y -framerate 60 -i "public/renderings/forth-device-frame-%02d.png" \
+    -vf scale=800:1200 -c:v libx264 -g 1 -pix_fmt yuv420p -crf 24 \
+    -movflags +faststart -an "public/renderings/forth-device-rotation.mp4"
+Then delete the intermediate frames, keeping frame-00 (it's the <video> poster).
+Full pipeline docs: scripts/RENDERING.md
 """
 import bpy
 import math
 import os
 
-REPO_ROOT = "/Users/cole/Documents/Sterilizer-Website"
+REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT_DIR = os.path.join(REPO_ROOT, "public/renderings")
 PNG_PATH = os.path.join(OUT_DIR, "forth-device-hero.png")
 GLB_PATH = os.path.join(OUT_DIR, "forth-device.glb")
@@ -779,12 +795,16 @@ def main():
             continue
         obj.parent = device_root
 
-    # Render rotation sequence: 0° → -90° (clockwise viewed from above), revealing
-    # the charging port that was on the +X side. Frames are evenly spaced.
+    # Render rotation sequence: one full 360° turn (clockwise viewed from above),
+    # starting and ending on the wordmark-front pose. ~3.5° per frame is smooth
+    # for scroll scrubbing since the component eases between positions; keeping
+    # the frame count at 104 keeps the all-keyframe encode the same size as the
+    # old 90° clip. If the arc changes, FULL_ROTATION_MS in HeroDeviceRotator.tsx
+    # must change proportionally to preserve angular speed.
     NUM_FRAMES = 104
     for i in range(NUM_FRAMES):
         progress = i / (NUM_FRAMES - 1)
-        angle_deg = -progress * 90.0
+        angle_deg = -progress * 360.0
         device_root.rotation_euler = (0, 0, math.radians(angle_deg))
 
         frame_path = os.path.join(OUT_DIR, f"forth-device-frame-{i:02d}.png")
