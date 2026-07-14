@@ -6,12 +6,11 @@ const VIDEO_WEBM = "/renderings/forth-device-rotation.webm";
 const VIDEO_MP4 = "/renderings/forth-device-rotation.mp4";
 const POSTER_SRC = "/renderings/forth-device-frame-00.png";
 
-// Time to traverse the entire video (a full 360° turn). The clip has 104
-// frames, so sweep time sets the visible frame cadence: 2400ms ≈ 43 frame
-// changes/sec average. Stretching this much past ~3000ms makes the scrub look
-// steppy, especially inside the easing tails. If the rendered arc or frame
-// count changes (see scripts/render-device.py), retune this.
-const FULL_ROTATION_MS = 2400;
+// Time to traverse the entire video (a full 360° turn). The clip has 208
+// frames, so sweep time sets the visible frame cadence: 3000ms ≈ 69 frame
+// changes/sec average — smooth even inside the ease-out tail. If the rendered
+// arc or frame count changes (see scripts/render-device.py), retune this.
+const FULL_ROTATION_MS = 3000;
 
 type Props = { alt: string };
 type Direction = "forward" | "reverse" | "idle";

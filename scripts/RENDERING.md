@@ -19,7 +19,7 @@ wordmark with different text/spacing).
 ## The blue hero model (the one on the front page)
 
 ```bash
-# 1. Render — builds the scene and writes 104 PNG frames of a full 360° turn
+# 1. Render — builds the scene and writes 208 PNG frames of a full 360° turn
 #    (plus forth-device-hero.png and forth-device.glb). Takes a while: 512
 #    Cycles samples per frame at 1600×2400.
 blender -b -P scripts/render-device.py
@@ -67,9 +67,9 @@ hero stills are used on the site today.
 
 [`app/components/HeroDeviceRotator.tsx`](../app/components/HeroDeviceRotator.tsx) scrubs
 `video.currentTime` on scroll. `FULL_ROTATION_MS` there is the time to traverse the whole
-clip — it's tuned to the rendered arc (4000 ms for the 360° turn ≈ 90°/s). If you change
-the rotation arc or frame count in `render-device.py`, scale `FULL_ROTATION_MS` to match,
-or the device will appear to spin faster/slower.
+clip — 3000 ms for the 208-frame 360° turn (≈ 69 visible frame changes/sec). If you
+change the rotation arc or frame count in `render-device.py`, retune it: sweep time sets
+both apparent spin speed and scrub fluidity (frames ÷ sweep seconds = frame cadence).
 
 ## Want an actual .blend?
 

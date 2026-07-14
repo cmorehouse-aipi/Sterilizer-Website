@@ -4,7 +4,7 @@ The entire scene — model, materials, lights, camera — is constructed in code
 there is no .blend file.
 
 Run: blender -b -P scripts/render-device.py
-Outputs: public/renderings/forth-device-frame-{00..103}.png (one full 360° turn),
+Outputs: public/renderings/forth-device-frame-{00..207}.png (one full 360° turn),
          forth-device-hero.png, forth-device.glb
 
 After rendering, encode the frames. -g 1 makes every frame a keyframe so the
@@ -826,12 +826,12 @@ def main():
         obj.parent = device_root
 
     # Render rotation sequence: one full 360° turn (clockwise viewed from above),
-    # starting and ending on the wordmark-front pose. ~3.5° per frame is smooth
-    # for scroll scrubbing since the component eases between positions; keeping
-    # the frame count at 104 keeps the all-keyframe encode the same size as the
-    # old 90° clip. If the arc changes, FULL_ROTATION_MS in HeroDeviceRotator.tsx
-    # must change proportionally to preserve angular speed.
-    NUM_FRAMES = 104
+    # starting and ending on the wordmark-front pose. 208 frames = 1.73°/frame.
+    # Frame count sets scrub fluidity: the component shows NUM_FRAMES frame
+    # changes per FULL_ROTATION_MS sweep (208 @ 3000ms ≈ 69/sec), and the
+    # all-keyframe encode grows linearly with it (~11MB webm at 208). If frame
+    # count or arc changes, retune FULL_ROTATION_MS in HeroDeviceRotator.tsx.
+    NUM_FRAMES = 208
     for i in range(NUM_FRAMES):
         progress = i / (NUM_FRAMES - 1)
         angle_deg = -progress * 360.0
