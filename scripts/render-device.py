@@ -11,11 +11,13 @@ After rendering, encode the frames. -g 1 makes every frame a keyframe so the
 scroll scrubber in app/components/HeroDeviceRotator.tsx can seek O(1) in either
 direction:
   ffmpeg -y -framerate 60 -i "public/renderings/forth-device-frame-%02d.png" \
-    -vf scale=800:1200 -c:v libvpx-vp9 -g 1 -b:v 0 -crf 33 -an \
+    -vf scale=800:1200 -pix_fmt yuv420p -c:v libvpx-vp9 -g 1 -b:v 0 -crf 33 -an \
     "public/renderings/forth-device-rotation.webm"
   ffmpeg -y -framerate 60 -i "public/renderings/forth-device-frame-%02d.png" \
-    -vf scale=800:1200 -c:v libx264 -g 1 -pix_fmt yuv420p -crf 24 \
+    -vf scale=800:1200 -pix_fmt yuv420p -c:v libx264 -g 1 -crf 24 \
     -movflags +faststart -an "public/renderings/forth-device-rotation.mp4"
+(-pix_fmt yuv420p is required — the source PNGs are RGBA and libvpx rejects the
+auto-picked gbrap format.)
 Then delete the intermediate frames, keeping frame-00 (it's the <video> poster).
 Full pipeline docs: scripts/RENDERING.md
 """
