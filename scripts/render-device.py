@@ -9,15 +9,19 @@ Outputs: public/renderings/forth-device-frame-{00..103}.png (one full 360° turn
 
 After rendering, encode the frames. -g 1 makes every frame a keyframe so the
 scroll scrubber in app/components/HeroDeviceRotator.tsx can seek O(1) in either
-direction:
+direction. The webm MUST keep alpha (yuva420p) — the page background shows
+through the video. Gotcha: ffprobe reports the finished webm as yuv420p; VP9
+stores alpha in a side-stream, so decode with -c:v libvpx-vp9 to see the rgba.
   ffmpeg -y -framerate 60 -i "public/renderings/forth-device-frame-%02d.png" \
-    -vf scale=800:1200 -pix_fmt yuv420p -c:v libvpx-vp9 -g 1 -b:v 0 -crf 33 -an \
-    "public/renderings/forth-device-rotation.webm"
+    -vf scale=800:1200 -pix_fmt yuva420p -c:v libvpx-vp9 -auto-alt-ref 0 \
+    -g 1 -b:v 0 -crf 33 -an "public/renderings/forth-device-rotation.webm"
+H.264 can't carry alpha, so the mp4 fallback composites the frames over the
+home page's background color (#f8f4ee), same as the original May build:
   ffmpeg -y -framerate 60 -i "public/renderings/forth-device-frame-%02d.png" \
-    -vf scale=800:1200 -pix_fmt yuv420p -c:v libx264 -g 1 -crf 24 \
-    -movflags +faststart -an "public/renderings/forth-device-rotation.mp4"
-(-pix_fmt yuv420p is required — the source PNGs are RGBA and libvpx rejects the
-auto-picked gbrap format.)
+    -f lavfi -i "color=0xf8f4ee:s=800x1200:r=60" -filter_complex \
+    "[0]scale=800:1200[fg];[1][fg]overlay=shortest=1" -pix_fmt yuv420p \
+    -c:v libx264 -g 1 -crf 24 -movflags +faststart -an \
+    "public/renderings/forth-device-rotation.mp4"
 Then delete the intermediate frames, keeping frame-00 (it's the <video> poster).
 Full pipeline docs: scripts/RENDERING.md
 """

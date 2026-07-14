@@ -26,14 +26,20 @@ blender -b -P scripts/render-device.py
 
 # 2. Encode. -g 1 = every frame is a keyframe, which is what makes the scroll
 #    scrubbing in HeroDeviceRotator.tsx smooth in BOTH directions — do not drop it.
-#    (-pix_fmt yuv420p is required: the source PNGs are RGBA and libvpx rejects
-#    the auto-picked gbrap format.)
+#    The webm MUST keep alpha (yuva420p + -auto-alt-ref 0): the page background
+#    shows through the video. Gotcha: ffprobe reports the finished webm as plain
+#    yuv420p — VP9 stores alpha in a side-stream; decode with -c:v libvpx-vp9
+#    to see the rgba. Encoding without alpha = black box around the device.
 ffmpeg -y -framerate 60 -i "public/renderings/forth-device-frame-%02d.png" \
-  -vf scale=800:1200 -pix_fmt yuv420p -c:v libvpx-vp9 -g 1 -b:v 0 -crf 33 -an \
-  "public/renderings/forth-device-rotation.webm"
+  -vf scale=800:1200 -pix_fmt yuva420p -c:v libvpx-vp9 -auto-alt-ref 0 \
+  -g 1 -b:v 0 -crf 33 -an "public/renderings/forth-device-rotation.webm"
+#    H.264 can't carry alpha, so the mp4 fallback composites the frames over
+#    the home page's background color (#f8f4ee):
 ffmpeg -y -framerate 60 -i "public/renderings/forth-device-frame-%02d.png" \
-  -vf scale=800:1200 -pix_fmt yuv420p -c:v libx264 -g 1 -crf 24 \
-  -movflags +faststart -an "public/renderings/forth-device-rotation.mp4"
+  -f lavfi -i "color=0xf8f4ee:s=800x1200:r=60" -filter_complex \
+  "[0]scale=800:1200[fg];[1][fg]overlay=shortest=1" -pix_fmt yuv420p \
+  -c:v libx264 -g 1 -crf 24 -movflags +faststart -an \
+  "public/renderings/forth-device-rotation.mp4"
 
 # 3. Clean up intermediate frames — keep frame-00, it's the <video> poster.
 find public/renderings -name "forth-device-frame-*.png" ! -name "*frame-00.png" -delete
