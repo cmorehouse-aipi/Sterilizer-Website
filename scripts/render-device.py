@@ -683,6 +683,30 @@ def configure_render():
     scene.view_settings.view_transform = 'Filmic'
     scene.view_settings.look = 'High Contrast'
 
+    # Optional GPU rendering: FORTH_RENDER_GPU=1 switches Cycles to the GPU
+    # (Metal on macOS, OptiX/CUDA/HIP elsewhere). Measured on an M3 Pro this is
+    # only ~1.35x faster than CPU; Max-class Apple GPUs and NVIDIA cards gain
+    # far more. Do NOT mix CPU- and GPU-rendered frames in one sequence — the
+    # denoiser output differs slightly between devices (SSIM ~0.9994, enough
+    # to risk visible shimmer between adjacent frames of the scrub video).
+    if os.environ.get("FORTH_RENDER_GPU"):
+        prefs = bpy.context.preferences.addons["cycles"].preferences
+        for backend in ("METAL", "OPTIX", "CUDA", "HIP"):
+            try:
+                prefs.compute_device_type = backend
+                break
+            except TypeError:
+                continue
+        try:
+            prefs.refresh_devices()
+        except AttributeError:
+            prefs.get_devices()
+        for dev in prefs.devices:
+            dev.use = dev.type != "CPU"
+        scene.cycles.device = 'GPU'
+        used = [d.name for d in prefs.devices if d.use]
+        print(f"[render-device] GPU rendering on: {used}")
+
     # Real studio HDRI. Provides physically-based environment lighting — the body
     # picks up the softbox positions as cylindrical highlights, the glass caps
     # refract to the studio environment (so they look properly transparent), and

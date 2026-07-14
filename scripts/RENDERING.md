@@ -40,6 +40,15 @@ find public/renderings -name "forth-device-frame-*.png" ! -name "*frame-00.png" 
 Commit the updated `forth-device-rotation.webm`, `forth-device-rotation.mp4`, and
 `forth-device-frame-00.png`.
 
+## GPU rendering
+
+`FORTH_RENDER_GPU=1 blender -b -P scripts/render-device.py` renders on the GPU (Metal on
+macOS, OptiX/CUDA/HIP on NVIDIA/AMD). Gains depend heavily on hardware: an M3 Pro is only
+~1.35× faster than its own CPU, while big NVIDIA cards are 25×+. **Render a full sequence
+on one device type** — CPU and GPU frames are visually identical (SSIM 0.9994) but not
+pixel-identical, and mixing them within a sequence risks frame-to-frame shimmer in the
+scrubbed video.
+
 ## Color variants
 
 `render-device-{coral,sage,sun,midnight-coarse,transparent}.py` are one-off variants of the
