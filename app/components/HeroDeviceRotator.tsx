@@ -6,16 +6,20 @@ const VIDEO_WEBM = "/renderings/forth-device-rotation.webm";
 const VIDEO_MP4 = "/renderings/forth-device-rotation.mp4";
 const POSTER_SRC = "/renderings/forth-device-frame-00.png";
 
-// Time to traverse the entire video. The clip is a full 360° turn, so 4000ms
-// keeps the same angular speed as the previous 90°-in-1000ms clip. If the
-// rendered arc changes (see scripts/render-device.py), scale this with it.
-const FULL_ROTATION_MS = 4000;
+// Time to traverse the entire video (a full 360° turn). The clip has 104
+// frames, so sweep time sets the visible frame cadence: 2400ms ≈ 43 frame
+// changes/sec average. Stretching this much past ~3000ms makes the scrub look
+// steppy, especially inside the easing tails. If the rendered arc or frame
+// count changes (see scripts/render-device.py), retune this.
+const FULL_ROTATION_MS = 2400;
 
 type Props = { alt: string };
 type Direction = "forward" | "reverse" | "idle";
 
-/** Sine ease-in-out — gentle slow→fast→slow without dead time at the start. */
-const easeInOut = (x: number): number => -(Math.cos(Math.PI * x) - 1) / 2;
+/** Quadratic ease-out — full speed immediately (scroll response feels live),
+ * decelerating into the endpoint. Ease-IN-out read as lag over the 360° clip:
+ * its slow-start phase left the device visibly frozen after the scroll began. */
+const easeOut = (x: number): number => 1 - (1 - x) * (1 - x);
 
 /**
  * Single video element. RAF-driven currentTime scrubbing in either direction.
@@ -72,7 +76,7 @@ export function HeroDeviceRotator({ alt }: Props) {
       const tick = () => {
         const elapsed = performance.now() - startWall;
         const linear = Math.min(1, elapsed / animMs);
-        const eased = easeInOut(linear);
+        const eased = easeOut(linear);
         const newTime = fromTime + (toTime - fromTime) * eased;
         try { v.currentTime = newTime; } catch {}
         if (linear < 1) {
