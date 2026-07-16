@@ -14,6 +14,8 @@ import { HeroColorPicker } from "./components/HeroColorPicker";
 
 import { FaqAccordion } from "./components/FaqAccordion";
 
+import { ObjectViewToggle } from "./components/ObjectViewToggle";
+
 import { SiteNav } from "./components/SiteNav";
 import { UseCaseIcon } from "./components/UseCaseIcons";
 
@@ -394,25 +396,7 @@ export default function HomeA() {
 
           <div className="col-span-12 flex items-center justify-center md:col-span-6">
 
-            <div className="relative flex items-center justify-center">
-
-              <div className="animate-glow pointer-events-none absolute left-1/2 top-0 h-44 w-44 -translate-x-1/2 -translate-y-1/3 rounded-full" style={{ backgroundColor: "#7FB3FF" }} aria-hidden />
-
-              <div className="animate-glow pointer-events-none absolute bottom-0 left-1/2 h-44 w-44 -translate-x-1/2 translate-y-1/3 rounded-full" style={{ backgroundColor: "#7FB3FF" }} aria-hidden />
-
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-
-              <img
-
-                src="/renderings/forth-device-frame-00.png"
-
-                alt="Forth device"
-
-                className="relative z-10 h-[520px] w-auto object-contain md:h-[620px]"
-
-              />
-
-            </div>
+            <ObjectViewToggle />
 
           </div>
 
