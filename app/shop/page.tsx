@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { PageShell, Eyebrow, H1, Lead } from "../components/PageShell";
 import { DeviceVisual } from "../components/DeviceVisual";
+import { CoralGate } from "../components/CoralGate";
 
 export const metadata = { title: "Shop — Forth" };
 
@@ -23,7 +24,10 @@ export default function Shop() {
       </header>
 
       <section className="grid grid-cols-2 gap-4 md:grid-cols-3 md:gap-6">
-        {PRODUCTS.map((p) => (
+        {PRODUCTS.map((p) =>
+          p.handle === "forth-1-coral" ? (
+            <CoralGate key={p.handle} />
+          ) : (
           <Link
             key={p.handle}
             href={`/shop/${p.handle}`}

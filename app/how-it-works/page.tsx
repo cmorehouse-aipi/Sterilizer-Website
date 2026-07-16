@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { PageShell, Eyebrow, H1, Lead } from "../components/PageShell";
+import { ProductAnimation } from "../components/ProductAnimation";
 import { SPECS, BRAND } from "../lib/brand";
 
 export const metadata = { title: "How It Works — Forth" };
@@ -75,6 +76,8 @@ export default function HowItWorks() {
           The product is technical. The interface is not. Drop {BRAND} into your bottle, give it a shake, and drink. Everything else is doing its job inside the dome.
         </Lead>
       </header>
+
+      <ProductAnimation />
 
       <section className="grid grid-cols-12 gap-10">
         <div className="col-span-12 md:col-span-7 space-y-0 divide-y divide-a-rule">
