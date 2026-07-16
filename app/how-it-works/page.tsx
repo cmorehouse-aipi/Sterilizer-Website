@@ -77,8 +77,6 @@ export default function HowItWorks() {
         </Lead>
       </header>
 
-      <ProductAnimation />
-
       <section className="grid grid-cols-12 gap-10">
         <div className="col-span-12 md:col-span-7 space-y-0 divide-y divide-a-rule">
           {STEPS.map((s) => (
@@ -101,8 +99,10 @@ export default function HowItWorks() {
 
         <aside className="col-span-12 md:col-span-5">
           <div className="sticky top-24 rounded-3xl bg-white/60 p-8 ring-1 ring-black/5">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/renderings/forth-device-frame-00.png" alt="Forth device" className="mx-auto h-[420px] w-auto object-contain" />
+            {/* The drop/shake/drink/charge film plays in this sticky card,
+                staying alongside the steps as you scroll — per the approved
+                consolidated build. */}
+            <ProductAnimation />
             <dl className="mt-6 space-y-3 text-[13.5px]">
               {Object.entries(SPECS).map(([k, v]) => (
                 <div key={k} className="flex justify-between gap-4 border-t border-black/5 pt-2 first:border-0 first:pt-0">
