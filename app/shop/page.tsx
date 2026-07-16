@@ -2,6 +2,7 @@ import Link from "next/link";
 import { PageShell, Eyebrow, H1, Lead } from "../components/PageShell";
 import { DeviceVisual } from "../components/DeviceVisual";
 import { CoralGate } from "../components/CoralGate";
+import { ShopEarlyAccess } from "../components/ShopEarlyAccess";
 
 export const metadata = { title: "Shop — Forth" };
 
@@ -62,6 +63,8 @@ export default function Shop() {
           </Link>
         ))}
       </section>
+
+      <ShopEarlyAccess />
     </PageShell>
   );
 }

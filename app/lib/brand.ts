@@ -48,6 +48,10 @@ export const FAQS = [
     a: "Magnetic induction. There are no ports, buttons, or seams to leak — the entire device is fully waterproof. One charge is good for around 30 cycles.",
   },
   {
+    q: "Is Forth safe to use?",
+    a: "Yes. Forth's casing is made out of materials known to be food safe and manufactured to rigorous standards.",
+  },
+  {
     q: "Is the app required?",
     a: "No. A shake activates the standard cycle. The app is for adjusting dose, intensity, scheduling reminders, and pairing additional units.",
   },
