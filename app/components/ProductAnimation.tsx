@@ -6,20 +6,18 @@
  * CSS-drawn — no image assets). We keep it as a standalone document served from
  * /public and load it through an iframe so it reproduces exactly and its CSS/JS
  * stay isolated from the rest of the site.
+ *
+ * Frame styling matches the consolidated build exactly: full width of its
+ * container, 4:3, 12px radius — designed to sit inside the sticky spec card on
+ * the How It Works page.
  */
 export function ProductAnimation() {
   return (
-    <section className="mt-10" aria-label="How Forth works — drop, shake, drink, charge">
-      <iframe
-        title="How Forth works — drop, shake, drink, charge"
-        src="/forth-product-animation.html"
-        loading="lazy"
-        className="mx-auto block w-full max-w-[1000px] rounded-xl ring-1 ring-black/5"
-        // 16:10 matches the film's native composition (width:min(1000px,96vw);
-        // aspect-ratio:16/10 in the source document) — anything else letterboxes
-        // the stage and makes the choreography sit oddly in the frame.
-        style={{ aspectRatio: "16 / 10", border: 0 }}
-      />
-    </section>
+    <iframe
+      title="How Forth works — drop, shake, drink, charge"
+      src="/forth-product-animation.html"
+      loading="lazy"
+      style={{ width: "100%", aspectRatio: "4 / 3", border: 0, display: "block", borderRadius: 12 }}
+    />
   );
 }
