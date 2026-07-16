@@ -1,7 +1,6 @@
 "use client";
 
-import { useState } from "react";
-import { HeroDeviceRotator } from "./HeroDeviceRotator";
+import { useEffect, useState } from "react";
 import { DeviceVisual } from "./DeviceVisual";
 
 const COLORWAYS: Array<{
@@ -23,9 +22,20 @@ const COLORWAYS: Array<{
 export function HeroColorPicker({ alt }: { alt: string }) {
   const [activeId, setActiveId] = useState("midnight");
   const [coarse, setCoarse] = useState(false);
+  const [reducedMotion, setReducedMotion] = useState(false);
   const cw = COLORWAYS.find((c) => c.id === activeId) ?? COLORWAYS[0];
 
   const showCoarse = activeId === "midnight" && coarse;
+
+  // The Midnight hero is a constant auto-spin (animated WebP). Honor
+  // prefers-reduced-motion by showing the static first frame instead.
+  useEffect(() => {
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const update = () => setReducedMotion(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, []);
 
   return (
     <div className="flex flex-col items-center gap-5">
@@ -54,7 +64,13 @@ export function HeroColorPicker({ alt }: { alt: string }) {
               className="h-[460px] md:h-[560px] w-auto object-contain"
             />
           ) : activeId === "midnight" ? (
-            <HeroDeviceRotator alt={alt} />
+            // Constant 360° auto-spin — 312-frame animated WebP, loops infinitely.
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={reducedMotion ? "/renderings/forth-device-frame-00.png" : "/renderings/forth-device-spin.webp"}
+              alt={alt}
+              className="h-[460px] md:h-[560px] w-auto object-contain"
+            />
           ) : cw.image ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img
