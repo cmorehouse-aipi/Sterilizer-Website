@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Forth — product animation</title>
+<style>
+  :root{
+    --cream:#F4F0E7;
+    --cream-deep:#ECE7DB;
+    --hairline:#D8D2C4;
+    --navy:#242B3D;
+    --uv:#4D7DFF;
+    --uv-soft:#7FA3FF;
+    --ease:cubic-bezier(.4,.02,.22,1);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html,body{height:100%;}
+  body{
+    background:transparent;
+    display:flex;align-items:center;justify-content:center;
+    min-height:100vh;padding:0;
+  }
+
+  #film{
+    position:relative;
+    width:100%;height:100%;
+    aspect-ratio:16/10;
+    background:var(--cream);
+    overflow:hidden;
+    border-radius:6px;
+    box-shadow:0 8px 30px rgba(0,0,0,.10);
+  }
+  #film::after{
+    content:"";position:absolute;inset:0;z-index:30;pointer-events:none;
+    background:radial-gradient(ellipse at 50% 46%, rgba(0,0,0,0) 58%, rgba(31,28,22,.07) 100%);
+  }
+
+  /* ---------- single persistent stage ---------- */
+  #stage{
+    position:absolute;left:50%;top:50%;
+    width:340px;height:620px;
+    margin:-310px 0 0 -170px;
+    transform:scale(var(--fit,.9));
+    opacity:1;transition:opacity .9s var(--ease);
+  }
+  @media (max-width:900px){ #film{--fit:.68;} }
+  @media (max-width:620px){ #film{--fit:.48;} }
+  #film.fading #stage{opacity:0;}
+  #stage.noanim, #stage.noanim *{transition:none !important; animation:none !important;}
+
+  /* =========================================================
+     GEOMETRY — 1 mm ≈ 2.2 px
+     bottle svg at (90,50), 160x540 · bottle center (170,322)
+     water surface y178 · interior floor y572
+     device seated: top 378 → spans 378–568, center 473
+  ==========================================================*/
+
+  /* camera */
+  #camera{
+    position:absolute;inset:0;
+    transform-origin:50% 76%;       /* device center */
+    transition:transform 1.9s var(--ease);
+  }
+  #camera.in{transform:scale(1.85);}
+
+  /* bottle lift wrapper: raised during invert, exits at the end */
+  #lift{
+    position:absolute;inset:0;
+    transition:transform 2.4s var(--ease), opacity 1s var(--ease) .3s;
+  }
+  #lift.raised{transform:translateY(-90px);}
+  #lift.exit{transform:translateY(-1000px);opacity:0;transition:transform 1.6s cubic-bezier(.5,0,.75,.5), opacity .9s var(--ease) .35s;}
+
+  /* bottle rotation rig */
+  #rig{
+    position:absolute;inset:0;
+    transform-origin:50% 52%;       /* bottle center (170,322) */
+    transition:transform 1.7s var(--ease);
+  }
+  #rig.tilt{transform:rotate(-34deg);}
+  #rig.invert{transform:rotate(-180deg);transition-duration:2.4s;}
+  #rig.shaking{animation:shake 2.3s cubic-bezier(.45,.05,.3,.95) 1;}
+  @keyframes shake{
+    0%  {transform:rotate(0) translate(0,0);}
+    10% {transform:rotate(-52deg) translate(-12px,-22px);}
+    22% {transform:rotate(56deg)  translate(14px,-30px);}
+    34% {transform:rotate(-58deg) translate(-15px,-18px);}
+    46% {transform:rotate(50deg)  translate(12px,-32px);}
+    58% {transform:rotate(-38deg) translate(-10px,-14px);}
+    70% {transform:rotate(26deg)  translate(7px,-20px);}
+    81% {transform:rotate(-13deg) translate(-4px,-8px);}
+    91% {transform:rotate(5deg)   translate(2px,-3px);}
+    100%{transform:rotate(0) translate(0,0);}
+  }
+
+  /* water stays level under tilt, drains in ONE motion */
+  .waterMass{
+    transform-box:view-box;
+    transform-origin:80px 272px;    /* bottle center in viewBox */
+    transition:transform 1.7s var(--ease), opacity .55s var(--ease);
+  }
+  #rig.tilt .waterMass{transform:rotate(34deg);}
+  #rig.drained .waterMass{opacity:0;}
+  .levelShift{
+    transform-box:view-box;
+    transition:transform 2.5s cubic-bezier(.5,.05,.45,.95);
+  }
+  #rig.drain .levelShift{transform:translateY(402px);}
+
+  /* cap fades on/off gently */
+  #cap{opacity:0;transition:opacity .6s var(--ease);}
+  #rig.capped #cap{opacity:1;}
+
+  /* ---------- the one device (inside the bottle) ---------- */
+  #deviceIn{
+    position:absolute;left:170px;top:378px;
+    width:48px;height:190px;margin-left:-24px;
+    transition:transform 1.15s cubic-bezier(.45,.05,.5,.95);
+  }
+  #deviceIn.dropped{animation:dropIn 1.3s cubic-bezier(.5,0,.6,1) forwards;}
+  @keyframes dropIn{
+    0%  {transform:translateY(-800px) rotate(-8deg);}
+    58% {transform:translateY(0) rotate(1.5deg);}
+    74% {transform:translateY(-26px) rotate(-1deg);}
+    88% {transform:translateY(-3px) rotate(.5deg);}
+    100%{transform:translateY(0) rotate(0);}
+  }
+  #deviceIn.hidden-start{transform:translateY(-800px) rotate(-8deg);}
+  #deviceIn.rattling{animation:rattle .19s ease-in-out 11;}
+  @keyframes rattle{
+    0%,100%{transform:translate(0,0) rotate(0);}
+    25%{transform:translate(-4px,-8px) rotate(-5deg);}
+    50%{transform:translate(3px,-13px) rotate(4deg);}
+    75%{transform:translate(-2px,-5px) rotate(-3deg);}
+  }
+  #deviceIn.off{visibility:hidden;}
+
+  /* ---------- the same device, free (handoff happens at a static moment) ---------- */
+  #deviceFree{
+    position:absolute;left:170px;top:0;
+    width:48px;height:190px;margin-left:-24px;
+    opacity:0;z-index:6;
+    transform:translateY(-13px) rotate(-180deg);   /* matched: seated at the inverted base */
+  }
+  #deviceFree.on{opacity:1;}
+  /* one fluid journey — baked at 2% from a single smooth curve (brisk release,
+     rotation completes high, pure vertical set-down; corner clearance verified) */
+  #deviceFree.journey{animation:exitJourney 3.6s linear forwards;}
+  @keyframes exitJourney{
+    0%{transform:translateY(-13.0px) rotate(-180.0deg);}
+    2%{transform:translateY(-10.5px) rotate(-180.0deg);}
+    4%{transform:translateY(-5.7px) rotate(-180.0deg);}
+    6%{transform:translateY(0.6px) rotate(-180.0deg);}
+    8%{transform:translateY(8.2px) rotate(-180.0deg);}
+    10%{transform:translateY(16.7px) rotate(-180.0deg);}
+    12%{transform:translateY(26.0px) rotate(-180.0deg);}
+    14%{transform:translateY(35.9px) rotate(-180.0deg);}
+    16%{transform:translateY(46.5px) rotate(-180.0deg);}
+    18%{transform:translateY(57.6px) rotate(-180.0deg);}
+    20%{transform:translateY(69.0px) rotate(-180.0deg);}
+    22%{transform:translateY(80.8px) rotate(-180.0deg);}
+    24%{transform:translateY(92.9px) rotate(-180.0deg);}
+    26%{transform:translateY(105.2px) rotate(-180.0deg);}
+    28%{transform:translateY(117.7px) rotate(-180.0deg);}
+    30%{transform:translateY(130.4px) rotate(-180.0deg);}
+    32%{transform:translateY(143.1px) rotate(-180.0deg);}
+    34%{transform:translateY(155.9px) rotate(-180.0deg);}
+    36%{transform:translateY(168.6px) rotate(-180.0deg);}
+    38%{transform:translateY(181.4px) rotate(-180.0deg);}
+    40%{transform:translateY(194.1px) rotate(-180.0deg);}
+    42%{transform:translateY(206.7px) rotate(-179.3deg);}
+    44%{transform:translateY(219.2px) rotate(-177.5deg);}
+    46%{transform:translateY(231.6px) rotate(-174.5deg);}
+    48%{transform:translateY(243.7px) rotate(-170.6deg);}
+    50%{transform:translateY(255.7px) rotate(-165.9deg);}
+    52%{transform:translateY(267.5px) rotate(-160.6deg);}
+    54%{transform:translateY(278.9px) rotate(-154.6deg);}
+    56%{transform:translateY(290.2px) rotate(-148.3deg);}
+    58%{transform:translateY(301.1px) rotate(-141.7deg);}
+    60%{transform:translateY(311.7px) rotate(-135.0deg);}
+    62%{transform:translateY(321.9px) rotate(-128.3deg);}
+    64%{transform:translateY(331.8px) rotate(-121.7deg);}
+    66%{transform:translateY(341.3px) rotate(-115.4deg);}
+    68%{transform:translateY(350.4px) rotate(-109.4deg);}
+    70%{transform:translateY(359.1px) rotate(-104.1deg);}
+    72%{transform:translateY(367.4px) rotate(-99.4deg);}
+    74%{transform:translateY(375.1px) rotate(-95.5deg);}
+    76%{transform:translateY(382.5px) rotate(-92.5deg);}
+    78%{transform:translateY(389.3px) rotate(-90.7deg);}
+    80%{transform:translateY(395.6px) rotate(-90.0deg);}
+    82%{transform:translateY(401.3px) rotate(-90.0deg);}
+    84%{transform:translateY(406.6px) rotate(-90.0deg);}
+    86%{transform:translateY(411.2px) rotate(-90.0deg);}
+    88%{transform:translateY(415.3px) rotate(-90.0deg);}
+    90%{transform:translateY(418.8px) rotate(-90.0deg);}
+    92%{transform:translateY(421.7px) rotate(-90.0deg);}
+    94%{transform:translateY(424.0px) rotate(-90.0deg);}
+    96%{transform:translateY(425.7px) rotate(-90.0deg);}
+    98%{transform:translateY(426.7px) rotate(-90.0deg);}
+    100%{transform:translateY(427.0px) rotate(-90.0deg);}
+  }
+
+  /* ---------- splash / pulses ---------- */
+  .ripple{
+    position:absolute;left:170px;top:162px;
+    width:124px;height:22px;margin-left:-62px;
+    border:1.5px solid rgba(110,140,190,0);
+    border-radius:50%;
+    transform:scale(.15);opacity:0;
+  }
+  #stage.splashed .ripple{animation:rip 1.15s var(--ease) forwards;}
+  #stage.splashed .ripple.r2{animation-delay:.2s;}
+  @keyframes rip{
+    0%{transform:scale(.15);opacity:0;border-color:rgba(110,140,190,.55);}
+    22%{opacity:1;}
+    100%{transform:scale(1.2);opacity:0;border-color:rgba(110,140,190,0);}
+  }
+  .pulse-dot{
+    position:absolute;left:170px;top:441px;
+    width:64px;height:64px;margin-left:-32px;
+    border-radius:50%;
+    background:radial-gradient(circle, rgba(77,125,255,.8) 0%, rgba(77,125,255,0) 70%);
+    opacity:0;transform:scale(.35);
+  }
+  #stage.arming .pulse-dot{animation:lit .6s var(--ease) 2;}
+  @keyframes lit{
+    0%{opacity:0;transform:scale(.35);}
+    35%{opacity:.9;transform:scale(1);}
+    100%{opacity:0;transform:scale(1.45);}
+  }
+
+  /* ---------- ACTIVATION LIGHT (every element SVG, clipped to the vessel) ---------- */
+  /* ignition burst at the device, contained */
+  .burst{
+    transform-box:view-box;transform-origin:80px 423px;
+    opacity:0;
+  }
+  #stage.ignite .burst{animation:burstUp 1.3s var(--ease) 1;}
+  @keyframes burstUp{
+    0%{opacity:0;transform:scale(.35);}
+    22%{opacity:1;}
+    100%{opacity:0;transform:scale(1.4);}
+  }
+  /* breathing core glow around the device, contained */
+  .uvCore{
+    transform-box:view-box;transform-origin:80px 423px;
+    opacity:0;transition:opacity .9s var(--ease);
+    animation:coreBreath 2.2s ease-in-out infinite alternate;
+  }
+  #stage.ignite .uvCore{opacity:1;}
+  @keyframes coreBreath{
+    0%{transform:scale(.92);}
+    100%{transform:scale(1.06);}
+  }
+  /* UV luminance rising through the water — clipped, no edges */
+  .uvGlow{
+    transform-box:view-box;
+    transform:translateY(440px);
+    transition:transform 2.6s var(--ease);
+  }
+  #stage.ignite .uvGlow{transform:translateY(0);}
+  /* precision scan sweep, floor to surface and back */
+  .scan{
+    transform-box:view-box;
+    opacity:0;transition:opacity .7s var(--ease);
+    animation:scanSweep 3.2s ease-in-out infinite alternate;
+  }
+  #stage.ignite .scan{opacity:1;}
+  @keyframes scanSweep{
+    0%{transform:translateY(0);}
+    100%{transform:translateY(-326px);}
+  }
+  /* twin-emitter ray fans, gently flickering */
+  .rays{opacity:0;transition:opacity 1s var(--ease);}
+  #stage.ignite .rays{opacity:1;}
+  .rays line{animation:flick 2.6s ease-in-out infinite;}
+  .rays line:nth-child(2n){animation-delay:.7s;}
+  .rays line:nth-child(3n){animation-delay:1.3s;}
+  @keyframes flick{
+    0%,100%{opacity:.28;}
+    50%{opacity:.85;}
+  }
+  /* drifting motes, inside the clip */
+  .motesG{opacity:0;transition:opacity 1s var(--ease);}
+  #stage.ignite .motesG{opacity:1;}
+  .motesG circle{
+    transform-box:view-box;
+    animation:driftS 3.6s var(--ease) infinite;
+  }
+  .motesG circle:nth-child(2){animation-delay:1.9s;}
+  @keyframes driftS{
+    0%{opacity:0;transform:translateY(12px);}
+    28%{opacity:.9;}
+    100%{opacity:0;transform:translateY(-54px);}
+  }
+
+  /* ---------- ground shadow ---------- */
+  #ground{
+    position:absolute;left:170px;top:592px;
+    width:200px;height:24px;margin-left:-100px;
+    background:radial-gradient(ellipse, rgba(31,28,22,.16) 0%, rgba(31,28,22,0) 70%);
+    transition:opacity 1.2s var(--ease);
+  }
+  #stage.noground #ground{opacity:0;}
+
+  /* ---------- DOCK (prominent) ---------- */
+  #padwrap{
+    position:absolute;inset:0;
+    opacity:0;transform:translateY(170px);
+    transition:transform 1.5s cubic-bezier(.22,.61,.3,1), opacity .8s var(--ease);
+  }
+  #padwrap.show{opacity:1;transform:translateY(0);}
+  #padwrap .padShadow{
+    position:absolute;left:170px;top:560px;
+    width:280px;height:34px;margin-left:-140px;
+    background:radial-gradient(ellipse, rgba(31,28,22,.22) 0%, rgba(31,28,22,0) 68%);
+  }
+  #padwrap .disc{
+    position:absolute;left:170px;top:498px;
+    width:264px;height:72px;margin-left:-132px;
+    border-radius:50%;
+    background:linear-gradient(to bottom, #F3EEE4 0%, #E0D9C8 55%, #D2CAB6 100%);
+    border:1.5px solid #B9B1A0;
+    box-shadow:
+      0 14px 26px rgba(31,28,22,.16),
+      inset 0 3px 4px rgba(255,255,255,.8),
+      inset 0 -4px 7px rgba(31,28,22,.1);
+  }
+  #padwrap .disc::before{
+    content:"";position:absolute;inset:11px 22px;
+    border-radius:50%;
+    border:1.5px solid rgba(31,28,22,.14);
+  }
+  #padwrap .disc::after{
+    content:"";position:absolute;inset:20px 38px;
+    border-radius:50%;
+    background:linear-gradient(to bottom, rgba(31,28,22,.06), rgba(255,255,255,.25));
+  }
+  /* charging indications: breathing under-glow + sequenced dots */
+  #padwrap .chargeGlow{
+    position:absolute;left:170px;top:520px;
+    width:190px;height:50px;margin:-25px 0 0 -95px;
+    border-radius:50%;
+    background:radial-gradient(ellipse, rgba(77,125,255,.45) 0%, rgba(77,125,255,0) 70%);
+    opacity:0;
+  }
+  #padwrap.charging .chargeGlow{animation:breathe 2.4s ease-in-out infinite alternate;}
+  @keyframes breathe{
+    0%{opacity:.3;transform:scale(.93);}
+    100%{opacity:.85;transform:scale(1.05);}
+  }
+  #padwrap .haloRing{
+    position:absolute;left:170px;top:522px;
+    width:110px;height:30px;margin:-15px 0 0 -55px;
+    border:1.5px solid rgba(77,125,255,.45);
+    border-radius:50%;
+    opacity:0;
+  }
+  #padwrap.charging .haloRing{animation:soft-ring 2.8s var(--ease) infinite;}
+  @keyframes soft-ring{
+    0%{transform:scale(.5);opacity:0;}
+    16%{opacity:.7;}
+    100%{transform:scale(2.1);opacity:0;}
+  }
+  #padwrap .dots{
+    position:absolute;left:170px;top:584px;margin-left:-17px;
+    display:flex;gap:10px;opacity:0;transition:opacity .6s var(--ease);
+    z-index:7;
+  }
+  #padwrap.charging .dots{opacity:1;}
+  #padwrap .dots i{
+    width:5px;height:5px;border-radius:50%;
+    background:rgba(77,125,255,.18);
+  }
+  #padwrap.charging .dots i{animation:dotFill 2.6s ease-in-out infinite;}
+  #padwrap.charging .dots i:nth-child(2){animation-delay:.45s;}
+  #padwrap.charging .dots i:nth-child(3){animation-delay:.9s;}
+  @keyframes dotFill{
+    0%,12%{background:rgba(77,125,255,.18);box-shadow:none;}
+    38%,68%{background:rgba(77,125,255,.85);box-shadow:0 0 6px rgba(77,125,255,.55);}
+    100%{background:rgba(77,125,255,.18);box-shadow:none;}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:.01s !important;animation-delay:0s !important;transition-duration:.01s !important;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ======== SHARED DEFS ======== -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="bodyGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#323A52"/>
+      <stop offset=".4" stop-color="#242B3D"/>
+      <stop offset=".85" stop-color="#1A2030"/>
+      <stop offset="1" stop-color="#222940"/>
+    </linearGradient>
+    <linearGradient id="glassGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity=".5"/>
+      <stop offset=".18" stop-color="#FFFFFF" stop-opacity=".12"/>
+      <stop offset=".55" stop-color="#E7E9EC" stop-opacity=".1"/>
+      <stop offset=".88" stop-color="#FFFFFF" stop-opacity=".08"/>
+      <stop offset="1" stop-color="#FFFFFF" stop-opacity=".42"/>
+    </linearGradient>
+    <linearGradient id="domeGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#F0F5FB"/>
+      <stop offset="1" stop-color="#C6D7E8"/>
+    </linearGradient>
+    <linearGradient id="domeGradFlip" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0" stop-color="#F0F5FB"/>
+      <stop offset="1" stop-color="#C6D7E8"/>
+    </linearGradient>
+    <linearGradient id="uvGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#7FA3FF" stop-opacity=".04"/>
+      <stop offset=".55" stop-color="#6E96FF" stop-opacity=".22"/>
+      <stop offset="1" stop-color="#4D7DFF" stop-opacity=".5"/>
+    </linearGradient>
+    <radialGradient id="glowRad">
+      <stop offset="0" stop-color="#9FBCFF" stop-opacity=".6"/>
+      <stop offset=".55" stop-color="#5E89FF" stop-opacity=".28"/>
+      <stop offset="1" stop-color="#5E89FF" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="burstRad">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity=".9"/>
+      <stop offset=".35" stop-color="#7FA3FF" stop-opacity=".5"/>
+      <stop offset="1" stop-color="#7FA3FF" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="specGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity="0"/>
+      <stop offset=".12" stop-color="#FFFFFF" stop-opacity=".55"/>
+      <stop offset=".82" stop-color="#FFFFFF" stop-opacity=".4"/>
+      <stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="waterGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#DEE9F2" stop-opacity=".68"/>
+      <stop offset=".7" stop-color="#C6D8E8" stop-opacity=".8"/>
+      <stop offset="1" stop-color="#B9CEE2" stop-opacity=".88"/>
+    </linearGradient>
+    <linearGradient id="capGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#F1ECE2"/>
+      <stop offset="1" stop-color="#D8D1C1"/>
+    </linearGradient>
+
+    <!-- FORTH device : 220 x 870 == 22 x 87 mm · domed faceted caps -->
+    <g id="forthDevice">
+      <!-- top dome -->
+      <path d="M10 140 C10 56 52 16 110 16 C168 16 210 56 210 140 Z"
+            fill="url(#domeGrad)" stroke="#F7FAFD" stroke-width="3" stroke-linejoin="round"/>
+      <g opacity=".55">
+        <polygon points="10,140 45,72 60,140" fill="#D9E6F2"/>
+        <polygon points="60,140 110,38 110,140" fill="#E6EFF7"/>
+        <polygon points="110,140 110,38 160,140" fill="#D3E1EF"/>
+        <polygon points="160,140 175,72 210,140" fill="#DCE8F3"/>
+      </g>
+      <g stroke="#F7FAFD" stroke-width="2.5" fill="none" stroke-linejoin="round" stroke-linecap="round" opacity=".95">
+        <path d="M10 140 L45 72 L60 140 L110 38 L110 140 M110 38 L160 140 L175 72 L210 140"/>
+        <path d="M45 72 L110 38 L175 72"/>
+      </g>
+      <!-- body -->
+      <rect x="10" y="138" width="200" height="594" fill="url(#bodyGrad)"/>
+      <rect x="22" y="138" width="22" height="594" rx="10" fill="#FFFFFF" opacity=".07"/>
+      <text x="110" y="448" text-anchor="middle" fill="#E9EDF2"
+            font-family="Jost, 'Century Gothic', Futura, sans-serif" font-size="34"
+            font-weight="400" textLength="148" lengthAdjust="spacing">FORTH</text>
+      <!-- bottom dome -->
+      <path d="M10 730 C10 814 52 854 110 854 C168 854 210 814 210 730 Z"
+            fill="url(#domeGradFlip)" stroke="#F7FAFD" stroke-width="3" stroke-linejoin="round"/>
+      <g opacity=".55">
+        <polygon points="10,730 45,798 60,730" fill="#D9E6F2"/>
+        <polygon points="60,730 110,832 110,730" fill="#E6EFF7"/>
+        <polygon points="110,730 110,832 160,730" fill="#D3E1EF"/>
+        <polygon points="160,730 175,798 210,730" fill="#DCE8F3"/>
+      </g>
+      <g stroke="#F7FAFD" stroke-width="2.5" fill="none" stroke-linejoin="round" stroke-linecap="round" opacity=".95">
+        <path d="M10 730 L45 798 L60 730 L110 832 L110 730 M110 832 L160 730 L175 798 L210 730"/>
+        <path d="M45 798 L110 832 L175 798"/>
+      </g>
+    </g>
+
+    <!-- glass shell -->
+    <g id="bottleGlass">
+      <path d="M52 30 L52 46 C52 60 2 66 2 98
+               L2 502 C2 522 16 530 34 530
+               L126 530 C144 530 158 522 158 502
+               L158 98 C158 66 108 60 108 46 L108 30 Z"
+            fill="url(#glassGrad)"/>
+      <path d="M52 30 L52 46 C52 60 2 66 2 98
+               L2 502 C2 522 16 530 34 530
+               L126 530 C144 530 158 522 158 502
+               L158 98 C158 66 108 60 108 46 L108 30"
+            fill="none" stroke="#928D81" stroke-width="2.5" stroke-linecap="round"/>
+      <path d="M8 102 C8 76 50 68 56 50 M152 102 C152 76 110 68 104 50"
+            fill="none" stroke="#FFFFFF" stroke-width="1.4" opacity=".55"/>
+      <line x1="53" y1="36" x2="107" y2="36" stroke="#9A958A" stroke-width="1.4" opacity=".5"/>
+      <line x1="53" y1="42" x2="107" y2="42" stroke="#9A958A" stroke-width="1.4" opacity=".5"/>
+      <rect x="16" y="112" width="11" height="368" rx="5.5" fill="url(#specGrad)"/>
+      <line x1="148" y1="110" x2="148" y2="486" stroke="#FFFFFF" stroke-width="1.6" opacity=".5" stroke-linecap="round"/>
+      <ellipse cx="80" cy="516" rx="62" ry="9" fill="#1F1C16" opacity=".07"/>
+      <path d="M10 496 C30 514 130 514 150 496" fill="none" stroke="#FFFFFF" stroke-width="1.2" opacity=".35"/>
+    </g>
+
+    <g id="bottleCapDef">
+      <rect x="44" y="2" width="72" height="30" rx="9" fill="url(#capGrad)" stroke="#9A958A" stroke-width="2"/>
+      <g stroke="#1F1C16" stroke-width="1.2" opacity=".18">
+        <line x1="56" y1="6" x2="56" y2="28"/>
+        <line x1="68" y1="6" x2="68" y2="28"/>
+        <line x1="80" y1="6" x2="80" y2="28"/>
+        <line x1="92" y1="6" x2="92" y2="28"/>
+        <line x1="104" y1="6" x2="104" y2="28"/>
+      </g>
+    </g>
+
+    <clipPath id="innerClip">
+      <path d="M54 32 L54 47 C54 61 5 67 5 98
+               L5 501 C5 520 17 527 34 527
+               L126 527 C143 527 155 520 155 501
+               L155 98 C155 67 106 61 106 47 L106 32 Z"/>
+    </clipPath>
+  </defs>
+</svg>
+
+<div id="film">
+  <div id="stage">
+
+    <div id="ground"></div>
+
+    <div id="camera">
+      <!-- dock layer (beneath bottle) -->
+      <div id="padwrap">
+        <div class="padShadow"></div>
+        <div class="disc"></div>
+        <div class="chargeGlow"></div>
+        <div class="haloRing"></div>
+        <div class="dots"><i></i><i></i><i></i></div>
+      </div>
+
+      <div id="lift">
+        <div id="rig">
+          <svg viewBox="0 0 160 540" style="position:absolute;left:90px;top:50px;width:160px;height:540px;overflow:visible;">
+            <g clip-path="url(#innerClip)">
+              <g class="waterMass">
+                <g class="levelShift">
+                  <rect x="-140" y="128" width="440" height="640" fill="url(#waterGrad)"/>
+                  <rect x="-140" y="128" width="440" height="3" fill="#A9C0D6" opacity=".8"/>
+                  <rect x="-140" y="131" width="440" height="6" fill="#FFFFFF" opacity=".25"/>
+                </g>
+              </g>
+              <!-- UV light, perfectly contained by the vessel -->
+              <g class="uvGlow">
+                <rect x="-20" y="96" width="200" height="432" fill="url(#uvGrad)"/>
+              </g>
+              <ellipse class="uvCore" cx="80" cy="423" rx="74" ry="128" fill="url(#glowRad)"/>
+              <ellipse class="burst" cx="80" cy="423" rx="95" ry="160" fill="url(#burstRad)"/>
+              <g class="rays" stroke="#9FBCFF" stroke-width="1.4" stroke-linecap="round">
+                <line x1="80" y1="345" x2="16" y2="250"/>
+                <line x1="80" y1="345" x2="46" y2="226"/>
+                <line x1="80" y1="345" x2="80" y2="216"/>
+                <line x1="80" y1="345" x2="114" y2="226"/>
+                <line x1="80" y1="345" x2="144" y2="250"/>
+                <line x1="80" y1="501" x2="16" y2="478"/>
+                <line x1="80" y1="501" x2="40" y2="528"/>
+                <line x1="80" y1="501" x2="120" y2="528"/>
+                <line x1="80" y1="501" x2="144" y2="478"/>
+              </g>
+              <g class="scan">
+                <rect x="-20" y="506" width="200" height="16" fill="#6E96FF" opacity=".3"/>
+                <rect x="-20" y="512" width="200" height="3" fill="#EAF1FF" opacity=".95"/>
+              </g>
+              <g class="motesG" fill="#FFFFFF">
+                <circle cx="60" cy="430" r="2.4"/>
+                <circle cx="98" cy="400" r="2"/>
+              </g>
+            </g>
+            <use href="#bottleGlass"/>
+            <g id="cap"><use href="#bottleCapDef"/></g>
+          </svg>
+
+          <!-- THE device — persistent from drop to slide-out -->
+          <div id="deviceIn" class="hidden-start">
+            <svg viewBox="0 0 220 870" width="48" height="190" style="position:relative;"><use href="#forthDevice"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- the same device after the matched-pose handoff -->
+      <div id="deviceFree">
+        <svg viewBox="0 0 220 870" width="48" height="190"><use href="#forthDevice"/></svg>
+      </div>
+
+      <div class="ripple"></div>
+      <div class="ripple r2"></div>
+      <div class="pulse-dot"></div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+(function(){
+  const $ = s => document.querySelector(s);
+  const stage = $('#stage'), film = $('#film'),
+        cam = $('#camera'), lift = $('#lift'), rig = $('#rig'),
+        devIn = $('#deviceIn'), devFree = $('#deviceFree'),
+        pad = $('#padwrap');
+
+  let timers = [];
+  const at = (t, fn) => timers.push(setTimeout(fn, t));
+
+  function resetAll(){
+    timers.forEach(t=>clearTimeout(t)); timers = [];
+    stage.classList.add('noanim');                 /* snap, don't animate, while invisible */
+    cam.classList.remove('in');
+    lift.classList.remove('raised','exit');
+    rig.classList.remove('shaking','tilt','invert','drain','drained','capped');
+    devIn.classList.remove('dropped','rattling','off');
+    devIn.classList.add('hidden-start');
+    devFree.classList.remove('on','journey');
+    pad.classList.remove('show','charging');
+    stage.classList.remove('splashed','arming','ignite','noground');
+    void stage.offsetWidth;                        /* commit reset before re-enabling motion */
+    stage.classList.remove('noanim');
+  }
+
+  function play(){
+    resetAll();
+    film.classList.remove('fading');
+
+    /* ---- one continuous choreography (ms) ---- */
+    at(600,  ()=>{ devIn.classList.remove('hidden-start'); devIn.classList.add('dropped'); });
+    at(1380, ()=> stage.classList.add('splashed'));
+    at(2050, ()=> devIn.classList.remove('dropped'));      /* anim already settled at rest */
+    at(2300, ()=> rig.classList.add('capped'));
+
+    at(3000, ()=>{ rig.classList.add('shaking'); devIn.classList.add('rattling'); });
+    at(5400, ()=>{ rig.classList.remove('shaking'); devIn.classList.remove('rattling'); });
+
+    at(5650, ()=> stage.classList.add('arming'));          /* two soft pulses */
+    at(6800, ()=> cam.classList.add('in'));                /* slow push-in */
+    at(7700, ()=> stage.classList.add('ignite'));          /* flash → bloom → rising luminance */
+
+    at(11000,()=> stage.classList.remove('ignite'));       /* light decays via transitions */
+    at(11050,()=> cam.classList.remove('in'));             /* pull back while light fades */
+    at(11600,()=> rig.classList.remove('capped'));
+
+    at(12300,()=> rig.classList.add('tilt'));              /* lean to drink */
+    at(13900,()=> rig.classList.add('drain'));             /* ONE fluid 2.5s drain */
+    at(16500,()=> rig.classList.add('drained'));           /* spent water fades */
+    at(16500,()=> stage.classList.add('noground'));
+    at(16900,()=>{ rig.classList.add('invert'); lift.classList.add('raised'); }); /* continuous roll to inverted */
+
+    /* inversion completes at 19300 — handoff one frame later, motion resumes immediately */
+    at(19310,()=>{
+      devFree.classList.add('on');
+      void devFree.offsetWidth;
+      devIn.classList.add('off');
+    });
+    at(19330,()=>{
+      devFree.classList.add('journey');                    /* one fluid descent: interior → mouth → tip high → set down */
+      lift.classList.add('exit');                          /* bottle ascends as the device descends */
+    });
+    at(21330,()=> pad.classList.add('show'));              /* dock rises from below to meet it */
+    at(23150,()=> pad.classList.add('charging'));          /* glow breathes, dots cycle */
+
+    at(27000,()=> film.classList.add('fading'));           /* gentle loop seam */
+    at(28100, play);
+  }
+
+  play();
+})();
+</script>
+</body>
+</html>
