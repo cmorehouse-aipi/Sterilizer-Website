@@ -14,8 +14,11 @@ export function ProductAnimation() {
         title="How Forth works — drop, shake, drink, charge"
         src="/forth-product-animation.html"
         loading="lazy"
-        className="block w-full rounded-xl ring-1 ring-black/5"
-        style={{ aspectRatio: "4 / 3", border: 0 }}
+        className="mx-auto block w-full max-w-[1000px] rounded-xl ring-1 ring-black/5"
+        // 16:10 matches the film's native composition (width:min(1000px,96vw);
+        // aspect-ratio:16/10 in the source document) — anything else letterboxes
+        // the stage and makes the choreography sit oddly in the frame.
+        style={{ aspectRatio: "16 / 10", border: 0 }}
       />
     </section>
   );
