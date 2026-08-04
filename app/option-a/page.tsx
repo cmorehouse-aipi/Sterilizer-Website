@@ -16,54 +16,6 @@ export const metadata = {
 /* ————— Display type helper ————— */
 const display = "[font-family:var(--font-anton),Impact,sans-serif] uppercase leading-[0.92] tracking-[0.005em]";
 
-/* ————— Generated loch-at-dusk scene (original SVG artwork) ————— */
-function LochDusk({ className = "" }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 800 600" preserveAspectRatio="xMidYMid slice" className={className} aria-hidden>
-      <defs>
-        <linearGradient id="ld-sky" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stopColor="#DCE7E8" />
-          <stop offset="0.45" stopColor="#B9CDD1" />
-          <stop offset="0.72" stopColor="#7E9AA6" />
-          <stop offset="1" stopColor="#54707F" />
-        </linearGradient>
-        <linearGradient id="ld-water" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stopColor="#5E7C8A" />
-          <stop offset="1" stopColor="#22333E" />
-        </linearGradient>
-        <linearGradient id="ld-mist" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stopColor="#DCE7E8" stopOpacity="0" />
-          <stop offset="1" stopColor="#DCE7E8" stopOpacity="0.85" />
-        </linearGradient>
-      </defs>
-      <rect width="800" height="380" fill="url(#ld-sky)" />
-      {/* far ridge */}
-      <path d="M0 250 L90 200 L170 245 L260 175 L350 240 L430 195 L520 250 L610 185 L700 240 L800 205 L800 380 L0 380 Z" fill="#8FA6AC" />
-      {/* mid ridge */}
-      <path d="M0 300 L110 240 L210 295 L330 225 L450 300 L560 250 L670 305 L800 255 L800 380 L0 380 Z" fill="#5F7A85" />
-      {/* mist band */}
-      <rect y="285" width="800" height="95" fill="url(#ld-mist)" />
-      {/* near headland */}
-      <path d="M0 355 L140 305 L300 360 L470 315 L640 365 L800 330 L800 380 L0 380 Z" fill="#37505C" />
-      {/* loch */}
-      <rect y="380" width="800" height="220" fill="url(#ld-water)" />
-      {/* reflections */}
-      <g stroke="#C9D8DB" strokeWidth="2" opacity="0.35">
-        <line x1="120" y1="415" x2="290" y2="415" />
-        <line x1="420" y1="440" x2="620" y2="440" />
-        <line x1="60" y1="475" x2="210" y2="475" />
-        <line x1="500" y1="500" x2="700" y2="500" />
-        <line x1="220" y1="535" x2="430" y2="535" />
-      </g>
-      <g stroke="#0F1B2D" strokeWidth="3" opacity="0.25">
-        <line x1="180" y1="430" x2="340" y2="430" />
-        <line x1="460" y1="465" x2="640" y2="465" />
-        <line x1="90" y1="520" x2="260" y2="520" />
-      </g>
-    </svg>
-  );
-}
-
 /* ————— Marquee ticker ————— */
 function Ticker({ items, dark = true }: { items: string[]; dark?: boolean }) {
   const row = (
@@ -175,16 +127,25 @@ export default function OptionA() {
         </div>
       </section>
 
-      {/* ————— Photo triptych ————— */}
-      <section className="grid h-[52vh] min-h-[380px] grid-cols-1 sm:grid-cols-3">
+      {/* ————— Photo triptych: burn → moor → golden loch ————— */}
+      <section className="grid h-[62vh] min-h-[420px] grid-cols-1 gap-0 sm:grid-cols-3">
         <div className="relative overflow-hidden">
-          <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: "url(/photos/waterfall.jpg)" }} />
-        </div>
-        <div className="relative hidden overflow-hidden sm:block">
-          <LochDusk className="absolute inset-0 h-full w-full" />
+          <div
+            className="absolute inset-0 bg-cover bg-[position:center_42%] transition-transform duration-700 hover:scale-[1.04]"
+            style={{ backgroundImage: "url(/photos/triptych-blue.jpg)" }}
+          />
         </div>
         <div className="relative overflow-hidden">
-          <div className="absolute inset-0 bg-cover bg-[position:70%_35%]" style={{ backgroundImage: "url(/photos/rocky-peaks.jpg)" }} />
+          <div
+            className="absolute inset-0 bg-cover bg-[position:center_35%] transition-transform duration-700 hover:scale-[1.04]"
+            style={{ backgroundImage: "url(/photos/triptych-green.jpg)" }}
+          />
+        </div>
+        <div className="relative overflow-hidden">
+          <div
+            className="absolute inset-0 bg-cover bg-[position:center_30%] transition-transform duration-700 hover:scale-[1.04]"
+            style={{ backgroundImage: "url(/photos/triptych-yellow.jpg)" }}
+          />
         </div>
       </section>
 
