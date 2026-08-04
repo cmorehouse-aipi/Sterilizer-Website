@@ -127,12 +127,23 @@ export default function OptionA() {
         </div>
       </section>
 
-      {/* ————— Waterfall divider ————— */}
-      <section
-        className="h-[48vh] min-h-[340px] bg-cover bg-center"
-        style={{ backgroundImage: "url(/photos/waterfall-divider.jpg)" }}
-        aria-label="A cascading burn in the Highlands"
-      />
+      {/* ————— Waterfall divider: why it's different ————— */}
+      <section className="relative overflow-hidden">
+        <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: "url(/photos/waterfall-divider.jpg)" }} />
+        <div className="absolute inset-0 bg-[#0F1B2D]/45" />
+        <div className="relative mx-auto flex min-h-[64vh] max-w-[860px] flex-col items-center justify-center px-6 py-24 text-center text-[#F2EFE8]">
+          <p className="font-mono text-[12px] uppercase tracking-[0.3em] text-[#F2EFE8]/70">why it&rsquo;s different</p>
+          <p className="mt-6 font-serif text-[clamp(24px,3.4vw,38px)] italic leading-snug">
+            Better technology, in a better object, at a fairer price.
+          </p>
+          <Link
+            href="/compare"
+            className="mt-10 rounded-full bg-[#F2EFE8] px-7 py-3.5 text-[14px] font-semibold tracking-wide text-[#0F1B2D] transition hover:-translate-y-0.5"
+          >
+            See the full comparison
+          </Link>
+        </div>
+      </section>
 
       {/* ————— The claim ————— */}
       <section className="bg-[#22333E] text-[#EAF1F2]">
