@@ -133,8 +133,6 @@ export default function OptionA() {
       <section className="relative overflow-hidden">
         <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: "url(/photos/waterfall-divider.jpg)" }} />
         <div className="absolute inset-0 bg-[#0F1B2D]/45" />
-        {/* bottom fade into the technology section */}
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-[linear-gradient(to_bottom,transparent,#22333E)]" style={{ height: "var(--fade-h, 160px)" }} />
         <div className="relative mx-auto flex min-h-[64vh] max-w-[860px] flex-col items-center justify-center px-6 py-24 text-center text-[#F2EFE8]">
           <p className="font-mono text-[12px] uppercase tracking-[0.3em] text-[#F2EFE8]/70">designed in the heart of Scotland</p>
           <p className="mt-6 font-serif text-[clamp(24px,3.4vw,38px)] italic leading-snug">
@@ -151,8 +149,28 @@ export default function OptionA() {
       </section>
 
       {/* ————— The claim ————— */}
-      <section className="bg-[#22333E] text-[#EAF1F2]">
-        <div className="mx-auto grid max-w-[1240px] items-center gap-14 px-6 py-28 lg:grid-cols-[0.85fr_1.15fr]">
+      <section className="relative overflow-hidden bg-[#22333E] text-[#EAF1F2]">
+        {/* waterfall (above) bleeds down into the navy */}
+        <div
+          className="pointer-events-none absolute inset-x-0 top-0 bg-cover bg-bottom"
+          style={{
+            height: "var(--fade-h, 160px)",
+            backgroundImage: "url(/photos/waterfall-divider.jpg)",
+            maskImage: "linear-gradient(to bottom, black, transparent)",
+            WebkitMaskImage: "linear-gradient(to bottom, black, transparent)",
+          }}
+        />
+        {/* moor (below) bleeds up into the navy */}
+        <div
+          className="pointer-events-none absolute inset-x-0 bottom-0 bg-cover bg-top"
+          style={{
+            height: "var(--fade-h, 160px)",
+            backgroundImage: "url(/photos/moor-story.jpg)",
+            maskImage: "linear-gradient(to top, black, transparent)",
+            WebkitMaskImage: "linear-gradient(to top, black, transparent)",
+          }}
+        />
+        <div className="relative mx-auto grid max-w-[1240px] items-center gap-14 px-6 py-28 lg:grid-cols-[0.85fr_1.15fr]">
           <div className="order-2 flex justify-center lg:order-1 lg:justify-start">
             <ObjectViewToggle />
           </div>
@@ -191,8 +209,6 @@ export default function OptionA() {
       <section className="relative overflow-hidden">
         <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: "url(/photos/moor-story.jpg)" }} />
         <div className="absolute inset-0 bg-[#0F1B2D]/45" />
-        {/* top fade from the technology section */}
-        <div className="pointer-events-none absolute inset-x-0 top-0 bg-[linear-gradient(to_top,transparent,#22333E)]" style={{ height: "var(--fade-h, 160px)" }} />
         <div className="relative mx-auto flex min-h-[64vh] max-w-[860px] flex-col items-center justify-center px-6 py-24 text-center text-[#F2EFE8]">
           <p className="font-mono text-[12px] uppercase tracking-[0.3em] text-[#F2EFE8]/70">why it&rsquo;s different</p>
           <p className="mt-6 font-serif text-[clamp(24px,3.4vw,38px)] italic leading-snug">
