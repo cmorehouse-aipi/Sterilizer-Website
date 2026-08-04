@@ -140,14 +140,14 @@ export default function OptionB() {
             style={{ backgroundImage: "url(/photos/waterfall-divider.jpg)" }}
           />
           <div className="absolute inset-0 bg-[#0F1B2D]/15" />
-          <div className="absolute inset-x-0 bottom-0 flex flex-col items-center pb-10 text-center text-[#F7F4EE]">
+          <div className="absolute inset-x-0 top-0 flex flex-col items-center pt-10 text-center text-[#F7F4EE]">
             <Eyebrow tone="light">The Source</Eyebrow>
           </div>
         </div>
 
         <div className="group relative flex h-[70vh] min-h-[440px] flex-col items-center justify-center overflow-hidden bg-[#C7D4D6]">
           <HeroDeviceRotator alt={`The ${BRAND} device, rotating`} heightClass="h-[42vh] min-h-[280px]" />
-          <div className="absolute inset-x-0 bottom-0 flex flex-col items-center pb-10 text-center">
+          <div className="absolute inset-x-0 top-0 flex flex-col items-center pt-10 text-center">
             <Eyebrow>The instrument</Eyebrow>
           </div>
         </div>
@@ -209,19 +209,12 @@ export default function OptionB() {
                 <div className="absolute inset-0 bg-cover" style={{ backgroundImage: `url(${c.scene})`, backgroundPosition: c.pos }} />
                 <div className="absolute inset-0" style={{ backgroundColor: `${c.tint}30` }} />
               </div>
-              <div className="relative z-10">
-                {/* soft halo of the field colour so the device stays legible over the scene */}
-                <div
-                  className="pointer-events-none absolute -inset-12 opacity-0 transition-opacity duration-700 group-hover:opacity-100"
-                  style={{ background: `radial-gradient(closest-side, ${c.bg}E6 25%, ${c.bg}99 55%, ${c.bg}00 78%)` }}
-                />
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={c.img}
-                  alt={`${BRAND} in ${c.name}`}
-                  className="relative h-[300px] w-auto drop-shadow-[0_24px_38px_rgba(15,27,45,0.3)]"
-                />
-              </div>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={c.img}
+                alt={`${BRAND} in ${c.name}`}
+                className="relative z-10 h-[300px] w-auto drop-shadow-[0_24px_38px_rgba(15,27,45,0.3)]"
+              />
               <div className="relative z-10 mt-10 text-[12px] uppercase tracking-[0.22em] text-[#0F1B2D]/60 transition-colors duration-700 group-hover:text-[#F7F4EE]/85">{c.name}</div>
               <div className={`${serif} relative z-10 mt-2 text-[26px] font-light transition-colors duration-700 group-hover:text-[#F7F4EE]`}>From $79</div>
               <Link
@@ -268,32 +261,41 @@ export default function OptionB() {
       </section>
 
       {/* ————— Newsletter / early access ————— */}
-      <section data-nav-dark className="bg-[#22333E] text-[#EAF1F2]">
-        <div className="mx-auto grid max-w-[1240px] gap-12 px-6 py-24 lg:grid-cols-[1fr_1fr] lg:items-end lg:px-10">
-          <div>
-            <Eyebrow tone="light">First 500 only</Eyebrow>
-            <h2 className={`${serif} mt-5 text-[clamp(36px,5vw,68px)] font-light leading-[1.02]`}>
-              Don&rsquo;t miss the drop
-            </h2>
-            <p className="mt-6 max-w-[440px] text-[15px] leading-relaxed text-[#EAF1F2]/75">
-              The founding run ships first, with founder exclusives. Everyone else waits for round two — leave your email
-              and be first through the door.
-            </p>
-          </div>
-          <form className="w-full">
-            <label className="text-[11px] uppercase tracking-[0.22em] text-[#EAF1F2]/60">Email address</label>
-            <div className="mt-4 flex items-center gap-4 border-b border-white/30 pb-3">
+      <section data-nav-dark className="relative overflow-hidden bg-[#22333E] text-[#EAF1F2]">
+        {/* faint oversized watermark, FUME-style typographic emphasis */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 top-1/2 -translate-y-1/2 select-none text-center text-[22vw] font-light leading-none text-[#EAF1F2]/[0.045]"
+          style={{ fontFamily: "var(--font-cormorant), Georgia, serif" }}
+        >
+          FORTH
+        </div>
+        <div className="relative mx-auto flex min-h-[85vh] max-w-[820px] flex-col items-center justify-center px-6 py-36 text-center">
+          <Eyebrow tone="light">First 500 only</Eyebrow>
+          <h2 className={`${serif} mt-6 text-[clamp(44px,6.5vw,92px)] font-light leading-[1.0]`}>
+            Don&rsquo;t miss the drop
+          </h2>
+          <p className="mx-auto mt-7 max-w-[480px] text-[16px] leading-relaxed text-[#EAF1F2]/75">
+            The founding run ships first, with founder exclusives. Everyone else waits for round two — leave your email
+            and be first through the door.
+          </p>
+          <form className="mt-14 w-full max-w-[560px]">
+            <div className="flex items-center gap-4 border-b border-white/40 pb-4">
               <input
                 type="email"
                 required
-                placeholder="you@example.com"
-                className="w-full bg-transparent text-[16px] text-[#EAF1F2] outline-none placeholder:text-[#EAF1F2]/40"
+                placeholder="Email address"
+                className="w-full bg-transparent text-center text-[19px] text-[#EAF1F2] outline-none transition-colors placeholder:text-[#EAF1F2]/45 focus:placeholder:text-[#EAF1F2]/25"
               />
-              <button type="submit" aria-label="Sign up" className="text-[22px] transition hover:translate-x-1">
+              <button
+                type="submit"
+                aria-label="Sign up"
+                className="text-[26px] transition-transform hover:translate-x-1.5"
+              >
                 →
               </button>
             </div>
-            <p className="mt-4 text-[11px] uppercase tracking-[0.18em] text-[#EAF1F2]/45">
+            <p className="mt-5 text-[11px] uppercase tracking-[0.2em] text-[#EAF1F2]/45">
               No spam · unsubscribe anytime
             </p>
           </form>
