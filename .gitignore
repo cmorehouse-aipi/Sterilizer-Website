@@ -35,3 +35,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# scratch folder for files Claude cannot delete via the device bridge
+_to_delete/
