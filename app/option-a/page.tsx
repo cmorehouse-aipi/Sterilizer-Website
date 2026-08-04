@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Anton } from "next/font/google";
 
-import { BRAND, SPECS, PRESS_QUOTES, USE_CASES } from "../lib/brand";
+import { BRAND, PRESS_QUOTES, USE_CASES } from "../lib/brand";
 import { VariantToggle } from "../components/VariantToggle";
 import { SiteFooter } from "../components/SiteFooter";
 import { SiteNav } from "../components/SiteNav";
@@ -85,7 +85,7 @@ export default function OptionA() {
               href="/shop"
               className="rounded-full bg-a-ink px-7 py-3.5 text-[14px] font-semibold tracking-wide text-a-bg transition hover:-translate-y-0.5 hover:shadow-lg"
             >
-              Reserve yours — from $39
+              Reserve yours — from $79
             </Link>
             <Link
               href="/how-it-works"
@@ -221,6 +221,25 @@ export default function OptionA() {
         </div>
       </section>
 
+      {/* ————— Sunset band: cited on the record ————— */}
+      <section className="relative overflow-hidden">
+        <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: "url(/photos/storr-sunset.jpg)" }} />
+        <div className="absolute inset-0 bg-[#0F1B2D]/45" />
+        <div className="relative mx-auto flex min-h-[64vh] max-w-[860px] flex-col items-center justify-center px-6 py-24 text-center text-[#F2EFE8]">
+          <p className="font-mono text-[12px] uppercase tracking-[0.3em] text-[#F2EFE8]/70">cited, on the record</p>
+          <p className="mt-6 font-serif text-[clamp(24px,3.4vw,38px)] italic leading-snug">
+            Built on a wavelength microbiology has studied for sixty years — three peer-reviewed papers on the same band the
+            device operates within.
+          </p>
+          <Link
+            href="/technology"
+            className="mt-10 rounded-full bg-[#F2EFE8] px-7 py-3.5 text-[14px] font-semibold tracking-wide text-[#0F1B2D] transition hover:-translate-y-0.5"
+          >
+            Read the science
+          </Link>
+        </div>
+      </section>
+
       {/* ————— Colour fields ————— */}
       <section className="bg-a-bg">
         <div className="border-y border-a-ink/10 bg-a-bg font-serif text-[16px] italic text-a-ink/80">
@@ -244,7 +263,7 @@ export default function OptionA() {
                 alt={`${BRAND} in ${c.name}`}
                 className="mt-6 w-[150px] drop-shadow-[0_24px_36px_rgba(15,27,45,0.35)] transition duration-300 hover:-translate-y-2 sm:w-[170px]"
               />
-              <div className={`${display} mt-8 text-[26px]`}>From $39</div>
+              <div className={`${display} mt-8 text-[26px]`}>From $79</div>
               <Link
                 href="/shop"
                 className="mt-4 rounded-full bg-a-ink px-6 py-3 text-[13px] font-semibold tracking-wide text-a-bg transition hover:-translate-y-0.5"
@@ -256,27 +275,44 @@ export default function OptionA() {
         </div>
       </section>
 
-      {/* ————— Footer CTA ————— */}
-      <section className="bg-grain bg-a-bg">
-        <div className="mx-auto max-w-[860px] px-6 py-24 text-center">
-          <h2 className={`${display} text-[clamp(40px,6.4vw,76px)]`}>First to know when it ships</h2>
-          <p className="mt-4 font-serif text-[18px] italic text-a-ink/70">
-            {SPECS.size} · {SPECS.weight} · {SPECS.rating} — early access opens soon
-          </p>
-          <form className="mx-auto mt-9 flex max-w-[440px] items-center gap-2">
-            <input
-              type="email"
-              required
-              placeholder="you@example.com"
-              className="w-full rounded-full border border-a-ink/20 bg-white px-5 py-3.5 text-[14px] outline-none placeholder:text-a-ink/40 focus:border-a-ink/50"
-            />
-            <button
-              type="submit"
-              className="shrink-0 rounded-full bg-a-ink px-6 py-3.5 text-[14px] font-semibold text-a-bg transition hover:-translate-y-0.5"
-            >
-              Notify me
-            </button>
-          </form>
+      {/* ————— Footer CTA — early access ————— */}
+      <section className="relative overflow-hidden bg-[#0F1B2D] text-[#F2EFE8]">
+        {/* animated aurora glow */}
+        <div className="pointer-events-none absolute inset-0">
+          <div className="animate-glow absolute -left-24 top-0 h-96 w-96 rounded-full bg-[#7FB3FF]/25 blur-3xl" />
+          <div className="animate-glow absolute -right-24 bottom-0 h-96 w-96 rounded-full bg-[#E89B7C]/20 blur-3xl" />
+          <div className="absolute left-1/2 top-1/2 h-[520px] w-[520px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#889E81]/15 blur-3xl" />
+        </div>
+        <div className="bg-grid-faint">
+          <div className="mx-auto max-w-[760px] px-6 py-28 text-center">
+            <span className="inline-block rounded-full bg-[#E89B7C] px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.22em] text-[#0F1B2D]">
+              First 500 only · founding batch
+            </span>
+            <h2 className={`${display} mt-6 text-[clamp(44px,7.5vw,96px)]`}>
+              Don&rsquo;t miss the drop
+            </h2>
+            <p className="mx-auto mt-5 max-w-[520px] font-serif text-[clamp(18px,2.4vw,24px)] italic text-[#F2EFE8]/80">
+              The founding run ships first, at the founder&rsquo;s price. Everyone else waits for round two. Leave your
+              email and be first through the door.
+            </p>
+            <form className="mx-auto mt-10 flex max-w-[500px] flex-col items-center gap-3 sm:flex-row">
+              <input
+                type="email"
+                required
+                placeholder="you@example.com"
+                className="w-full rounded-full border border-white/20 bg-white/10 px-6 py-4 text-[15px] text-[#F2EFE8] outline-none backdrop-blur placeholder:text-[#F2EFE8]/50 focus:border-white/60"
+              />
+              <button
+                type="submit"
+                className="w-full shrink-0 rounded-full bg-[#E89B7C] px-8 py-4 text-[15px] font-bold uppercase tracking-wide text-[#0F1B2D] shadow-lg transition hover:-translate-y-0.5 hover:bg-[#f0ab8f] sm:w-auto"
+              >
+                Claim my spot
+              </button>
+            </form>
+            <p className="mt-5 font-mono text-[12px] uppercase tracking-[0.2em] text-[#F2EFE8]/50">
+              No spam · unsubscribe anytime · just the launch
+            </p>
+          </div>
         </div>
       </section>
 
