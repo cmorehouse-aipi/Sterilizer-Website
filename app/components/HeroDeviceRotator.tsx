@@ -11,7 +11,7 @@ const POSTER_SRC = "/renderings/forth-device-frame-00.png";
 // ~31fps effective frame rate at display speed.
 const HERO_TURN_MS = 10000;
 
-type Props = { alt: string };
+type Props = { alt: string; heightClass?: string };
 
 /**
  * Slow continuous 360° spin. Preferred path: native loop playback slowed via
@@ -19,7 +19,7 @@ type Props = { alt: string };
  * (autoplay refused): rAF scrubbing quantized to frame boundaries so we only
  * seek when the displayed frame actually changes.
  */
-export function HeroDeviceRotator({ alt }: Props) {
+export function HeroDeviceRotator({ alt, heightClass = "h-[460px] md:h-[560px]" }: Props) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const rafRef = useRef<number | null>(null);
 
@@ -70,7 +70,7 @@ export function HeroDeviceRotator({ alt }: Props) {
 
   return (
     <div
-      className="relative h-[460px] w-auto md:h-[560px]"
+      className={`relative w-auto ${heightClass}`}
       style={{ aspectRatio: "1600 / 2400", backgroundColor: "transparent" }}
     >
       <video

@@ -4,16 +4,20 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const VARIANTS = [
-  { id: "a", href: "/", label: "A · Editorial" },
-  { id: "b", href: "/option-b", label: "B · Engineered" },
+  { id: "prev", href: "/", label: "Previous" },
+  { id: "a", href: "/option-a", label: "Option A" },
+  { id: "b", href: "/option-b", label: "Option B" },
 ] as const;
+
+export type VariantId = (typeof VARIANTS)[number]["id"];
 
 type Tone = "light" | "dark";
 
-export function VariantToggle({ active, tone = "light" }: { active: "a" | "b"; tone?: Tone }) {
+export function VariantToggle({ active, tone = "light" }: { active?: VariantId; tone?: Tone }) {
   // Reads pathname so the active state stays correct if user navigates between variants.
   const path = usePathname();
-  const inferred: "a" | "b" = path === "/option-b" ? "b" : "a";
+  const inferred: VariantId =
+    path === "/option-a" ? "a" : path === "/option-b" ? "b" : "prev";
   const current = active ?? inferred;
 
   const wrap =
@@ -47,13 +51,7 @@ export function VariantToggle({ active, tone = "light" }: { active: "a" | "b"; t
           );
         })}
       </div>
-      <Link
-        href="/identity"
-        className={`rounded-full px-3 py-2 text-[12px] tracking-wide ${wrap}`}
-        title="Try logo and name combinations"
-      >
-        Identity Lab →
-      </Link>
+      {/* Identity Lab link hidden per request (page still exists at /identity) */}
     </div>
   );
 }

@@ -1026,7 +1026,7 @@ export default function HomeA() {
 
       <SiteFooter tone="light" />
 
-      <VariantToggle active="a" tone="light" />
+      <VariantToggle active="prev" tone="light" />
 
     </div>
 

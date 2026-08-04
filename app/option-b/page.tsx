@@ -1,440 +1,350 @@
-﻿import Link from "next/link";
-import { BRAND, SPECS, COMPARE_ROWS, FAQS, USE_CASES, PRESS_QUOTES } from "../lib/brand";
-import { HorizontalDeviceMark } from "../components/HorizontalDeviceMark";
-import { DeviceCylinder } from "../components/DeviceCylinder";
+import Link from "next/link";
+import { Cormorant_Garamond } from "next/font/google";
+
+import { BRAND, PRESS_QUOTES, USE_CASES } from "../lib/brand";
 import { VariantToggle } from "../components/VariantToggle";
-import { SiteFooter } from "../components/SiteFooter";
-import { ExplodedReveal } from "../components/ExplodedReveal";
+import { FumeNav } from "../components/FumeNav";
+import { ObjectViewToggle } from "../components/ObjectViewToggle";
+import { HeroDeviceRotator } from "../components/HeroDeviceRotator";
+
+const cormorant = Cormorant_Garamond({
+  weight: ["300", "400", "500", "600"],
+  subsets: ["latin"],
+  variable: "--font-cormorant",
+});
 
 export const metadata = {
-  title: `${BRAND} — UV-C sterilization, engineered in Scotland.`,
-  description: `${BRAND} is an 87 mm submersible UV-C sterilizer. Designed and assembled in Edinburgh.`,
+  title: `${BRAND} — Option B`,
+  description: `${BRAND} is a submersible UV-C sterilizer the size of a marker. Designed and assembled in Scotland.`,
 };
 
-const NAV = [
-  { href: "/shop", label: "Shop" },
-  { href: "/how-it-works", label: "How It Works" },
-  { href: "/technology", label: "Technology" },
-  { href: "/compare", label: "Compare" },
-  { href: "/about", label: "About" },
-];
+/* elegant editorial serif — the voice of Option B */
+const serif = "[font-family:var(--font-cormorant),Georgia,serif]";
 
-export default function HomeB() {
+/* ● micro-label used throughout, FUME-style */
+function Eyebrow({ children, tone = "ink" }: { children: React.ReactNode; tone?: "ink" | "light" }) {
+  const c = tone === "light" ? "text-[#F7F4EE]/70" : "text-[#0F1B2D]/55";
   return (
-    <div className="min-h-screen bg-b-bg text-b-ink font-display">
-      {/* Header */}
-      <header className="sticky top-0 z-30 border-b border-b-line bg-b-bg/80 backdrop-blur">
-        <div className="mx-auto flex max-w-[1280px] items-center justify-between px-6 py-4">
-          <Link href="/option-b" className="flex items-center gap-3 text-b-ink" aria-label={BRAND}>
-            <HorizontalDeviceMark name={BRAND} className="h-7 w-auto" />
-            <span className="hidden font-mono text-[10px] uppercase tracking-[0.2em] text-b-mute md:inline">
-              v1.0 · patent-pending
-            </span>
-          </Link>
-          <nav className="hidden items-center gap-7 md:flex">
-            {NAV.map((n) => (
-              <Link key={n.href} href={n.href} className="text-[13px] tracking-tight text-b-ink/85 hover:text-b-ink">
-                {n.label}
-              </Link>
-            ))}
-          </nav>
-          <div className="flex items-center gap-3">
-            <span className="hidden rounded-full px-2.5 py-1 font-mono text-[10.5px] uppercase tracking-[0.18em] text-b-mute ring-1 ring-white/15 sm:inline">
-              US · USD
-            </span>
-            <Link href="/shop" className="rounded-full bg-b-ink px-4 py-1.5 text-[13px] text-b-bg">
-              Buy
-            </Link>
-          </div>
+    <span className={`inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.24em] ${c}`}>
+      <span className="text-[7px] leading-none">●</span>
+      {children}
+    </span>
+  );
+}
+
+export default function OptionB() {
+  return (
+    <div className={`${cormorant.variable} bg-[#F7F4EE] text-[#0F1B2D]`}>
+      <FumeNav />
+
+      {/* ————— Hero: full-bleed cinematic ————— */}
+      <section data-nav-dark className="relative h-[100svh] min-h-[640px] w-full overflow-hidden">
+        <div
+          className="absolute inset-0 bg-cover bg-[position:center_35%]"
+          style={{ backgroundImage: "url(/photos/storr-hero.jpg)" }}
+        />
+        {/* cool wash to unify with the palette + legibility */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_bottom,#0F1B2D66_0%,#0F1B2D22_35%,#0F1B2D88_100%)]" />
+
+        {/* bottom-left statement */}
+        <div className="absolute bottom-14 left-6 max-w-[560px] lg:left-10">
+          <h1 className={`${serif} text-[clamp(40px,6vw,80px)] font-light leading-[1.02] tracking-[0.01em] text-[#F7F4EE]`}>
+            Any water,
+            <br />
+            any bottle.
+          </h1>
         </div>
-      </header>
 
-      {/* Hero — full-bleed device, technical callouts */}
-      <section className="relative overflow-hidden">
-        <div className="bg-grid-faint absolute inset-0" aria-hidden />
-        <div className="absolute -left-40 top-1/2 h-[700px] w-[700px] -translate-y-1/2 rounded-full bg-b-coral/10 blur-3xl" aria-hidden />
+        {/* centred caption */}
+        <div className="absolute left-1/2 top-[41%] hidden max-w-[240px] -translate-x-1/2 text-[13px] leading-relaxed text-[#F7F4EE]/85 lg:block">
+          A submersible UV-C sterilizer that cleans any bottle in sixty seconds. Designed in Scotland.
+        </div>
 
-        <div className="relative mx-auto grid min-h-[88vh] max-w-[1280px] grid-cols-12 items-center gap-8 px-6 py-24">
-          <div className="col-span-12 md:col-span-7">
-            <div className="flex items-center gap-3">
-              <span className="h-1.5 w-1.5 rounded-full bg-b-coral" />
-              <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-b-mute">
-                Engineered in Edinburgh — Q3 ship
-              </span>
-            </div>
-            <h1 className="mt-7 text-[64px] font-medium leading-[0.96] tracking-tightx md:text-[104px]">
-              Sterilization,<br />
-              <span className="text-b-mute">at the</span><br />
-              <span className="text-b-coral">molecular level.</span>
-            </h1>
-            <p className="mt-8 max-w-md text-[15.5px] leading-[1.65] text-b-ink/75">
-              {BRAND} is an 87 mm submersible UV-C sterilizer. Twin geodesic emitters refract 265 nm light through every face of any bottle. ≥ 3-log reduction. Sixty seconds. No filters, no consumables, no plastic.
+        {/* right CTA box */}
+        <div className="absolute bottom-14 right-6 lg:right-10">
+          <Link
+            href="/shop"
+            className="inline-flex items-center gap-3 border border-[#F7F4EE]/50 px-7 py-4 text-[12px] uppercase tracking-[0.2em] text-[#F7F4EE] transition hover:bg-[#F7F4EE] hover:text-[#0F1B2D]"
+          >
+            Discover Forth <span aria-hidden>→</span>
+          </Link>
+        </div>
+      </section>
+
+      {/* ————— Technology — dark editorial ————— */}
+      <section data-nav-dark className="bg-[#22333E] text-[#EAF1F2]">
+        <div className="mx-auto grid max-w-[1240px] items-center gap-16 px-6 py-28 lg:grid-cols-[0.9fr_1.1fr] lg:px-10">
+          <div className="flex justify-center lg:justify-start">
+            <ObjectViewToggle />
+          </div>
+          <div>
+            <Eyebrow tone="light">The technology</Eyebrow>
+            <h2 className={`${serif} mt-5 text-[clamp(38px,5vw,72px)] font-light leading-[1.02]`}>Purified by light</h2>
+            <p className="mt-6 max-w-[440px] text-[15px] leading-relaxed text-[#EAF1F2]/75">
+              Emission at 265 nanometres — the wavelength microbial DNA cannot survive. Twin geodesic emitters reach every
+              face of the bottle: no shadowed water, no missed surface.
             </p>
-            <div className="mt-10 flex items-center gap-4">
-              <Link
-                href="/shop"
-                className="group inline-flex items-center gap-2 rounded-full bg-b-ink px-6 py-3 text-[13.5px] font-medium tracking-tight text-b-bg"
-              >
-                Buy — from $39
-                <span className="transition group-hover:translate-x-0.5">→</span>
-              </Link>
-              <Link href="/technology" className="text-[13.5px] text-b-ink/80 hover:text-b-ink">
-                Read the science
-              </Link>
-            </div>
 
-            {/* Inline spec strip */}
-            <dl className="mt-14 grid max-w-lg grid-cols-3 gap-4 border-t border-b-line pt-6 font-mono text-[11px] uppercase tracking-[0.16em]">
+            <div className="mt-12 grid max-w-[520px] grid-cols-3 gap-8 border-t border-white/15 pt-8">
               {[
-                ["λ", SPECS.wavelength],
-                ["t", SPECS.cycle],
-                ["log₁₀", "≥ 3.0 reduction"],
-              ].map(([k, v]) => (
-                <div key={k}>
-                  <dt className="text-b-mute">{k}</dt>
-                  <dd className="mt-1 text-b-ink">{v}</dd>
+                { k: "99.9%", v: "bacteria, viruses & protozoa" },
+                { k: "60 s", v: "standard cycle" },
+                { k: "30", v: "cycles per charge" },
+              ].map((s) => (
+                <div key={s.k}>
+                  <div className={`${serif} text-[34px] font-light`}>{s.k}</div>
+                  <div className="mt-1 text-[12px] leading-snug text-[#EAF1F2]/60">{s.v}</div>
                 </div>
               ))}
-            </dl>
-          </div>
-
-          {/* Device — clean, no hero callouts. Part-level labelling lives in
-              the §01.5 assembly diagram (ExplodedReveal) below. */}
-          <div className="col-span-12 md:col-span-5">
-            <div className="relative mx-auto w-fit">
-              <DeviceCylinder
-                className="h-[560px] w-auto md:h-[640px]"
-                body="#13151A"
-                dome="#86A6BC"
-                glow="#E89B7C"
-                ink="#0A0B0D"
-                glowOn
-              />
             </div>
-          </div>
-        </div>
 
-        {/* Press logos / scroll strip */}
-        <div className="border-y border-b-line">
-          <div className="mx-auto flex max-w-[1280px] items-center justify-between px-6 py-5 font-mono text-[11px] uppercase tracking-[0.2em] text-b-mute">
-            <span>Wired</span>
-            <span>Outside</span>
-            <span className="hidden sm:inline">Monocle</span>
-            <span>T3</span>
-            <span className="hidden sm:inline">The Verge</span>
-            <span>Fast Company</span>
-          </div>
-        </div>
-      </section>
-
-      {/* The 30-second story — engineering diagram feel */}
-      <section className="border-b border-b-line">
-        <div className="mx-auto max-w-[1280px] px-6 py-28">
-          <div className="grid grid-cols-12 gap-10">
-            <div className="col-span-12 md:col-span-4">
-              <div className="font-mono text-[11px] uppercase tracking-[0.2em] text-b-mute">§ 01 — operation</div>
-              <h2 className="mt-4 text-[44px] font-medium leading-[1.02] tracking-tightx md:text-[56px]">
-                Three motions.<br />
-                <span className="text-b-mute">Sixty seconds.</span>
-              </h2>
-              <p className="mt-6 max-w-sm text-[14.5px] leading-[1.7] text-b-ink/70">
-                A motion handshake initiates the cycle. There is no power button, no port, no setup screen. The mechanism is the gesture.
-              </p>
-            </div>
-            <ol className="col-span-12 grid gap-px bg-b-line md:col-span-8 md:grid-cols-3">
-              {[
-                { n: "01", h: "Drop", b: "Submerges in any bottle. No alignment, no orientation." },
-                { n: "02", h: "Shake", b: "Accelerometer-triggered cycle initiates. Solid-blue LED through the dome." },
-                { n: "03", h: "Drink", b: "265 nm dose × 60 s. ≥ 3-log reduction across pathogens." },
-              ].map((s, i) => (
-                <li key={s.n} className="bg-b-bg p-7">
-                  <div className="font-mono text-[11px] uppercase tracking-[0.2em] text-b-coral">{s.n}</div>
-                  <div className="mt-8 text-[28px] font-medium leading-tight tracking-tightish">{s.h}</div>
-                  <p className="mt-3 text-[14px] leading-[1.65] text-b-ink/70">{s.b}</p>
-                  {i < 2 && <span className="mt-6 block font-mono text-[11px] text-b-mute">→</span>}
-                </li>
-              ))}
-            </ol>
-          </div>
-        </div>
-      </section>
-
-      {/* Scroll-pinned exploded view */}
-      <ExplodedReveal
-        tone="dark"
-        eyebrow="§ 01.5 — assembly diagram"
-        title="Six components. Sealed for life."
-        description="Scroll to disassemble. The aluminum unibody resolves into its parts — twin emitters, driver PCB, induction-charged battery."
-      />
-
-      {/* Technology hero */}
-      <section className="relative overflow-hidden border-b border-b-line">
-        <div className="bg-grid-faint absolute inset-0" aria-hidden />
-        <div className="relative mx-auto grid max-w-[1280px] grid-cols-12 items-center gap-12 px-6 py-32">
-          <div className="col-span-12 md:col-span-6">
-            <div className="font-mono text-[11px] uppercase tracking-[0.2em] text-b-mute">§ 02 — technology</div>
-            <h3 className="mt-4 text-[48px] font-medium leading-[1.02] tracking-tightx md:text-[60px]">
-              UV-C at 265 nm. The wavelength microbial DNA cannot survive.
-            </h3>
-            <p className="mt-6 max-w-md text-[15px] leading-[1.7] text-b-ink/75">
-              Twin geodesic emitters refract a 265 nm dose across twelve faces. Multi-directional coverage means there is no shadowed water — independently of bottle geometry.
-            </p>
             <Link
               href="/technology"
-              className="mt-8 inline-flex items-center gap-2 text-[13.5px] text-b-coral hover:underline"
+              className="mt-12 inline-flex items-center gap-3 border border-white/40 px-7 py-3.5 text-[12px] uppercase tracking-[0.2em] transition hover:bg-[#EAF1F2] hover:text-[#22333E]"
             >
-              <span>Read the white paper</span>
-              <span>→</span>
+              Read the science <span aria-hidden>→</span>
             </Link>
-
-            <dl className="mt-12 grid grid-cols-3 gap-6 border-t border-b-line pt-6 font-mono text-[11px] uppercase tracking-[0.16em]">
-              {[
-                ["Pathogen", "B / V / P"],
-                ["Reduction", "≥ 99.9%"],
-                ["Compliance", "EPA · NSF/ANSI 55"],
-              ].map(([k, v]) => (
-                <div key={k}>
-                  <dt className="text-b-mute">{k}</dt>
-                  <dd className="mt-1 text-b-ink">{v}</dd>
-                </div>
-              ))}
-            </dl>
-          </div>
-
-          {/* Wave / dome diagram */}
-          <div className="col-span-12 md:col-span-6">
-            <div className="relative aspect-square w-full overflow-hidden rounded-3xl bg-b-surface ring-1 ring-b-line">
-              <div className="absolute inset-0 grid place-items-center">
-                <div className="relative">
-                  <div className="absolute inset-0 -m-20 animate-glow rounded-full bg-b-coral/20" />
-                  <div className="relative h-56 w-56 animate-spinslow">
-                    <svg viewBox="0 0 200 200" className="h-full w-full">
-                      <g fill="none" stroke="#E89B7C" strokeWidth="0.7" strokeOpacity="0.7">
-                        {Array.from({ length: 14 }).map((_, i) => (
-                          <circle key={i} cx="100" cy="100" r={20 + i * 6} />
-                        ))}
-                      </g>
-                      <g stroke="#F5F2EC" strokeOpacity="0.85" fill="none" strokeWidth="1">
-                        <polygon points="100,12 168,52 168,148 100,188 32,148 32,52" />
-                        <line x1="100" y1="12" x2="100" y2="188" />
-                        <line x1="32" y1="52" x2="168" y2="148" />
-                        <line x1="168" y1="52" x2="32" y2="148" />
-                      </g>
-                    </svg>
-                  </div>
-                </div>
-              </div>
-              <div className="absolute bottom-4 left-4 font-mono text-[10px] uppercase tracking-[0.22em] text-b-mute">
-                fig. 02 · multi-directional dose
-              </div>
-            </div>
           </div>
         </div>
       </section>
 
-      {/* Provenance — Designed in Scotland */}
-      <section className="relative border-b border-b-line">
-        <div className="relative h-[68vh] min-h-[460px] w-full overflow-hidden">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/photos/rocky-peaks.png"
-            alt="The Old Man of Storr, Isle of Skye — first prototype field site"
-            className="absolute inset-0 h-full w-full object-cover opacity-60"
+      {/* ————— Poured by you — editorial statement + steps ————— */}
+      <section className="mx-auto max-w-[1240px] px-6 py-28 lg:px-10">
+        <div className="grid gap-10 lg:grid-cols-[1fr_1.1fr] lg:items-end">
+          <Eyebrow>Born of the Highlands</Eyebrow>
+          <h2 className={`${serif} text-[clamp(34px,4.4vw,58px)] font-light leading-[1.06]`}>
+            Poured by you, purified by light.
+          </h2>
+        </div>
+
+        <div className="mt-16 grid gap-px overflow-hidden rounded-sm border border-[#0F1B2D]/10 bg-[#0F1B2D]/10 sm:grid-cols-3">
+          {[
+            { n: "01", t: "Drop", d: "Slip it into any bottle with a neck wider than 25 mm. Loch, fountain, hotel tap — no worries." },
+            { n: "02", t: "Shake", d: "One shake wakes the cycle. Dual UV-C emitters flood the water from every direction." },
+            { n: "03", t: "Drink", d: "Sixty seconds later the light goes out and the water is yours. Pure as the untouched highlands." },
+          ].map((s) => (
+            <div key={s.n} className="bg-[#F7F4EE] px-8 py-12">
+              <div className={`${serif} text-[40px] font-light text-[#0F1B2D]/35`}>{s.n}</div>
+              <h3 className="mt-4 text-[13px] uppercase tracking-[0.22em]">{s.t}</h3>
+              <p className="mt-4 text-[15px] leading-relaxed text-[#0F1B2D]/70">{s.d}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ————— Split panels: the Highlands / the instrument ————— */}
+      <section className="grid grid-cols-1 md:grid-cols-2">
+        <div className="group relative h-[70vh] min-h-[440px] overflow-hidden">
+          <div
+            className="absolute inset-0 bg-cover bg-[position:center_45%] transition-transform duration-[1200ms] group-hover:scale-[1.05]"
+            style={{ backgroundImage: "url(/photos/waterfall-divider.jpg)" }}
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-b-bg via-b-bg/40 to-b-bg/20" />
-          <div className="bg-grid-faint absolute inset-0 opacity-50" aria-hidden />
-          <div className="relative mx-auto flex h-full max-w-[1280px] flex-col justify-end px-6 pb-16 md:pb-20">
-            <div className="font-mono text-[11px] uppercase tracking-[0.22em] text-b-coral">§ 02.5 — provenance</div>
-            <h3 className="mt-4 max-w-3xl text-[44px] font-medium leading-[1.02] tracking-tightx md:text-[64px]">
-              Designed in the
-              <br />
-              <span className="text-b-mute italic">Heart of Scotland.</span>
-            </h3>
-            <p className="mt-5 max-w-lg text-[14.5px] leading-[1.65] text-b-ink/80">
-              Engineered and assembled in a workshop above the Firth of Forth. Prototype no. 003 was tested at the foot of the Storr — the first water it ever cleaned came out of a Highland burn.
-            </p>
-            <dl className="mt-10 grid max-w-xl grid-cols-3 gap-6 border-t border-b-line pt-6 font-mono text-[11px] uppercase tracking-[0.16em]">
-              <div>
-                <dt className="text-b-mute">Workshop</dt>
-                <dd className="mt-1 text-b-ink">Edinburgh, UK</dd>
-              </div>
-              <div>
-                <dt className="text-b-mute">Validation</dt>
-                <dd className="mt-1 text-b-ink">EPA · NSF/ANSI 55</dd>
-              </div>
-              <div>
-                <dt className="text-b-mute">Field site</dt>
-                <dd className="mt-1 text-b-ink">Isle of Skye</dd>
-              </div>
-            </dl>
+          <div className="absolute inset-0 bg-[#0F1B2D]/15" />
+          {/* soft top scrim for label legibility */}
+          <div className="absolute inset-x-0 top-0 h-28 bg-[linear-gradient(to_bottom,#0F1B2D59,transparent)]" />
+          <div className="absolute inset-x-0 top-0 flex flex-col items-center pt-10 text-center">
+            <span className="inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.24em] text-[#F7F4EE] [text-shadow:0_1px_12px_rgba(15,27,45,0.85)]">
+              <span className="text-[7px] leading-none">●</span>
+              The Source
+            </span>
+          </div>
+        </div>
+
+        <div className="group relative flex h-[70vh] min-h-[440px] flex-col items-center justify-center overflow-hidden bg-[#C7D4D6]">
+          <HeroDeviceRotator alt={`The ${BRAND} device, rotating`} heightClass="h-[42vh] min-h-[280px]" />
+          <div className="absolute inset-x-0 top-0 flex flex-col items-center pt-10 text-center">
+            <Eyebrow>The instrument</Eyebrow>
           </div>
         </div>
       </section>
 
-      {/* Comparison — spec sheet */}
-      <section className="border-b border-b-line">
-        <div className="mx-auto max-w-[1280px] px-6 py-28">
-          <div className="flex flex-wrap items-end justify-between gap-6">
-            <div>
-              <div className="font-mono text-[11px] uppercase tracking-[0.2em] text-b-mute">§ 03 — benchmarks</div>
-              <h3 className="mt-4 text-[44px] font-medium leading-tight tracking-tightx">
-                Tested against the category.
-              </h3>
+      {/* ————— Break — matches the breathing room above the split panels ————— */}
+      <div aria-hidden className="h-[233px] bg-[#F7F4EE]" />
+
+      {/* ————— Cinematic quote band ————— */}
+      <section data-nav-dark className="relative overflow-hidden">
+        <div className="absolute inset-0 bg-cover bg-[position:center_60%]" style={{ backgroundImage: "url(/photos/moor-story.jpg)" }} />
+        <div className="absolute inset-0 bg-[#0F1B2D]/50" />
+        <div className="relative mx-auto flex min-h-[60vh] max-w-[820px] flex-col items-center justify-center px-6 py-24 text-center text-[#F7F4EE]">
+          <Eyebrow tone="light">Designed in the heart of Scotland</Eyebrow>
+          <p className={`${serif} mt-6 text-[clamp(26px,3.6vw,44px)] font-light italic leading-[1.15]`}>
+            Engineered and assembled in a workshop above the Firth of Forth. The first water it ever cleaned came out of a
+            Highland burn.
+          </p>
+          <Link
+            href="/about"
+            className="mt-10 inline-flex items-center gap-3 border border-[#F7F4EE]/50 px-7 py-3.5 text-[12px] uppercase tracking-[0.2em] transition hover:bg-[#F7F4EE] hover:text-[#0F1B2D]"
+          >
+            Our story <span aria-hidden>→</span>
+          </Link>
+        </div>
+      </section>
+
+      {/* ————— Carried, not stored ————— */}
+      <section className="mx-auto max-w-[1240px] px-6 py-28 lg:px-10">
+        <div className="grid gap-10 lg:grid-cols-[1fr_1.1fr] lg:items-end">
+          <Eyebrow>Where it lives</Eyebrow>
+          <h2 className={`${serif} text-[clamp(34px,4.4vw,58px)] font-light leading-[1.06]`}>Carried, not stored.</h2>
+        </div>
+        <div className="mt-16 grid gap-x-10 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
+          {USE_CASES.map((u) => (
+            <div key={u.tag} className="border-t border-[#0F1B2D]/15 pt-6">
+              <div className="text-[12px] uppercase tracking-[0.22em] text-[#0F1B2D]/55">{u.tag}</div>
+              <p className={`${serif} mt-3 text-[22px] font-light leading-snug`}>{u.line}</p>
             </div>
-            <Link href="/compare" className="text-[13.5px] text-b-coral hover:underline">
-              Full benchmark →
-            </Link>
-          </div>
-
-          <div className="mt-10 overflow-hidden rounded-2xl ring-1 ring-b-line">
-            <table className="w-full text-left text-[13.5px]">
-              <thead className="bg-b-surface">
-                <tr className="font-mono text-[10.5px] uppercase tracking-[0.2em] text-b-mute">
-                  <th className="px-5 py-4"></th>
-                  <th className="px-5 py-4 text-b-coral">{BRAND}</th>
-                  <th className="px-5 py-4">SteriPen</th>
-                  <th className="px-5 py-4">LARQ</th>
-                  <th className="px-5 py-4">Tablets</th>
-                </tr>
-              </thead>
-              <tbody>
-                {COMPARE_ROWS.map((row) => (
-                  <tr key={row.label} className="border-t border-b-line">
-                    <td className="px-5 py-4 text-b-mute">{row.label}</td>
-                    <td className="px-5 py-4 font-medium text-b-ink">{row.forth}</td>
-                    <td className="px-5 py-4 text-b-ink/70">{row.steripen}</td>
-                    <td className="px-5 py-4 text-b-ink/70">{row.larq}</td>
-                    <td className="px-5 py-4 text-b-ink/70">{row.tabs}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+          ))}
         </div>
       </section>
 
-      {/* Field use — Waterfall photo + use case list */}
-      <section className="border-b border-b-line">
-        <div className="mx-auto max-w-[1280px] px-6 py-28">
-          <div className="grid grid-cols-12 gap-10">
-            <div className="col-span-12 md:col-span-7">
-              <div className="aspect-[3/2] w-full overflow-hidden rounded-3xl ring-1 ring-b-line">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src="/photos/waterfall.jpg"
-                  alt="Highland burn — log-reduction validation site"
-                  className="h-full w-full object-cover"
-                />
+      {/* ————— Pick your colour — product on fields ————— */}
+      <section className="border-t border-[#0F1B2D]/10">
+        <div className="mx-auto max-w-[1240px] px-6 pb-6 pt-24 text-center lg:px-10">
+          <Eyebrow>Three finishes</Eyebrow>
+          <h2 className={`${serif} mt-5 text-[clamp(34px,4.6vw,64px)] font-light`}>Pick your colour</h2>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-3">
+          {[
+            { name: "Midnight", bg: "#C7D4D6", img: "/renderings/forth-device-hero.png", scene: "/photos/waterfall-divider.jpg", pos: "center 42%", tint: "#51707E" },
+            { name: "Sage", bg: "#DCE4D7", img: "/renderings/forth-device-sage-hero.png", scene: "/photos/moor-story.jpg", pos: "center 55%", tint: "#889E81" },
+            { name: "Sun", bg: "#F0E3BC", img: "/renderings/forth-device-sun-hero.png", scene: "/photos/storr-sunset.jpg", pos: "center 35%", tint: "#F0E3BC" },
+          ].map((c) => (
+            <div key={c.name} className="group relative flex flex-col items-center overflow-hidden px-6 pb-14 pt-16" style={{ backgroundColor: c.bg }}>
+              {/* scene reveal on hover — FUME-style */}
+              <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-700 group-hover:opacity-100">
+                <div className="absolute inset-0 bg-cover" style={{ backgroundImage: `url(${c.scene})`, backgroundPosition: c.pos }} />
+                <div className="absolute inset-0" style={{ backgroundColor: `${c.tint}30` }} />
               </div>
-              <div className="mt-3 flex items-center gap-2 font-mono text-[10.5px] uppercase tracking-[0.22em] text-b-mute">
-                <span className="block h-px w-6 bg-b-coral/60" />
-                <span>fig. 04 · field validation site, Wester Ross</span>
-              </div>
-            </div>
-            <div className="col-span-12 md:col-span-5">
-              <div className="font-mono text-[11px] uppercase tracking-[0.2em] text-b-mute">§ 04 — field use</div>
-              <h3 className="mt-4 text-[40px] font-medium leading-[1.02] tracking-tightx md:text-[48px]">
-                Built for everywhere a bottle goes.
-              </h3>
-              <p className="mt-6 max-w-md text-[14.5px] leading-[1.7] text-b-ink/75">
-                Validated against the ten kinds of water our engineers couldn't otherwise drink. From hotel taps to glacial runoff — same cycle, same dose, same sixty seconds.
-              </p>
-              <ul className="mt-10 divide-y divide-b-line border-y border-b-line">
-                {USE_CASES.map((u, i) => (
-                  <li key={u.tag} className="flex items-baseline gap-4 py-4">
-                    <span className="font-mono text-[10.5px] uppercase tracking-[0.22em] text-b-coral min-w-[28px]">
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
-                    <span className="font-mono text-[10.5px] uppercase tracking-[0.22em] text-b-mute min-w-[80px]">
-                      {u.tag}
-                    </span>
-                    <p className="text-[14px] leading-snug text-b-ink/85">{u.line}</p>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Press quotes */}
-      <section className="border-b border-b-line">
-        <div className="mx-auto max-w-[1280px] px-6 py-24">
-          <div className="grid gap-10 md:grid-cols-2">
-            {PRESS_QUOTES.slice(0, 2).map((p) => (
-              <figure key={p.source} className="rounded-3xl bg-b-surface p-8 ring-1 ring-b-line">
-                <div className="font-mono text-[11px] uppercase tracking-[0.22em] text-b-coral">{p.source}</div>
-                <blockquote className="mt-4 text-[24px] font-medium leading-snug tracking-tightish text-b-ink">
-                  "{p.text}"
-                </blockquote>
-              </figure>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* FAQ */}
-      <section className="border-b border-b-line">
-        <div className="mx-auto max-w-[1280px] px-6 py-24">
-          <div className="grid grid-cols-12 gap-10">
-            <div className="col-span-12 md:col-span-4">
-              <div className="font-mono text-[11px] uppercase tracking-[0.2em] text-b-mute">§ 05 — answers</div>
-              <h3 className="mt-4 text-[40px] font-medium leading-tight tracking-tightx">
-                The short ones.
-              </h3>
-              <Link href="/help" className="mt-6 inline-block text-[13.5px] text-b-coral hover:underline">
-                Full FAQ →
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={c.img}
+                alt={`${BRAND} in ${c.name}`}
+                className="relative z-10 h-[300px] w-auto drop-shadow-[0_24px_38px_rgba(15,27,45,0.3)]"
+              />
+              <div className="relative z-10 mt-10 text-[12px] uppercase tracking-[0.22em] text-[#0F1B2D]/60 transition-colors duration-700 group-hover:text-[#F7F4EE]/85">{c.name}</div>
+              <div className={`${serif} relative z-10 mt-2 text-[26px] font-light transition-colors duration-700 group-hover:text-[#F7F4EE]`}>From $79</div>
+              <Link
+                href="/shop"
+                className="relative z-10 mt-5 border border-[#0F1B2D]/40 px-6 py-2.5 text-[11px] uppercase tracking-[0.2em] transition-colors duration-700 hover:bg-[#0F1B2D] hover:text-[#F7F4EE] group-hover:border-[#F7F4EE]/70 group-hover:text-[#F7F4EE]"
+              >
+                Reserve
               </Link>
             </div>
-            <div className="col-span-12 md:col-span-8">
-              <div className="divide-y divide-b-line rounded-3xl bg-b-surface ring-1 ring-b-line">
-                {FAQS.slice(0, 4).map((f) => (
-                  <details key={f.q} className="group p-6">
-                    <summary className="flex cursor-pointer list-none items-center justify-between gap-6">
-                      <span className="text-[18px] font-medium leading-snug tracking-tightish">{f.q}</span>
-                      <span className="font-mono text-b-mute transition group-open:rotate-45">＋</span>
-                    </summary>
-                    <p className="mt-4 max-w-2xl text-[14px] leading-[1.7] text-b-ink/75">{f.a}</p>
-                  </details>
-                ))}
-              </div>
-            </div>
-          </div>
+          ))}
         </div>
       </section>
 
-      {/* Email capture */}
-      <section className="relative overflow-hidden">
-        <div className="bg-grid-faint absolute inset-0" aria-hidden />
-        <div className="relative mx-auto grid max-w-[1280px] grid-cols-12 gap-8 px-6 py-28">
-          <div className="col-span-12 md:col-span-6">
-            <div className="font-mono text-[11px] uppercase tracking-[0.2em] text-b-coral">// early access</div>
-            <h3 className="mt-4 text-[48px] font-medium leading-[1.02] tracking-tightx">
-              First batch ships
-              <br />
-              <span className="text-b-mute">from Edinburgh.</span>
-            </h3>
-            <p className="mt-4 max-w-md text-[15px] leading-[1.65] text-b-ink/70">
-              Validation data, engineering notes, and pre-order access — one email when units leave the workshop.
-            </p>
-          </div>
-          <form className="col-span-12 flex items-end gap-3 md:col-span-6">
-            <div className="flex-1">
-              <label className="font-mono text-[10.5px] uppercase tracking-[0.22em] text-b-mute">Email</label>
+      {/* ————— Press line ————— */}
+      <section className="mx-auto max-w-[1240px] px-6 py-20 lg:px-10">
+        <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-4">
+          {PRESS_QUOTES.map((q) => (
+            <figure key={q.source} className="border-t border-[#0F1B2D]/15 pt-5">
+              <blockquote className={`${serif} text-[19px] font-light italic leading-snug text-[#0F1B2D]/85`}>
+                “{q.text}”
+              </blockquote>
+            </figure>
+          ))}
+        </div>
+      </section>
+
+      {/* ————— Cited on the record — sunset band ————— */}
+      <section data-nav-dark className="relative overflow-hidden">
+        <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: "url(/photos/storr-sunset.jpg)" }} />
+        <div className="absolute inset-0 bg-[#0F1B2D]/45" />
+        <div className="relative mx-auto flex min-h-[54vh] max-w-[820px] flex-col items-center justify-center px-6 py-24 text-center text-[#F7F4EE]">
+          <Eyebrow tone="light">Cited, on the record</Eyebrow>
+          <p className={`${serif} mt-6 text-[clamp(24px,3.4vw,40px)] font-light italic leading-[1.18]`}>
+            Built on a wavelength microbiology has studied for sixty years — three peer-reviewed papers on the same band
+            the device operates within.
+          </p>
+          <Link
+            href="/technology"
+            className="mt-10 inline-flex items-center gap-3 border border-[#F7F4EE]/50 px-7 py-3.5 text-[12px] uppercase tracking-[0.2em] transition hover:bg-[#F7F4EE] hover:text-[#0F1B2D]"
+          >
+            The evidence <span aria-hidden>→</span>
+          </Link>
+        </div>
+      </section>
+
+      {/* ————— Newsletter / early access ————— */}
+      <section data-nav-dark className="relative overflow-hidden bg-[#22333E] text-[#EAF1F2]">
+        {/* faint oversized watermark, FUME-style typographic emphasis */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 top-1/2 -translate-y-1/2 select-none text-center text-[22vw] font-light leading-none text-[#EAF1F2]/[0.045]"
+          style={{ fontFamily: "var(--font-cormorant), Georgia, serif" }}
+        >
+          FORTH
+        </div>
+        <div className="relative mx-auto flex min-h-[85vh] max-w-[820px] flex-col items-center justify-center px-6 py-36 text-center">
+          <Eyebrow tone="light">First 500 only</Eyebrow>
+          <h2 className={`${serif} mt-6 text-[clamp(44px,6.5vw,92px)] font-light leading-[1.0]`}>
+            Don&rsquo;t miss the drop
+          </h2>
+          <p className="mx-auto mt-7 max-w-[480px] text-[16px] leading-relaxed text-[#EAF1F2]/75">
+            The founding run ships first, with founder exclusives. Everyone else waits for round two — leave your email
+            and be first through the door.
+          </p>
+          <form className="mt-14 w-full max-w-[560px]">
+            <div className="flex items-center gap-4 border-b border-white/40 pb-4">
               <input
-                placeholder="you@home.com"
-                className="mt-2 w-full border-b border-b-line bg-transparent pb-3 text-[16px] placeholder:text-b-mute focus:border-b-coral focus:outline-none"
+                type="email"
+                required
+                placeholder="Email address"
+                className="w-full bg-transparent text-center text-[19px] text-[#EAF1F2] outline-none transition-colors placeholder:text-[#EAF1F2]/45 focus:placeholder:text-[#EAF1F2]/25"
               />
+              <button
+                type="submit"
+                aria-label="Sign up"
+                className="text-[26px] transition-transform hover:translate-x-1.5"
+              >
+                →
+              </button>
             </div>
-            <button className="rounded-full bg-b-coral px-6 py-3 text-[13.5px] font-medium text-b-bg hover:bg-b-coral/90">
-              Submit
-            </button>
+            <p className="mt-5 text-[11px] uppercase tracking-[0.2em] text-[#EAF1F2]/45">
+              No spam · unsubscribe anytime
+            </p>
           </form>
         </div>
       </section>
 
-      <SiteFooter tone="dark" />
-      <VariantToggle active="b" tone="dark" />
+      {/* ————— Footer ————— */}
+      <footer className="bg-[#F7F4EE] text-[#0F1B2D]">
+        <div className="mx-auto max-w-[1240px] px-6 py-20 lg:px-10">
+          <div className="grid gap-12 md:grid-cols-[1.4fr_1fr_1fr]">
+            <div>
+              <div className={`${serif} text-[28px] font-medium tracking-[0.12em]`}>{BRAND.toUpperCase()}</div>
+              <p className="mt-4 max-w-[300px] text-[14px] leading-relaxed text-[#0F1B2D]/65">
+                A submersible UV-C water sterilizer. Drops into any bottle and disinfects in sixty seconds. Designed and
+                assembled in Scotland.
+              </p>
+            </div>
+            <div>
+              <div className="text-[11px] uppercase tracking-[0.22em] text-[#0F1B2D]/45">Shop</div>
+              <ul className="mt-5 space-y-3 text-[14px] text-[#0F1B2D]/75">
+                <li><Link href="/shop" className="hover:opacity-60">Product</Link></li>
+                <li><Link href="/how-it-works" className="hover:opacity-60">How it works</Link></li>
+                <li><Link href="/technology" className="hover:opacity-60">Technology</Link></li>
+                <li><Link href="/compare" className="hover:opacity-60">Compare</Link></li>
+              </ul>
+            </div>
+            <div>
+              <div className="text-[11px] uppercase tracking-[0.22em] text-[#0F1B2D]/45">Company</div>
+              <ul className="mt-5 space-y-3 text-[14px] text-[#0F1B2D]/75">
+                <li><Link href="/about" className="hover:opacity-60">About</Link></li>
+                <li><Link href="/press" className="hover:opacity-60">Press</Link></li>
+                <li><Link href="/contact" className="hover:opacity-60">Contact</Link></li>
+                <li><Link href="/help" className="hover:opacity-60">Help</Link></li>
+              </ul>
+            </div>
+          </div>
+          <div className="mt-16 flex flex-col items-center justify-between gap-3 border-t border-[#0F1B2D]/10 pt-6 text-[11px] uppercase tracking-[0.18em] text-[#0F1B2D]/45 sm:flex-row">
+            <span>© 2026 {BRAND}, Ltd · Patent-pending</span>
+            <span>Terms · Privacy · Cookies</span>
+          </div>
+        </div>
+      </footer>
+
+      <VariantToggle active="b" tone="light" />
     </div>
   );
 }
