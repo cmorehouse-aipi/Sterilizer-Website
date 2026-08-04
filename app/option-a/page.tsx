@@ -127,27 +127,12 @@ export default function OptionA() {
         </div>
       </section>
 
-      {/* ————— Photo triptych: burn → moor → golden loch ————— */}
-      <section className="grid h-[62vh] min-h-[420px] grid-cols-1 gap-0 sm:grid-cols-3">
-        <div className="relative overflow-hidden">
-          <div
-            className="absolute inset-0 bg-cover bg-[position:center_42%] transition-transform duration-700 hover:scale-[1.04]"
-            style={{ backgroundImage: "url(/photos/triptych-blue.jpg)" }}
-          />
-        </div>
-        <div className="relative overflow-hidden">
-          <div
-            className="absolute inset-0 bg-cover bg-[position:center_35%] transition-transform duration-700 hover:scale-[1.04]"
-            style={{ backgroundImage: "url(/photos/triptych-green.jpg)" }}
-          />
-        </div>
-        <div className="relative overflow-hidden">
-          <div
-            className="absolute inset-0 bg-cover bg-[position:center_30%] transition-transform duration-700 hover:scale-[1.04]"
-            style={{ backgroundImage: "url(/photos/triptych-yellow.jpg)" }}
-          />
-        </div>
-      </section>
+      {/* ————— Waterfall divider ————— */}
+      <section
+        className="h-[48vh] min-h-[340px] bg-cover bg-center"
+        style={{ backgroundImage: "url(/photos/waterfall-divider.jpg)" }}
+        aria-label="A cascading burn in the Highlands"
+      />
 
       {/* ————— The claim ————— */}
       <section className="bg-[#22333E] text-[#EAF1F2]">
@@ -183,6 +168,25 @@ export default function OptionA() {
               Read the technology page
             </Link>
           </div>
+        </div>
+      </section>
+
+      {/* ————— Scotland story: moor panorama ————— */}
+      <section className="relative overflow-hidden">
+        <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: "url(/photos/moor-story.jpg)" }} />
+        <div className="absolute inset-0 bg-[#0F1B2D]/45" />
+        <div className="relative mx-auto flex min-h-[64vh] max-w-[860px] flex-col items-center justify-center px-6 py-24 text-center text-[#F2EFE8]">
+          <p className="font-mono text-[12px] uppercase tracking-[0.3em] text-[#F2EFE8]/70">designed in the heart of Scotland</p>
+          <p className="mt-6 font-serif text-[clamp(24px,3.4vw,38px)] italic leading-snug">
+            Engineered and assembled in a workshop above the Firth of Forth. The first water it ever cleaned came out of a
+            Highland burn.
+          </p>
+          <Link
+            href="/about"
+            className="mt-10 rounded-full bg-[#F2EFE8] px-7 py-3.5 text-[14px] font-semibold tracking-wide text-[#0F1B2D] transition hover:-translate-y-0.5"
+          >
+            Our story
+          </Link>
         </div>
       </section>
 
@@ -222,25 +226,6 @@ export default function OptionA() {
       <div className="border-y border-a-ink/10 bg-a-bg font-serif text-[16px] italic text-a-ink/80">
         <Ticker dark={false} items={PRESS_QUOTES.map((q) => `“${q.text}” — ${q.source}`)} />
       </div>
-
-      {/* ————— Scotland story ————— */}
-      <section className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: "url(/photos/waterfall.jpg)" }} />
-        <div className="absolute inset-0 bg-[#0F1B2D]/55" />
-        <div className="relative mx-auto flex min-h-[70vh] max-w-[860px] flex-col items-center justify-center px-6 py-28 text-center text-[#F2EFE8]">
-          <p className="font-mono text-[12px] uppercase tracking-[0.3em] text-[#F2EFE8]/70">designed in the heart of Scotland</p>
-          <p className="mt-6 font-serif text-[clamp(24px,3.4vw,38px)] italic leading-snug">
-            Engineered and assembled in a workshop above the Firth of Forth. The first water it ever cleaned came out of a
-            Highland burn.
-          </p>
-          <Link
-            href="/about"
-            className="mt-10 rounded-full bg-[#F2EFE8] px-7 py-3.5 text-[14px] font-semibold tracking-wide text-[#0F1B2D] transition hover:-translate-y-0.5"
-          >
-            Our story
-          </Link>
-        </div>
-      </section>
 
       {/* ————— Footer CTA ————— */}
       <section className="bg-grain bg-a-bg">
