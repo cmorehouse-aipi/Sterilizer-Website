@@ -77,7 +77,7 @@ export default function OptionA() {
             Any bottle.
           </h1>
           <p className="mt-5 font-serif text-[clamp(19px,2.4vw,27px)] italic text-a-ink/80">
-            from loch to lips, in sixty seconds
+            from loch to sip, in sixty seconds
           </p>
 
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
@@ -103,13 +103,13 @@ export default function OptionA() {
         <div className="mx-auto grid max-w-[1240px] items-center gap-14 px-6 py-24 lg:grid-cols-[1.15fr_0.85fr]">
           <div className="text-left">
             <h2 className={`${display} text-[clamp(44px,6vw,80px)]`}>Born of the Highlands</h2>
-            <p className="mt-3 font-serif text-[clamp(20px,2.4vw,28px)] italic text-a-ink/75">purified by light, not by luck</p>
+            <p className="mt-3 font-serif text-[clamp(20px,2.4vw,28px)] italic text-a-ink/75">poured by you, purified by light</p>
 
             <div className="mt-14 flex flex-col gap-10">
               {[
-                { n: "01", t: "Drop", d: "Slip it into any bottle with a neck wider than 25 mm. Loch, burn, hotel tap — no ceremony." },
+                { n: "01", t: "Drop", d: "Slip it into any bottle with a neck wider than 25 mm. Loch, fountain, hotel tap - no worries." },
                 { n: "02", t: "Shake", d: "One shake wakes the cycle. Dual UV-C emitters flood the water from every direction." },
-                { n: "03", t: "Drink", d: "Sixty seconds later the light goes out and the water is yours. No taste, no chemicals." },
+                { n: "03", t: "Drink", d: "Sixty seconds later the light goes out and the water is yours. Pure as the untouched highlands." },
               ].map((s) => (
                 <div key={s.n} className="flex items-start gap-5">
                   <span className="mt-1 font-mono text-[12px] tracking-[0.25em] text-a-ink/50">{s.n}</span>
@@ -156,9 +156,9 @@ export default function OptionA() {
 
           <div className="order-1 text-left lg:order-2">
             <p className="font-mono text-[12px] uppercase tracking-[0.3em] text-[#EAF1F2]/60">the technology</p>
-            <h2 className={`${display} mt-4 text-[clamp(44px,6vw,84px)]`}>265 nm of pure light</h2>
+            <h2 className={`${display} mt-4 text-[clamp(44px,6vw,84px)]`}>Purified by light</h2>
             <p className="mt-5 max-w-[520px] font-serif text-[clamp(19px,2.2vw,25px)] italic text-[#EAF1F2]/80">
-              the wavelength microbial DNA cannot survive
+              emission at 265 nm - the wavelength microbial DNA cannot survive
             </p>
 
             <div className="mt-12 grid max-w-[640px] gap-5 sm:grid-cols-3">
@@ -276,43 +276,35 @@ export default function OptionA() {
       </section>
 
       {/* ————— Footer CTA — early access ————— */}
-      <section className="relative overflow-hidden bg-[#0F1B2D] text-[#F2EFE8]">
-        {/* animated aurora glow */}
-        <div className="pointer-events-none absolute inset-0">
-          <div className="animate-glow absolute -left-24 top-0 h-96 w-96 rounded-full bg-[#7FB3FF]/25 blur-3xl" />
-          <div className="animate-glow absolute -right-24 bottom-0 h-96 w-96 rounded-full bg-[#E89B7C]/20 blur-3xl" />
-          <div className="absolute left-1/2 top-1/2 h-[520px] w-[520px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#889E81]/15 blur-3xl" />
-        </div>
-        <div className="bg-grid-faint">
-          <div className="mx-auto max-w-[760px] px-6 py-28 text-center">
-            <span className="inline-block rounded-full bg-[#E89B7C] px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.22em] text-[#0F1B2D]">
-              First 500 only · founding batch
-            </span>
-            <h2 className={`${display} mt-6 text-[clamp(44px,7.5vw,96px)]`}>
-              Don&rsquo;t miss the drop
-            </h2>
-            <p className="mx-auto mt-5 max-w-[520px] font-serif text-[clamp(18px,2.4vw,24px)] italic text-[#F2EFE8]/80">
-              The founding run ships first, at the founder&rsquo;s price. Everyone else waits for round two. Leave your
-              email and be first through the door.
-            </p>
-            <form className="mx-auto mt-10 flex max-w-[500px] flex-col items-center gap-3 sm:flex-row">
-              <input
-                type="email"
-                required
-                placeholder="you@example.com"
-                className="w-full rounded-full border border-white/20 bg-white/10 px-6 py-4 text-[15px] text-[#F2EFE8] outline-none backdrop-blur placeholder:text-[#F2EFE8]/50 focus:border-white/60"
-              />
-              <button
-                type="submit"
-                className="w-full shrink-0 rounded-full bg-[#E89B7C] px-8 py-4 text-[15px] font-bold uppercase tracking-wide text-[#0F1B2D] shadow-lg transition hover:-translate-y-0.5 hover:bg-[#f0ab8f] sm:w-auto"
-              >
-                Claim my spot
-              </button>
-            </form>
-            <p className="mt-5 font-mono text-[12px] uppercase tracking-[0.2em] text-[#F2EFE8]/50">
-              No spam · unsubscribe anytime · just the launch
-            </p>
-          </div>
+      <section className="bg-[#22333E] text-[#EAF1F2]">
+        <div className="mx-auto max-w-[760px] px-6 py-28 text-center">
+          <span className="inline-block rounded-full bg-[#C7D4D6] px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.22em] text-[#22333E]">
+            First 500 only · founding batch
+          </span>
+          <h2 className={`${display} mt-6 whitespace-nowrap text-[clamp(30px,6vw,80px)]`}>
+            Don&rsquo;t miss the drop
+          </h2>
+          <p className="mx-auto mt-5 max-w-[560px] font-serif text-[clamp(18px,2.4vw,24px)] italic text-[#EAF1F2]/80">
+            The founding run ships first, with founder exclusives. Everyone else waits for round two — leave your email and
+            be first through the door.
+          </p>
+          <form className="mx-auto mt-10 flex max-w-[500px] flex-col items-center gap-3 sm:flex-row">
+            <input
+              type="email"
+              required
+              placeholder="you@example.com"
+              className="w-full rounded-full border border-white/20 bg-white/10 px-6 py-4 text-[15px] text-[#EAF1F2] outline-none backdrop-blur placeholder:text-[#EAF1F2]/50 focus:border-white/60"
+            />
+            <button
+              type="submit"
+              className="w-full shrink-0 rounded-full bg-[#C7D4D6] px-8 py-4 text-[15px] font-bold uppercase tracking-wide text-[#22333E] shadow-lg transition hover:-translate-y-0.5 hover:bg-[#d6e0e1] sm:w-auto"
+            >
+              Claim my spot
+            </button>
+          </form>
+          <p className="mt-5 font-mono text-[12px] uppercase tracking-[0.2em] text-[#EAF1F2]/50">
+            No spam · unsubscribe anytime · just the launch
+          </p>
         </div>
       </section>
 
