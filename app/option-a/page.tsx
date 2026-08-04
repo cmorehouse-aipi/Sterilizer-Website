@@ -8,6 +8,7 @@ import { SiteNav } from "../components/SiteNav";
 import { HeroDeviceRotator } from "../components/HeroDeviceRotator";
 import { ObjectViewToggle } from "../components/ObjectViewToggle";
 import { UseCaseIcon } from "../components/UseCaseIcons";
+import { TransitionTuner } from "../components/TransitionTuner";
 
 const anton = Anton({ weight: "400", subsets: ["latin"], variable: "--font-anton" });
 
@@ -133,7 +134,7 @@ export default function OptionA() {
         <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: "url(/photos/waterfall-divider.jpg)" }} />
         <div className="absolute inset-0 bg-[#0F1B2D]/45" />
         {/* bottom fade into the technology section */}
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-[linear-gradient(to_bottom,transparent,#22333E)]" />
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-[linear-gradient(to_bottom,transparent,#22333E)]" style={{ height: "var(--fade-h, 160px)" }} />
         <div className="relative mx-auto flex min-h-[64vh] max-w-[860px] flex-col items-center justify-center px-6 py-24 text-center text-[#F2EFE8]">
           <p className="font-mono text-[12px] uppercase tracking-[0.3em] text-[#F2EFE8]/70">designed in the heart of Scotland</p>
           <p className="mt-6 font-serif text-[clamp(24px,3.4vw,38px)] italic leading-snug">
@@ -191,7 +192,7 @@ export default function OptionA() {
         <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: "url(/photos/moor-story.jpg)" }} />
         <div className="absolute inset-0 bg-[#0F1B2D]/45" />
         {/* top fade from the technology section */}
-        <div className="pointer-events-none absolute inset-x-0 top-0 h-40 bg-[linear-gradient(to_top,transparent,#22333E)]" />
+        <div className="pointer-events-none absolute inset-x-0 top-0 bg-[linear-gradient(to_top,transparent,#22333E)]" style={{ height: "var(--fade-h, 160px)" }} />
         <div className="relative mx-auto flex min-h-[64vh] max-w-[860px] flex-col items-center justify-center px-6 py-24 text-center text-[#F2EFE8]">
           <p className="font-mono text-[12px] uppercase tracking-[0.3em] text-[#F2EFE8]/70">why it&rsquo;s different</p>
           <p className="mt-6 font-serif text-[clamp(24px,3.4vw,38px)] italic leading-snug">
@@ -314,6 +315,7 @@ export default function OptionA() {
 
       <SiteFooter />
       <VariantToggle active="a" tone="light" />
+      <TransitionTuner />
     </div>
   );
 }
