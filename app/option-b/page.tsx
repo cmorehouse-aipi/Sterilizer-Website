@@ -35,11 +35,6 @@ function Eyebrow({ children, tone = "ink" }: { children: React.ReactNode; tone?:
 export default function OptionB() {
   return (
     <div className={`${cormorant.variable} bg-[#F7F4EE] text-[#0F1B2D]`}>
-      {/* ————— Announcement bar ————— */}
-      <div className="bg-[#F7F4EE] py-2.5 text-center text-[11px] uppercase tracking-[0.22em] text-[#0F1B2D]/70">
-        Founding batch — early access now open
-      </div>
-
       <FumeNav />
 
       {/* ————— Hero: full-bleed cinematic ————— */}
@@ -76,58 +71,6 @@ export default function OptionB() {
         </div>
       </section>
 
-      {/* ————— Split panels: the Highlands / the instrument ————— */}
-      <section className="grid grid-cols-1 md:grid-cols-2">
-        <div className="group relative h-[70vh] min-h-[440px] overflow-hidden">
-          <div
-            className="absolute inset-0 bg-cover bg-[position:center_40%] transition-transform duration-[1200ms] group-hover:scale-[1.05]"
-            style={{ backgroundImage: "url(/photos/triptych-blue.jpg)" }}
-          />
-          <div className="absolute inset-0 bg-[#0F1B2D]/15" />
-          <div className="absolute inset-x-0 bottom-0 flex flex-col items-center pb-10 text-center text-[#F7F4EE]">
-            <Eyebrow tone="light">The Highlands</Eyebrow>
-            <p className={`${serif} mt-3 text-[30px] font-light`}>Straight from the source</p>
-          </div>
-        </div>
-
-        <div className="group relative flex h-[70vh] min-h-[440px] flex-col items-center justify-center overflow-hidden bg-[#C7D4D6]">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/renderings/forth-device-hero.png"
-            alt={`The ${BRAND} device`}
-            className="h-[62%] w-auto drop-shadow-[0_30px_50px_rgba(15,27,45,0.28)] transition-transform duration-[1200ms] group-hover:scale-[1.05]"
-          />
-          <div className="absolute inset-x-0 bottom-0 flex flex-col items-center pb-10 text-center">
-            <Eyebrow>The instrument</Eyebrow>
-            <p className={`${serif} mt-3 text-[30px] font-light`}>87 × 22 mm of engineering</p>
-          </div>
-        </div>
-      </section>
-
-      {/* ————— Poured by you — editorial statement + steps ————— */}
-      <section className="mx-auto max-w-[1240px] px-6 py-28 lg:px-10">
-        <div className="grid gap-10 lg:grid-cols-[1fr_1.1fr] lg:items-end">
-          <Eyebrow>Born of the Highlands</Eyebrow>
-          <h2 className={`${serif} text-[clamp(34px,4.4vw,58px)] font-light leading-[1.06]`}>
-            Poured by you, purified by light.
-          </h2>
-        </div>
-
-        <div className="mt-16 grid gap-px overflow-hidden rounded-sm border border-[#0F1B2D]/10 bg-[#0F1B2D]/10 sm:grid-cols-3">
-          {[
-            { n: "01", t: "Drop", d: "Slip it into any bottle with a neck wider than 25 mm. Loch, fountain, hotel tap — no worries." },
-            { n: "02", t: "Shake", d: "One shake wakes the cycle. Dual UV-C emitters flood the water from every direction." },
-            { n: "03", t: "Drink", d: "Sixty seconds later the light goes out and the water is yours. Pure as the untouched highlands." },
-          ].map((s) => (
-            <div key={s.n} className="bg-[#F7F4EE] px-8 py-12">
-              <div className={`${serif} text-[40px] font-light text-[#0F1B2D]/35`}>{s.n}</div>
-              <h3 className="mt-4 text-[13px] uppercase tracking-[0.22em]">{s.t}</h3>
-              <p className="mt-4 text-[15px] leading-relaxed text-[#0F1B2D]/70">{s.d}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
       {/* ————— Technology — dark editorial ————— */}
       <section className="bg-[#22333E] text-[#EAF1F2]">
         <div className="mx-auto grid max-w-[1240px] items-center gap-16 px-6 py-28 lg:grid-cols-[0.9fr_1.1fr] lg:px-10">
@@ -161,6 +104,51 @@ export default function OptionB() {
             >
               Read the science <span aria-hidden>→</span>
             </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ————— Poured by you — editorial statement + steps ————— */}
+      <section className="mx-auto max-w-[1240px] px-6 py-28 lg:px-10">
+        <div className="grid gap-10 lg:grid-cols-[1fr_1.1fr] lg:items-end">
+          <Eyebrow>Born of the Highlands</Eyebrow>
+          <h2 className={`${serif} text-[clamp(34px,4.4vw,58px)] font-light leading-[1.06]`}>
+            Poured by you, purified by light.
+          </h2>
+        </div>
+
+        <div className="mt-16 grid gap-px overflow-hidden rounded-sm border border-[#0F1B2D]/10 bg-[#0F1B2D]/10 sm:grid-cols-3">
+          {[
+            { n: "01", t: "Drop", d: "Slip it into any bottle with a neck wider than 25 mm. Loch, fountain, hotel tap — no worries." },
+            { n: "02", t: "Shake", d: "One shake wakes the cycle. Dual UV-C emitters flood the water from every direction." },
+            { n: "03", t: "Drink", d: "Sixty seconds later the light goes out and the water is yours. Pure as the untouched highlands." },
+          ].map((s) => (
+            <div key={s.n} className="bg-[#F7F4EE] px-8 py-12">
+              <div className={`${serif} text-[40px] font-light text-[#0F1B2D]/35`}>{s.n}</div>
+              <h3 className="mt-4 text-[13px] uppercase tracking-[0.22em]">{s.t}</h3>
+              <p className="mt-4 text-[15px] leading-relaxed text-[#0F1B2D]/70">{s.d}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ————— Split panels: the Highlands / the instrument ————— */}
+      <section className="grid grid-cols-1 md:grid-cols-2">
+        <div className="group relative h-[70vh] min-h-[440px] overflow-hidden">
+          <div
+            className="absolute inset-0 bg-cover bg-[position:center_40%] transition-transform duration-[1200ms] group-hover:scale-[1.05]"
+            style={{ backgroundImage: "url(/photos/triptych-blue.jpg)" }}
+          />
+          <div className="absolute inset-0 bg-[#0F1B2D]/15" />
+          <div className="absolute inset-x-0 bottom-0 flex flex-col items-center pb-10 text-center text-[#F7F4EE]">
+            <Eyebrow tone="light">The Source</Eyebrow>
+          </div>
+        </div>
+
+        <div className="group relative flex h-[70vh] min-h-[440px] flex-col items-center justify-center overflow-hidden bg-[#C7D4D6]">
+          <HeroDeviceRotator alt={`The ${BRAND} device, rotating`} heightClass="h-[42vh] min-h-[280px]" />
+          <div className="absolute inset-x-0 bottom-0 flex flex-col items-center pb-10 text-center">
+            <Eyebrow>The instrument</Eyebrow>
           </div>
         </div>
       </section>
@@ -208,22 +196,27 @@ export default function OptionB() {
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-3">
           {[
-            { name: "Midnight", bg: "#C7D4D6", img: "/renderings/forth-device-hero.png" },
-            { name: "Sage", bg: "#DCE4D7", img: "/renderings/forth-device-sage-hero.png" },
-            { name: "Sun", bg: "#F0E3BC", img: "/renderings/forth-device-sun-hero.png" },
+            { name: "Midnight", bg: "#C7D4D6", img: "/renderings/forth-device-hero.png", scene: "/photos/waterfall-divider.jpg", pos: "center 42%", tint: "#51707E" },
+            { name: "Sage", bg: "#DCE4D7", img: "/renderings/forth-device-sage-hero.png", scene: "/photos/moor-story.jpg", pos: "center 55%", tint: "#889E81" },
+            { name: "Sun", bg: "#F0E3BC", img: "/renderings/forth-device-sun-hero.png", scene: "/photos/storr-sunset.jpg", pos: "center 35%", tint: "#F0E3BC" },
           ].map((c) => (
-            <div key={c.name} className="group relative flex flex-col items-center px-6 pb-14 pt-16" style={{ backgroundColor: c.bg }}>
+            <div key={c.name} className="group relative flex flex-col items-center overflow-hidden px-6 pb-14 pt-16" style={{ backgroundColor: c.bg }}>
+              {/* scene reveal on hover — FUME-style */}
+              <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-700 group-hover:opacity-100">
+                <div className="absolute inset-0 bg-cover" style={{ backgroundImage: `url(${c.scene})`, backgroundPosition: c.pos }} />
+                <div className="absolute inset-0" style={{ backgroundColor: `${c.tint}30` }} />
+              </div>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={c.img}
                 alt={`${BRAND} in ${c.name}`}
-                className="h-[300px] w-auto drop-shadow-[0_24px_38px_rgba(15,27,45,0.3)] transition-transform duration-700 group-hover:-translate-y-2"
+                className="relative z-10 h-[300px] w-auto drop-shadow-[0_24px_38px_rgba(15,27,45,0.3)] transition-transform duration-700 group-hover:-translate-y-2"
               />
-              <div className="mt-10 text-[12px] uppercase tracking-[0.22em] text-[#0F1B2D]/60">{c.name}</div>
-              <div className={`${serif} mt-2 text-[26px] font-light`}>From $79</div>
+              <div className="relative z-10 mt-10 text-[12px] uppercase tracking-[0.22em] text-[#0F1B2D]/60 transition-colors duration-700 group-hover:text-[#F7F4EE]/85">{c.name}</div>
+              <div className={`${serif} relative z-10 mt-2 text-[26px] font-light transition-colors duration-700 group-hover:text-[#F7F4EE]`}>From $79</div>
               <Link
                 href="/shop"
-                className="mt-5 border border-[#0F1B2D]/40 px-6 py-2.5 text-[11px] uppercase tracking-[0.2em] transition hover:bg-[#0F1B2D] hover:text-[#F7F4EE]"
+                className="relative z-10 mt-5 border border-[#0F1B2D]/40 px-6 py-2.5 text-[11px] uppercase tracking-[0.2em] transition-colors duration-700 hover:bg-[#0F1B2D] hover:text-[#F7F4EE] group-hover:border-[#F7F4EE]/70 group-hover:text-[#F7F4EE]"
               >
                 Reserve
               </Link>

@@ -80,6 +80,12 @@ export function FumeNav() {
         </div>
       </div>
 
+
+      {/* persistent announcement bar */}
+      <div className="bg-[#0F1B2D]/90 py-2 text-center text-[10px] uppercase tracking-[0.24em] text-[#F7F4EE]/90 backdrop-blur">
+        Founding batch — early access now open
+      </div>
+
       {/* mobile sheet */}
       {open && (
         <div className="border-t border-[#0F1B2D]/10 bg-[#F7F4EE] px-6 py-4 text-[#0F1B2D] md:hidden">
