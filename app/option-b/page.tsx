@@ -1,1038 +1,340 @@
 import Link from "next/link";
+import { Cormorant_Garamond } from "next/font/google";
 
-import { BRAND, SPECS, COMPARE_ROWS, FAQS, USE_CASES, PRESS_QUOTES } from "../lib/brand";
-
-import { Logomark } from "../components/Logomark";
-
+import { BRAND, PRESS_QUOTES, USE_CASES } from "../lib/brand";
 import { VariantToggle } from "../components/VariantToggle";
-
-import { SiteFooter } from "../components/SiteFooter";
-
-import { ExplodedReveal } from "../components/ExplodedReveal";
-
-import { HeroColorPicker } from "../components/HeroColorPicker";
-
-import { FaqAccordion } from "../components/FaqAccordion";
-
+import { FumeNav } from "../components/FumeNav";
 import { ObjectViewToggle } from "../components/ObjectViewToggle";
+import { HeroDeviceRotator } from "../components/HeroDeviceRotator";
 
-import { SiteNav } from "../components/SiteNav";
-import { UseCaseIcon } from "../components/UseCaseIcons";
-
-
+const cormorant = Cormorant_Garamond({
+  weight: ["300", "400", "500", "600"],
+  subsets: ["latin"],
+  variable: "--font-cormorant",
+});
 
 export const metadata = {
-
   title: `${BRAND} — Option B`,
-
   description: `${BRAND} is a submersible UV-C sterilizer the size of a marker. Designed and assembled in Scotland.`,
-
 };
 
+/* elegant editorial serif — the voice of Option B */
+const serif = "[font-family:var(--font-cormorant),Georgia,serif]";
 
-
-
-
-export default function OptionB() {
-
+/* ● micro-label used throughout, FUME-style */
+function Eyebrow({ children, tone = "ink" }: { children: React.ReactNode; tone?: "ink" | "light" }) {
+  const c = tone === "light" ? "text-[#F7F4EE]/70" : "text-[#0F1B2D]/55";
   return (
-
-    <div className="min-h-screen bg-a-bg text-a-ink bg-grain">
-
-      <SiteNav tone="light" />
-
-
-
-      {/* Hero — editorial split. */}
-
-      <section className="relative">
-
-        <div className="mx-auto grid max-w-[1240px] grid-cols-12 gap-8 px-8 pb-24 pt-20 md:pt-28">
-
-          <div className="col-span-12 md:col-span-7">
-
-            <div className="animate-rise text-[12px] uppercase tracking-[0.18em] text-a-ink/60">UV-C · Designed in Scotland</div>
-
-            <h1 className="mt-8 animate-rise font-serif text-[56px] leading-[0.98] tracking-tightish text-a-ink md:text-[88px]" style={{ animationDelay: "80ms" }}>
-
-              Clean water,
-
-              <br />
-
-              <span className="italic text-a-ink/85">in any bottle,</span>
-
-              <br />
-
-              in seconds.
-
-            </h1>
-
-            <p className="mt-8 animate-rise max-w-md text-[16px] leading-[1.6] text-a-ink/75" style={{ animationDelay: "180ms" }}>
-
-              {BRAND} is a submersible UV-C sterilizer the size of a marker. It drops into the bottle in your hand, activates on a shake, and neutralises 99.9% of bacteria, viruses, and protozoa in sixty seconds.
-
-            </p>
-
-            <div className="mt-10 animate-rise flex items-center gap-4" style={{ animationDelay: "260ms" }}>
-
-              <Link
-
-                href="/shop"
-
-                className="rounded-full bg-a-ink px-6 py-3 text-[14px] tracking-tight text-a-bg hover:bg-a-ink/85"
-
-              >
-
-                Buy — from $39
-
-              </Link>
-
-              <Link href="/how-it-works" className="text-[14px] tracking-tight underline-offset-4 hover:underline">
-
-                How it works →
-
-              </Link>
-
-            </div>
-
-          </div>
-
-
-
-          <div className="col-span-12 animate-rise flex justify-center md:col-span-5 md:justify-center" style={{ animationDelay: "120ms" }}>
-
-            <HeroColorPicker alt={`${BRAND} sterilizer — 3D rendering`} />
-
-          </div>
-
-        </div>
-
-
-
-        {/* Quiet credentials strip — marquee */}
-
-        <div className="border-y border-a-rule bg-a-bg/60 overflow-hidden">
-
-          <div className="animate-ticker flex items-center whitespace-nowrap py-5 font-mono text-[11px] uppercase tracking-[0.22em] text-a-ink/55">
-
-            {[0, 1, 2, 3].map((i) => (
-
-              <div key={i} aria-hidden={i > 0} className="flex shrink-0 items-center gap-8 pl-8">
-
-                <span>EPA-validated</span>
-
-                <span className="text-a-ink/25">·</span>
-
-                <span>87 × 22 mm · 32 g</span>
-
-                <span className="text-a-ink/25">·</span>
-
-                <span>30 cycles per charge</span>
-
-                <span className="text-a-ink/25">·</span>
-
-                <span>2-year warranty</span>
-
-                <span className="text-a-ink/25">·</span>
-
-                <span>Made in Scotland</span>
-
-                <span className="text-a-ink/25">·</span>
-
-              </div>
-
-            ))}
-
-          </div>
-
-        </div>
-
-      </section>
-
-
-
-      {/* Provenance — Designed in the Heart of Scotland */}
-
-      <section className="relative">
-
-        <div className="relative h-[68vh] min-h-[460px] w-full overflow-hidden">
-
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-
-          <img
-
-            src="/photos/rocky-peaks.png"
-
-            alt="The Old Man of Storr, Isle of Skye"
-
-            className="absolute inset-0 h-full w-full object-cover"
-
-          />
-
-          <div className="absolute inset-0 bg-gradient-to-r from-black/65 via-black/35 to-black/10" />
-
-          <div className="relative mx-auto flex h-full max-w-[1240px] flex-col justify-end px-8 pb-16 md:pb-20">
-
-            <div className="font-mono text-[11px] uppercase tracking-[0.22em] text-white/70">Provenance</div>
-
-            <h2 className="mt-3 max-w-2xl font-serif text-[40px] leading-[1.05] tracking-tightish text-white md:text-[56px]">
-
-              Designed in the
-
-              <br />
-
-              <span className="italic">Heart of Scotland.</span>
-
-            </h2>
-
-            <p className="mt-5 max-w-md text-[15px] leading-[1.65] text-white/80">
-
-              {BRAND} is engineered and assembled in a workshop above the Firth of Forth — the river it takes its name from, and the first water it ever cleaned.
-
-            </p>
-
-          </div>
-
-        </div>
-
-      </section>
-
-
-
-      {/* The 30-second story */}
-
-      <section className="mx-auto max-w-[1240px] px-8 py-24">
-
-        <div className="grid grid-cols-12 gap-8">
-
-          <div className="col-span-12 md:col-span-4">
-
-            <div className="font-mono text-[11px] uppercase tracking-[0.22em] text-a-ink/55">The thirty-second story</div>
-
-            <h2 className="mt-4 font-serif text-[44px] leading-[1] tracking-tightish md:text-[56px]">
-
-              Drop. Shake.<br /> Drink.
-
-            </h2>
-
-            <p className="mt-6 max-w-sm text-[15px] leading-[1.65] text-a-ink/70">
-
-              Three motions. Sixty seconds, start to finish. No filters to change, no cartridges to replace.
-
-            </p>
-
-          </div>
-
-          <ol className="col-span-12 grid grid-cols-1 gap-px bg-a-rule md:col-span-8 md:grid-cols-3">
-
-            {[
-
-              {
-
-                n: "01", h: "Drop it in",
-
-                b: "Drops into any bottle with a neck wider than 25 mm. Fully submersible, fully waterproof.",
-
-                icon: (
-
-                  <svg aria-hidden width="40" height="40" viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-
-                    <rect x="18" y="1" width="12" height="26" rx="6"/>
-
-                    <line x1="24" y1="29" x2="24" y2="33" strokeDasharray="2.5 2"/>
-
-                    <line x1="13" y1="35" x2="35" y2="35"/>
-
-                    <line x1="17" y1="35" x2="17" y2="45"/>
-
-                    <line x1="31" y1="35" x2="31" y2="45"/>
-
-                  </svg>
-
-                ),
-
-              },
-
-              {
-
-                n: "02", h: "Shake to start",
-
-                b: "A single shake fires the 60-second cycle. No buttons, no ports, no fuss.",
-
-                icon: (
-
-                  <svg aria-hidden width="40" height="40" viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-
-                    <path d="M20 4h8v10l6 5v24q0 3-3 3H17q-3 0-3-3V19l6-5V4z"/>
-                    <rect x="21" y="20" width="6" height="20" rx="3"/>
-
-                    <path d="M10 22 C7 26 7 32 10 36" strokeOpacity="0.55"/>
-
-                    <path d="M7 19 C4 24 4 34 7 39" strokeOpacity="0.25"/>
-
-                    <path d="M38 22 C41 26 41 32 38 36" strokeOpacity="0.55"/>
-
-                    <path d="M41 19 C44 24 44 34 41 39" strokeOpacity="0.25"/>
-
-                  </svg>
-
-                ),
-
-              },
-
-              {
-
-                n: "03", h: "Drink",
-
-                b: "Dual UV-C emitters at 265 nm reach every face of the bottle. Sterile water, every time.",
-
-                icon: (
-
-                  <svg aria-hidden width="40" height="40" viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-
-                    <path d="M24 7C24 7 11 22 11 31c0 7.2 5.9 12 13 12s13-4.8 13-12c0-9-13-24-13-24Z"/>
-
-                    <polyline points="18,31 22,35 31,25"/>
-
-                  </svg>
-
-                ),
-
-              },
-
-            ].map((s) => (
-
-              <li key={s.n} className="bg-a-bg p-7">
-
-                <div className="text-a-ink/45">{s.icon}</div>
-
-                <div className="mt-5 font-mono text-[11px] uppercase tracking-[0.22em] text-a-ink/50">{s.n}</div>
-
-                <div className="mt-4 font-serif text-[24px] leading-tight">{s.h}</div>
-
-                <p className="mt-3 text-[14px] leading-[1.6] text-a-ink/70">{s.b}</p>
-
-              </li>
-
-            ))}
-
-          </ol>
-
-        </div>
-
-      </section>
-
-
-
-      {/* Scroll-pinned exploded view */}
-
-      <ExplodedReveal
-
-        tone="light"
-
-        eyebrow="Inside the cylinder"
-
-        title="Six components. Eight pieces. One sealed instrument."
-
-        description="Scroll to disassemble. The body resolves into its components — every part engineered to last. No internal replacements needed."
-
-      />
-
-
-
-      {/* Big product hero shot section */}
-
-      <section className="bg-a-ink text-a-bg">
-
-        <div className="mx-auto grid max-w-[1240px] grid-cols-12 gap-8 px-8 py-32">
-
-          <div className="col-span-12 self-center md:col-span-6">
-
-            <div className="font-mono text-[11px] uppercase tracking-[0.22em] text-a-bg/55">The object</div>
-
-            <h3 className="mt-6 font-serif text-[40px] leading-[1.05] tracking-tightish md:text-[52px]">
-
-              An instrument, not a gadget.
-
-            </h3>
-
-            <p className="mt-6 max-w-md text-[15px] leading-[1.7] text-a-bg/75">
-
-              An 87 × 22 mm cylinder of recycled aluminium, capped at each end by a faceted geodesic emitter. No buttons. No ports. No seams. Charged by induction; sealed for life. Only eight pieces. Built to last.
-
-            </p>
-
-            <dl className="mt-10 grid grid-cols-2 gap-y-5 text-[13px]">
-
-              {[
-
-                ["Size", SPECS.size],
-
-                ["Weight", SPECS.weight],
-
-                ["Cycle", SPECS.cycle],
-
-                ["Battery", SPECS.battery],
-
-                ["Charging", SPECS.charge],
-
-                ["Rating", SPECS.rating],
-
-              ].map(([k, v]) => (
-
-                <div key={k}>
-
-                  <dt className="text-a-bg/55 uppercase tracking-[0.16em] text-[11px]">{k}</dt>
-
-                  <dd className="mt-1 text-a-bg">{v}</dd>
-
-                </div>
-
-              ))}
-
-            </dl>
-
-          </div>
-
-          <div className="col-span-12 flex items-center justify-center md:col-span-6">
-
-            <ObjectViewToggle />
-
-          </div>
-
-        </div>
-
-      </section>
-
-
-
-      {/* Why it's different — small comparison snippet */}
-
-      <section className="mx-auto max-w-[1240px] px-8 py-28">
-
-        <div className="grid grid-cols-12 gap-8">
-
-          <div className="col-span-12 md:col-span-4">
-
-            <div className="text-[12px] uppercase tracking-[0.18em] text-a-ink/55">Why it's different</div>
-
-            <h3 className="mt-4 font-serif text-[40px] leading-tight tracking-tightish">
-
-              Better technology, in a better object, at a fairer price.
-
-            </h3>
-
-            <Link
-
-              href="/compare"
-
-              className="mt-8 inline-block text-[14px] underline-offset-4 hover:underline"
-
-            >
-
-              See the full comparison →
-
-            </Link>
-
-          </div>
-
-          <div className="col-span-12 md:col-span-8">
-
-            <div className="overflow-hidden rounded-2xl ring-1 ring-a-rule">
-
-              <table className="w-full text-left text-[14px]">
-
-                <thead className="bg-a-rule/40">
-
-                  <tr className="text-[11px] uppercase tracking-[0.16em] text-a-ink/60">
-
-                    <th className="px-5 py-4"></th>
-
-                    <th className="border-l-2 border-r-2 border-t-2 border-a-sage/40 bg-a-sage/10 px-5 py-4">{BRAND}</th>
-
-                    <th className="px-5 py-4">SteriPen</th>
-
-                    <th className="px-5 py-4">LARQ</th>
-
-                    <th className="px-5 py-4">Tablets</th>
-
-                  </tr>
-
-                </thead>
-
-                <tbody>
-
-                  {COMPARE_ROWS.slice(0, 5).map((row) => (
-
-                    <tr key={row.label} className="group border-t border-a-rule">
-
-                      <td className="px-5 py-4 text-a-ink/65">{row.label}</td>
-
-                      <td className="border-l-2 border-r-2 border-a-sage/40 group-last:border-b-2 bg-a-sage/10 px-5 py-4">{row.forth}</td>
-
-                      <td className="px-5 py-4 text-a-ink/65">{row.steripen}</td>
-
-                      <td className="px-5 py-4 text-a-ink/65">{row.larq}</td>
-
-                      <td className="px-5 py-4 text-a-ink/65">{row.tabs}</td>
-
-                    </tr>
-
-                  ))}
-
-                </tbody>
-
-              </table>
-
-            </div>
-
-          </div>
-
-        </div>
-
-      </section>
-
-
-
-      {/* Press / social proof */}
-
-      <section className="border-y border-a-rule bg-a-bg/60">
-
-        <div className="mx-auto max-w-[1240px] px-8 py-16 pb-24">
-
-          <div className="grid grid-cols-2 gap-10 md:grid-cols-4">
-
-            {PRESS_QUOTES.map((p, i) => (
-
-              <figure key={p.source} className={i % 2 === 1 ? "mt-10" : ""}>
-
-                <div className="relative">
-
-                  <span className="pointer-events-none absolute -left-1 -top-3 select-none font-serif text-[80px] leading-none text-a-ink/[0.07]" aria-hidden>&ldquo;</span>
-
-                  <blockquote className="relative pt-7 font-serif text-[18px] leading-snug text-a-ink/85">
-
-                    {p.text}
-
-                  </blockquote>
-
-                </div>
-
-                <figcaption className="mt-4 text-[11px] uppercase tracking-[0.18em] text-a-ink/55">
-
-                  — {p.source}
-
-                </figcaption>
-
-              </figure>
-
-            ))}
-
-          </div>
-
-        </div>
-
-      </section>
-
-
-
-      {/* Technology in 60 seconds */}
-
-      <section className="mx-auto max-w-[1240px] px-8 py-28">
-
-        <div className="grid grid-cols-12 items-center gap-12">
-
-          <div className="col-span-12 md:col-span-5">
-
-            <div className="aspect-square w-full overflow-hidden rounded-3xl bg-a-sage/15 ring-1 ring-a-rule">
-
-              <div className="grid h-full place-items-center">
-
-                <div className="relative">
-
-                  <div className="absolute inset-0 animate-spinslow rounded-full border border-dashed border-a-ink/25" />
-
-                  <Logomark className="h-32 w-32 origin-center animate-spinslow text-a-ink/80" />
-
-                </div>
-
-              </div>
-
-            </div>
-
-          </div>
-
-          <div className="col-span-12 md:col-span-7">
-
-            <div className="font-mono text-[11px] uppercase tracking-[0.22em] text-a-ink/55">The technology, briefly</div>
-
-            <h3 className="mt-4 font-serif text-[40px] leading-tight tracking-tightish">
-
-              UV-C at 265 nanometres — the wavelength microbial DNA cannot survive.
-
-            </h3>
-
-            <p className="mt-6 max-w-xl text-[15px] leading-[1.7] text-a-ink/70">
-
-              Twin geodesic emitters project UV-C through twelve refractive facets, reaching every face of the bottle. No shadowed water, no missed surface, regardless of bottle shape. Tested against E. coli, rotavirus, and Cryptosporidium. Validated to EPA log-reduction standards.
-
-            </p>
-
-            <Link
-
-              href="/technology"
-
-              className="mt-8 inline-block text-[14px] underline-offset-4 hover:underline"
-
-            >
-
-              Read the technology page →
-
-            </Link>
-
-          </div>
-
-        </div>
-
-      </section>
-
-
-
-      {/* From the literature — peer-reviewed dossier */}
-
-      <section className="border-t border-a-rule">
-
-        <div className="mx-auto max-w-[1240px] px-8 py-28 md:py-32">
-
-          <div className="grid grid-cols-12 gap-x-8 gap-y-14">
-
-            <div className="col-span-12 md:col-span-5 md:pr-6">
-
-              <div className="font-mono text-[11px] uppercase tracking-[0.22em] text-a-ink/55">
-
-                From the literature
-
-              </div>
-
-              <h2 className="mt-5 font-serif text-[40px] leading-[1.02] tracking-tightish md:text-[56px]">
-
-                Cited,
-
-                <br />
-
-                <span className="italic text-a-ink/85">on the record.</span>
-
-              </h2>
-
-              <p className="mt-7 max-w-md text-[15px] leading-[1.7] text-a-ink/70">
-
-                {BRAND} is built on a wavelength microbiology has been studying for sixty years. Three peer-reviewed papers, independently conducted, on the same 255–280 nm band the device operates within.
-
-              </p>
-
-              <div className="mt-10 hidden md:block">
-
-                <div className="h-px w-16 bg-a-ink/40" />
-
-                <p className="mt-5 max-w-xs font-serif text-[13.5px] italic leading-[1.55] text-a-ink/55">
-
-                  A short bibliography. Open each paper and read it for yourself — we'd rather you didn't take our word.
-
-                </p>
-
-              </div>
-
-            </div>
-
-
-
-            <div className="col-span-12 md:col-span-7">
-
-              <ol className="border-t border-a-ink/20">
-
-                {[
-
-                  {
-
-                    id: "I",
-
-                    finding:
-
-                      "Across environmental and laboratory strains of E. coli and E. faecium, UV-C LEDs delivered up to six log₁₀ inactivation at fluences below 7 mJ/cm². The 265 nm band — the wavelength Forth operates within — produced the highest inactivation rate constant of any tested. No substantial photoreactivation was observed under light or dark conditions over eighteen hours.",
-
-                    authors: "Sério, Santos, Martins et al.",
-
-                    journal: "Scientific Reports — Nature",
-
-                    year: "2026",
-
-                    margin: "6 log₁₀",
-
-                    marginLabel: "< 7 mJ/cm², 265 nm",
-
-                    url: "https://www.nature.com/articles/s41598-026-44556-8",
-
-                  },
-
-                  {
-
-                    id: "II",
-
-                    finding:
-
-                      "Four strains of Legionella pneumophila — three clinical isolates and one drinking-water isolate — were inactivated by more than three log₁₀ across the 255, 265 and 280 nm bands at fluences between 0.5 and 34 mJ/cm². The lowest dose, at 255 nm, did the most work.",
-
-                    authors: "Buse, Hall, Hunter & Goodrich",
-
-                    journal: "Microorganisms (MDPI), 10(2), 352",
-
-                    year: "2022",
-
-                    margin: "> 3 log₁₀",
-
-                    marginLabel: "0.5–34 mJ/cm², 255–280 nm",
-
-                    url: "https://www.mdpi.com/2076-2607/10/2/352",
-
-                  },
-
-                  {
-
-                    id: "III",
-
-                    finding:
-
-                      "A systematic review of UV-C LED water disinfection studies found that 265 nm achieves the highest germicidal effect — delivering 4.58 log₁₀ inactivation of E. coli at just 8 mJ/cm² — while 280 nm radiation, though slightly less germicidal, suppresses bacterial repair mechanisms including photoreactivation and dark repair, making wavelength selection a meaningful design variable.",
-
-                    authors: "Martín-Sómer, Pablos, Adán, van Grieken & Marugán",
-
-                    journal: "Science of the Total Environment, 885",
-
-                    year: "2023",
-
-                    margin: "4.58 log₁₀",
-
-                    marginLabel: "8 mJ/cm², 265 nm",
-
-                    url: "https://www.sciencedirect.com/science/article/pii/S0048969723025846",
-
-                  },
-
-                ].map((s) => (
-
-                  <li
-
-                    key={s.id}
-
-                    className="grid grid-cols-12 gap-x-5 gap-y-4 border-b border-a-ink/20 py-9 md:py-10"
-
-                  >
-
-                    <div className="col-span-12 flex items-baseline gap-4 md:col-span-2 md:flex-col md:items-start md:gap-0">
-
-                      <div className="font-serif text-[14px] italic text-a-ink/55">§&nbsp;{s.id}</div>
-
-                      <div className="md:mt-5">
-
-                        <div className="font-serif text-[26px] leading-none tracking-tightish text-a-ink md:text-[30px]">
-
-                          {s.margin}
-
-                        </div>
-
-                        <div className="mt-2 font-mono text-[10px] uppercase tracking-[0.18em] text-a-ink/50">
-
-                          {s.marginLabel}
-
-                        </div>
-
-                      </div>
-
-                    </div>
-
-
-
-                    <div className="col-span-12 md:col-span-10">
-
-                      <p className="font-serif text-[19px] leading-[1.5] text-a-ink/90 md:text-[21px]">
-
-                        <span className="font-serif italic text-a-ink/55">“</span>
-
-                        {s.finding}
-
-                        <span className="font-serif italic text-a-ink/55">”</span>
-
-                      </p>
-
-                      <div className="mt-6 flex flex-wrap items-baseline gap-x-3 gap-y-1">
-
-                        <span className="font-mono text-[10.5px] uppercase tracking-[0.2em] text-a-ink/55">{s.authors}</span>
-
-                        <span aria-hidden className="font-mono text-[10.5px] text-a-ink/30">·</span>
-
-                        <span className="font-serif italic text-[13px] text-a-ink/90">{s.journal}</span>
-
-                        <span aria-hidden className="font-mono text-[10.5px] text-a-ink/30">·</span>
-
-                        <span className="font-mono text-[10.5px] uppercase tracking-[0.2em] text-a-ink/55">{s.year}</span>
-
-                      </div>
-
-                      <a
-
-                        href={s.url}
-
-                        target="_blank"
-
-                        rel="noopener noreferrer"
-
-                        className="mt-4 inline-flex items-baseline gap-2 text-[13.5px] text-a-ink/75 underline-offset-[5px] hover:text-a-ink hover:underline"
-
-                      >
-
-                        Read the paper
-
-                        <span aria-hidden className="text-a-ink/45">↗</span>
-
-                      </a>
-
-                    </div>
-
-                  </li>
-
-                ))}
-
-              </ol>
-
-              <p className="mt-6 font-mono text-[10.5px] uppercase tracking-[0.2em] text-a-ink/45">
-
-                Citations selected for direct relevance to {BRAND}'s 265 nm operating wavelength. No commercial relationship with any author or publisher.
-
-              </p>
-
-            </div>
-
-          </div>
-
-        </div>
-
-      </section>
-
-
-
-      {/* Tested at the source — Waterfall */}
-
-      <section className="mx-auto max-w-[1240px] px-8 pb-28 pt-28">
-
-        <div className="grid grid-cols-12 items-center gap-12">
-
-          <div className="col-span-12 md:col-span-7">
-
-            <div className="aspect-[3/2] w-full overflow-hidden rounded-3xl ring-1 ring-a-rule">
-
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-
-              <img
-
-                src="/photos/waterfall.jpg"
-
-                alt="Highland burn — testing site for Forth prototypes"
-
-                className="h-full w-full object-cover"
-
-              />
-
-            </div>
-
-          </div>
-
-          <div className="col-span-12 self-center md:col-span-5">
-
-            <div className="font-mono text-[11px] uppercase tracking-[0.22em] text-a-ink/55">Tested at the source</div>
-
-            <h3 className="mt-4 font-serif text-[40px] leading-[1.05] tracking-tightish md:text-[44px]">
-
-              Cleared against water that's never seen a tap.
-
-            </h3>
-
-            <p className="mt-6 max-w-md text-[15px] leading-[1.7] text-a-ink/70">
-
-              Every prototype is validated in burns, lochs, and the splash pools of the Cuillin. Standard EPA log-reduction protocols, applied to water our engineers couldn't otherwise drink.
-
-            </p>
-
-            <Link
-
-              href="/technology"
-
-              className="mt-8 inline-block text-[14px] underline-offset-4 hover:underline"
-
-            >
-
-              Read the validation data →
-
-            </Link>
-
-          </div>
-
-        </div>
-
-      </section>
-
-
-
-      {/* Where it lives — minimal text-only list, no empty placeholders */}
-
-      <section className="border-y border-a-rule bg-a-bg/40">
-
-        <div className="mx-auto max-w-[1240px] px-8 py-20">
-
-          <div className="grid grid-cols-12 gap-8">
-
-            <div className="col-span-12 md:col-span-3">
-
-              <div className="font-mono text-[11px] uppercase tracking-[0.22em] text-a-ink/55">Where it lives</div>
-
-              <h3 className="mt-4 font-serif text-[32px] leading-tight tracking-tightish md:text-[36px]">
-
-                Carried, not stored.
-
-              </h3>
-
-            </div>
-
-            <ul className="col-span-12 grid grid-cols-2 gap-4 md:col-span-9 md:grid-cols-3">
-
-              {USE_CASES.map((u) => (
-
-                <li key={u.tag} className="flex flex-col gap-3 rounded-2xl border border-a-rule bg-white/40 p-6">
-
-                  <span className="text-a-sage"><UseCaseIcon tag={u.tag} /></span>
-
-                  <div className="font-mono text-[10.5px] uppercase tracking-[0.22em] text-a-ink/45">{u.tag}</div>
-
-                  <p className="font-serif text-[16px] leading-snug text-a-ink/80">{u.line}</p>
-
-                </li>
-
-              ))}
-
-            </ul>
-
-          </div>
-
-        </div>
-
-      </section>
-
-
-
-      {/* FAQ snippet */}
-
-      <section className="mx-auto max-w-[1240px] px-8 pb-28">
-
-        <div className="grid grid-cols-12 gap-8">
-
-          <div className="col-span-12 md:col-span-4">
-
-            <div className="text-[12px] uppercase tracking-[0.18em] text-a-ink/55">Questions, briefly answered</div>
-
-            <h3 className="mt-4 font-serif text-[40px] leading-tight tracking-tightish">
-
-              Things people want to know.
-
-            </h3>
-
-            <Link
-
-              href="/help"
-
-              className="mt-8 inline-block text-[14px] underline-offset-4 hover:underline"
-
-            >
-
-              All questions →
-
-            </Link>
-
-          </div>
-
-          <div className="col-span-12 md:col-span-8">
-
-            <FaqAccordion faqs={FAQS.slice(0, 5)} />
-
-          </div>
-
-        </div>
-
-      </section>
-
-
-
-      {/* Email capture */}
-
-      <section className="bg-a-ink text-a-bg">
-
-        <div className="mx-auto grid max-w-[1240px] grid-cols-12 gap-8 px-8 py-24">
-
-          <div className="col-span-12 md:col-span-6">
-
-            <div className="font-mono text-[11px] uppercase tracking-[0.22em] text-a-bg/55">Early access</div>
-
-            <h3 className="mt-4 font-serif text-[44px] leading-[1.05] tracking-tightish">
-
-              First to know
-
-              <br />
-
-              <span className="italic text-a-bg/85">when it ships.</span>
-
-            </h3>
-
-            <p className="mt-5 max-w-md text-[15px] leading-[1.65] text-a-bg/75">
-
-              Leave us your address and we'll write once — when the first batch ships from Edinburgh.
-
-            </p>
-
-          </div>
-
-          <form className="col-span-12 flex items-end gap-3 md:col-span-6">
-
-            <div className="flex-1">
-
-              <label className="text-[11px] uppercase tracking-[0.18em] text-a-bg/60">Email address</label>
-
-              <input
-
-                placeholder="your@email.com"
-
-                className="mt-2 w-full border-b border-a-bg/30 bg-transparent pb-3 text-[16px] text-a-bg placeholder:text-a-bg/40 focus:border-a-bg focus:outline-none"
-
-              />
-
-            </div>
-
-            <button className="rounded-full bg-a-bg px-6 py-3 text-[14px] text-a-ink hover:bg-a-bg/85">Join</button>
-
-          </form>
-
-        </div>
-
-      </section>
-
-
-
-      <SiteFooter tone="light" />
-
-      <VariantToggle active="b" tone="light" />
-
-    </div>
-
+    <span className={`inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.24em] ${c}`}>
+      <span className="text-[7px] leading-none">●</span>
+      {children}
+    </span>
   );
-
 }
 
+export default function OptionB() {
+  return (
+    <div className={`${cormorant.variable} bg-[#F7F4EE] text-[#0F1B2D]`}>
+      {/* ————— Announcement bar ————— */}
+      <div className="bg-[#F7F4EE] py-2.5 text-center text-[11px] uppercase tracking-[0.22em] text-[#0F1B2D]/70">
+        Founding batch — early access now open
+      </div>
 
+      <FumeNav />
 
+      {/* ————— Hero: full-bleed cinematic ————— */}
+      <section className="relative h-[100svh] min-h-[640px] w-full overflow-hidden">
+        <div
+          className="absolute inset-0 bg-cover bg-[position:center_35%]"
+          style={{ backgroundImage: "url(/photos/storr-hero.jpg)" }}
+        />
+        {/* cool wash to unify with the palette + legibility */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_bottom,#0F1B2D66_0%,#0F1B2D22_35%,#0F1B2D88_100%)]" />
+
+        {/* bottom-left statement */}
+        <div className="absolute bottom-14 left-6 max-w-[560px] lg:left-10">
+          <h1 className={`${serif} text-[clamp(40px,6vw,80px)] font-light leading-[1.02] tracking-[0.01em] text-[#F7F4EE]`}>
+            Any water,
+            <br />
+            any bottle.
+          </h1>
+        </div>
+
+        {/* centred caption */}
+        <div className="absolute left-1/2 top-[52%] hidden max-w-[240px] -translate-x-1/2 text-[13px] leading-relaxed text-[#F7F4EE]/85 lg:block">
+          A submersible UV-C sterilizer that cleans any bottle in sixty seconds. Designed in Scotland.
+        </div>
+
+        {/* right CTA box */}
+        <div className="absolute bottom-14 right-6 lg:right-10">
+          <Link
+            href="/shop"
+            className="inline-flex items-center gap-3 border border-[#F7F4EE]/50 px-7 py-4 text-[12px] uppercase tracking-[0.2em] text-[#F7F4EE] transition hover:bg-[#F7F4EE] hover:text-[#0F1B2D]"
+          >
+            Discover Forth <span aria-hidden>→</span>
+          </Link>
+        </div>
+      </section>
+
+      {/* ————— Split panels: the Highlands / the instrument ————— */}
+      <section className="grid grid-cols-1 md:grid-cols-2">
+        <div className="group relative h-[70vh] min-h-[440px] overflow-hidden">
+          <div
+            className="absolute inset-0 bg-cover bg-[position:center_40%] transition-transform duration-[1200ms] group-hover:scale-[1.05]"
+            style={{ backgroundImage: "url(/photos/triptych-blue.jpg)" }}
+          />
+          <div className="absolute inset-0 bg-[#0F1B2D]/15" />
+          <div className="absolute inset-x-0 bottom-0 flex flex-col items-center pb-10 text-center text-[#F7F4EE]">
+            <Eyebrow tone="light">The Highlands</Eyebrow>
+            <p className={`${serif} mt-3 text-[30px] font-light`}>Straight from the source</p>
+          </div>
+        </div>
+
+        <div className="group relative flex h-[70vh] min-h-[440px] flex-col items-center justify-center overflow-hidden bg-[#C7D4D6]">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/renderings/forth-device-hero.png"
+            alt={`The ${BRAND} device`}
+            className="h-[62%] w-auto drop-shadow-[0_30px_50px_rgba(15,27,45,0.28)] transition-transform duration-[1200ms] group-hover:scale-[1.05]"
+          />
+          <div className="absolute inset-x-0 bottom-0 flex flex-col items-center pb-10 text-center">
+            <Eyebrow>The instrument</Eyebrow>
+            <p className={`${serif} mt-3 text-[30px] font-light`}>87 × 22 mm of engineering</p>
+          </div>
+        </div>
+      </section>
+
+      {/* ————— Poured by you — editorial statement + steps ————— */}
+      <section className="mx-auto max-w-[1240px] px-6 py-28 lg:px-10">
+        <div className="grid gap-10 lg:grid-cols-[1fr_1.1fr] lg:items-end">
+          <Eyebrow>Born of the Highlands</Eyebrow>
+          <h2 className={`${serif} text-[clamp(34px,4.4vw,58px)] font-light leading-[1.06]`}>
+            Poured by you, purified by light.
+          </h2>
+        </div>
+
+        <div className="mt-16 grid gap-px overflow-hidden rounded-sm border border-[#0F1B2D]/10 bg-[#0F1B2D]/10 sm:grid-cols-3">
+          {[
+            { n: "01", t: "Drop", d: "Slip it into any bottle with a neck wider than 25 mm. Loch, fountain, hotel tap — no worries." },
+            { n: "02", t: "Shake", d: "One shake wakes the cycle. Dual UV-C emitters flood the water from every direction." },
+            { n: "03", t: "Drink", d: "Sixty seconds later the light goes out and the water is yours. Pure as the untouched highlands." },
+          ].map((s) => (
+            <div key={s.n} className="bg-[#F7F4EE] px-8 py-12">
+              <div className={`${serif} text-[40px] font-light text-[#0F1B2D]/35`}>{s.n}</div>
+              <h3 className="mt-4 text-[13px] uppercase tracking-[0.22em]">{s.t}</h3>
+              <p className="mt-4 text-[15px] leading-relaxed text-[#0F1B2D]/70">{s.d}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ————— Technology — dark editorial ————— */}
+      <section className="bg-[#22333E] text-[#EAF1F2]">
+        <div className="mx-auto grid max-w-[1240px] items-center gap-16 px-6 py-28 lg:grid-cols-[0.9fr_1.1fr] lg:px-10">
+          <div className="flex justify-center lg:justify-start">
+            <ObjectViewToggle />
+          </div>
+          <div>
+            <Eyebrow tone="light">The technology</Eyebrow>
+            <h2 className={`${serif} mt-5 text-[clamp(38px,5vw,72px)] font-light leading-[1.02]`}>Purified by light</h2>
+            <p className="mt-6 max-w-[440px] text-[15px] leading-relaxed text-[#EAF1F2]/75">
+              Emission at 265 nanometres — the wavelength microbial DNA cannot survive. Twin geodesic emitters reach every
+              face of the bottle: no shadowed water, no missed surface.
+            </p>
+
+            <div className="mt-12 grid max-w-[520px] grid-cols-3 gap-8 border-t border-white/15 pt-8">
+              {[
+                { k: "99.9%", v: "bacteria, viruses & protozoa" },
+                { k: "60 s", v: "standard cycle" },
+                { k: "30", v: "cycles per charge" },
+              ].map((s) => (
+                <div key={s.k}>
+                  <div className={`${serif} text-[34px] font-light`}>{s.k}</div>
+                  <div className="mt-1 text-[12px] leading-snug text-[#EAF1F2]/60">{s.v}</div>
+                </div>
+              ))}
+            </div>
+
+            <Link
+              href="/technology"
+              className="mt-12 inline-flex items-center gap-3 border border-white/40 px-7 py-3.5 text-[12px] uppercase tracking-[0.2em] transition hover:bg-[#EAF1F2] hover:text-[#22333E]"
+            >
+              Read the science <span aria-hidden>→</span>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ————— Cinematic quote band ————— */}
+      <section className="relative overflow-hidden">
+        <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: "url(/photos/waterfall-divider.jpg)" }} />
+        <div className="absolute inset-0 bg-[#0F1B2D]/50" />
+        <div className="relative mx-auto flex min-h-[60vh] max-w-[820px] flex-col items-center justify-center px-6 py-24 text-center text-[#F7F4EE]">
+          <Eyebrow tone="light">Designed in the heart of Scotland</Eyebrow>
+          <p className={`${serif} mt-6 text-[clamp(26px,3.6vw,44px)] font-light italic leading-[1.15]`}>
+            Engineered and assembled in a workshop above the Firth of Forth. The first water it ever cleaned came out of a
+            Highland burn.
+          </p>
+          <Link
+            href="/about"
+            className="mt-10 inline-flex items-center gap-3 border border-[#F7F4EE]/50 px-7 py-3.5 text-[12px] uppercase tracking-[0.2em] transition hover:bg-[#F7F4EE] hover:text-[#0F1B2D]"
+          >
+            Our story <span aria-hidden>→</span>
+          </Link>
+        </div>
+      </section>
+
+      {/* ————— Carried, not stored ————— */}
+      <section className="mx-auto max-w-[1240px] px-6 py-28 lg:px-10">
+        <div className="grid gap-10 lg:grid-cols-[1fr_1.1fr] lg:items-end">
+          <Eyebrow>Where it lives</Eyebrow>
+          <h2 className={`${serif} text-[clamp(34px,4.4vw,58px)] font-light leading-[1.06]`}>Carried, not stored.</h2>
+        </div>
+        <div className="mt-16 grid gap-x-10 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
+          {USE_CASES.map((u) => (
+            <div key={u.tag} className="border-t border-[#0F1B2D]/15 pt-6">
+              <div className="text-[12px] uppercase tracking-[0.22em] text-[#0F1B2D]/55">{u.tag}</div>
+              <p className={`${serif} mt-3 text-[22px] font-light leading-snug`}>{u.line}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ————— Pick your colour — product on fields ————— */}
+      <section className="border-t border-[#0F1B2D]/10">
+        <div className="mx-auto max-w-[1240px] px-6 pb-6 pt-24 text-center lg:px-10">
+          <Eyebrow>Three finishes</Eyebrow>
+          <h2 className={`${serif} mt-5 text-[clamp(34px,4.6vw,64px)] font-light`}>Pick your colour</h2>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-3">
+          {[
+            { name: "Midnight", bg: "#C7D4D6", img: "/renderings/forth-device-hero.png" },
+            { name: "Sage", bg: "#DCE4D7", img: "/renderings/forth-device-sage-hero.png" },
+            { name: "Sun", bg: "#F0E3BC", img: "/renderings/forth-device-sun-hero.png" },
+          ].map((c) => (
+            <div key={c.name} className="group relative flex flex-col items-center px-6 pb-14 pt-16" style={{ backgroundColor: c.bg }}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={c.img}
+                alt={`${BRAND} in ${c.name}`}
+                className="h-[300px] w-auto drop-shadow-[0_24px_38px_rgba(15,27,45,0.3)] transition-transform duration-700 group-hover:-translate-y-2"
+              />
+              <div className="mt-10 text-[12px] uppercase tracking-[0.22em] text-[#0F1B2D]/60">{c.name}</div>
+              <div className={`${serif} mt-2 text-[26px] font-light`}>From $79</div>
+              <Link
+                href="/shop"
+                className="mt-5 border border-[#0F1B2D]/40 px-6 py-2.5 text-[11px] uppercase tracking-[0.2em] transition hover:bg-[#0F1B2D] hover:text-[#F7F4EE]"
+              >
+                Reserve
+              </Link>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ————— Press line ————— */}
+      <section className="mx-auto max-w-[1240px] px-6 py-20 lg:px-10">
+        <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-4">
+          {PRESS_QUOTES.map((q) => (
+            <figure key={q.source} className="border-t border-[#0F1B2D]/15 pt-5">
+              <blockquote className={`${serif} text-[19px] font-light italic leading-snug text-[#0F1B2D]/85`}>
+                “{q.text}”
+              </blockquote>
+            </figure>
+          ))}
+        </div>
+      </section>
+
+      {/* ————— Cited on the record — sunset band ————— */}
+      <section className="relative overflow-hidden">
+        <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: "url(/photos/storr-sunset.jpg)" }} />
+        <div className="absolute inset-0 bg-[#0F1B2D]/45" />
+        <div className="relative mx-auto flex min-h-[54vh] max-w-[820px] flex-col items-center justify-center px-6 py-24 text-center text-[#F7F4EE]">
+          <Eyebrow tone="light">Cited, on the record</Eyebrow>
+          <p className={`${serif} mt-6 text-[clamp(24px,3.4vw,40px)] font-light italic leading-[1.18]`}>
+            Built on a wavelength microbiology has studied for sixty years — three peer-reviewed papers on the same band
+            the device operates within.
+          </p>
+          <Link
+            href="/technology"
+            className="mt-10 inline-flex items-center gap-3 border border-[#F7F4EE]/50 px-7 py-3.5 text-[12px] uppercase tracking-[0.2em] transition hover:bg-[#F7F4EE] hover:text-[#0F1B2D]"
+          >
+            The evidence <span aria-hidden>→</span>
+          </Link>
+        </div>
+      </section>
+
+      {/* ————— Newsletter / early access ————— */}
+      <section className="bg-[#22333E] text-[#EAF1F2]">
+        <div className="mx-auto grid max-w-[1240px] gap-12 px-6 py-24 lg:grid-cols-[1fr_1fr] lg:items-end lg:px-10">
+          <div>
+            <Eyebrow tone="light">First 500 only</Eyebrow>
+            <h2 className={`${serif} mt-5 text-[clamp(36px,5vw,68px)] font-light leading-[1.02]`}>
+              Don&rsquo;t miss the drop
+            </h2>
+            <p className="mt-6 max-w-[440px] text-[15px] leading-relaxed text-[#EAF1F2]/75">
+              The founding run ships first, with founder exclusives. Everyone else waits for round two — leave your email
+              and be first through the door.
+            </p>
+          </div>
+          <form className="w-full">
+            <label className="text-[11px] uppercase tracking-[0.22em] text-[#EAF1F2]/60">Email address</label>
+            <div className="mt-4 flex items-center gap-4 border-b border-white/30 pb-3">
+              <input
+                type="email"
+                required
+                placeholder="you@example.com"
+                className="w-full bg-transparent text-[16px] text-[#EAF1F2] outline-none placeholder:text-[#EAF1F2]/40"
+              />
+              <button type="submit" aria-label="Sign up" className="text-[22px] transition hover:translate-x-1">
+                →
+              </button>
+            </div>
+            <p className="mt-4 text-[11px] uppercase tracking-[0.18em] text-[#EAF1F2]/45">
+              No spam · unsubscribe anytime
+            </p>
+          </form>
+        </div>
+      </section>
+
+      {/* ————— Footer ————— */}
+      <footer className="bg-[#F7F4EE] text-[#0F1B2D]">
+        <div className="mx-auto max-w-[1240px] px-6 py-20 lg:px-10">
+          <div className="grid gap-12 md:grid-cols-[1.4fr_1fr_1fr]">
+            <div>
+              <div className={`${serif} text-[28px] font-medium tracking-[0.12em]`}>{BRAND.toUpperCase()}</div>
+              <p className="mt-4 max-w-[300px] text-[14px] leading-relaxed text-[#0F1B2D]/65">
+                A submersible UV-C water sterilizer. Drops into any bottle and disinfects in sixty seconds. Designed and
+                assembled in Scotland.
+              </p>
+            </div>
+            <div>
+              <div className="text-[11px] uppercase tracking-[0.22em] text-[#0F1B2D]/45">Shop</div>
+              <ul className="mt-5 space-y-3 text-[14px] text-[#0F1B2D]/75">
+                <li><Link href="/shop" className="hover:opacity-60">Product</Link></li>
+                <li><Link href="/how-it-works" className="hover:opacity-60">How it works</Link></li>
+                <li><Link href="/technology" className="hover:opacity-60">Technology</Link></li>
+                <li><Link href="/compare" className="hover:opacity-60">Compare</Link></li>
+              </ul>
+            </div>
+            <div>
+              <div className="text-[11px] uppercase tracking-[0.22em] text-[#0F1B2D]/45">Company</div>
+              <ul className="mt-5 space-y-3 text-[14px] text-[#0F1B2D]/75">
+                <li><Link href="/about" className="hover:opacity-60">About</Link></li>
+                <li><Link href="/press" className="hover:opacity-60">Press</Link></li>
+                <li><Link href="/contact" className="hover:opacity-60">Contact</Link></li>
+                <li><Link href="/help" className="hover:opacity-60">Help</Link></li>
+              </ul>
+            </div>
+          </div>
+          <div className="mt-16 flex flex-col items-center justify-between gap-3 border-t border-[#0F1B2D]/10 pt-6 text-[11px] uppercase tracking-[0.18em] text-[#0F1B2D]/45 sm:flex-row">
+            <span>© 2026 {BRAND}, Ltd · Patent-pending</span>
+            <span>Terms · Privacy · Cookies</span>
+          </div>
+        </div>
+      </footer>
+
+      <VariantToggle active="b" tone="light" />
+    </div>
+  );
+}
