@@ -38,7 +38,7 @@ export default function OptionB() {
       <FumeNav />
 
       {/* ————— Hero: full-bleed cinematic ————— */}
-      <section className="relative h-[100svh] min-h-[640px] w-full overflow-hidden">
+      <section data-nav-dark className="relative h-[100svh] min-h-[640px] w-full overflow-hidden">
         <div
           className="absolute inset-0 bg-cover bg-[position:center_35%]"
           style={{ backgroundImage: "url(/photos/storr-hero.jpg)" }}
@@ -72,7 +72,7 @@ export default function OptionB() {
       </section>
 
       {/* ————— Technology — dark editorial ————— */}
-      <section className="bg-[#22333E] text-[#EAF1F2]">
+      <section data-nav-dark className="bg-[#22333E] text-[#EAF1F2]">
         <div className="mx-auto grid max-w-[1240px] items-center gap-16 px-6 py-28 lg:grid-cols-[0.9fr_1.1fr] lg:px-10">
           <div className="flex justify-center lg:justify-start">
             <ObjectViewToggle />
@@ -136,8 +136,8 @@ export default function OptionB() {
       <section className="grid grid-cols-1 md:grid-cols-2">
         <div className="group relative h-[70vh] min-h-[440px] overflow-hidden">
           <div
-            className="absolute inset-0 bg-cover bg-[position:center_40%] transition-transform duration-[1200ms] group-hover:scale-[1.05]"
-            style={{ backgroundImage: "url(/photos/triptych-blue.jpg)" }}
+            className="absolute inset-0 bg-cover bg-[position:center_45%] transition-transform duration-[1200ms] group-hover:scale-[1.05]"
+            style={{ backgroundImage: "url(/photos/waterfall-divider.jpg)" }}
           />
           <div className="absolute inset-0 bg-[#0F1B2D]/15" />
           <div className="absolute inset-x-0 bottom-0 flex flex-col items-center pb-10 text-center text-[#F7F4EE]">
@@ -153,9 +153,12 @@ export default function OptionB() {
         </div>
       </section>
 
+      {/* ————— Break — matches the breathing room above the split panels ————— */}
+      <div aria-hidden className="h-28 bg-[#F7F4EE]" />
+
       {/* ————— Cinematic quote band ————— */}
-      <section className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: "url(/photos/waterfall-divider.jpg)" }} />
+      <section data-nav-dark className="relative overflow-hidden">
+        <div className="absolute inset-0 bg-cover bg-[position:center_60%]" style={{ backgroundImage: "url(/photos/moor-story.jpg)" }} />
         <div className="absolute inset-0 bg-[#0F1B2D]/50" />
         <div className="relative mx-auto flex min-h-[60vh] max-w-[820px] flex-col items-center justify-center px-6 py-24 text-center text-[#F7F4EE]">
           <Eyebrow tone="light">Designed in the heart of Scotland</Eyebrow>
@@ -206,12 +209,19 @@ export default function OptionB() {
                 <div className="absolute inset-0 bg-cover" style={{ backgroundImage: `url(${c.scene})`, backgroundPosition: c.pos }} />
                 <div className="absolute inset-0" style={{ backgroundColor: `${c.tint}30` }} />
               </div>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={c.img}
-                alt={`${BRAND} in ${c.name}`}
-                className="relative z-10 h-[300px] w-auto drop-shadow-[0_24px_38px_rgba(15,27,45,0.3)] transition-transform duration-700 group-hover:-translate-y-2"
-              />
+              <div className="relative z-10">
+                {/* soft halo of the field colour so the device stays legible over the scene */}
+                <div
+                  className="pointer-events-none absolute -inset-12 opacity-0 transition-opacity duration-700 group-hover:opacity-100"
+                  style={{ background: `radial-gradient(closest-side, ${c.bg}E6 25%, ${c.bg}99 55%, ${c.bg}00 78%)` }}
+                />
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={c.img}
+                  alt={`${BRAND} in ${c.name}`}
+                  className="relative h-[300px] w-auto drop-shadow-[0_24px_38px_rgba(15,27,45,0.3)]"
+                />
+              </div>
               <div className="relative z-10 mt-10 text-[12px] uppercase tracking-[0.22em] text-[#0F1B2D]/60 transition-colors duration-700 group-hover:text-[#F7F4EE]/85">{c.name}</div>
               <div className={`${serif} relative z-10 mt-2 text-[26px] font-light transition-colors duration-700 group-hover:text-[#F7F4EE]`}>From $79</div>
               <Link
@@ -239,7 +249,7 @@ export default function OptionB() {
       </section>
 
       {/* ————— Cited on the record — sunset band ————— */}
-      <section className="relative overflow-hidden">
+      <section data-nav-dark className="relative overflow-hidden">
         <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: "url(/photos/storr-sunset.jpg)" }} />
         <div className="absolute inset-0 bg-[#0F1B2D]/45" />
         <div className="relative mx-auto flex min-h-[54vh] max-w-[820px] flex-col items-center justify-center px-6 py-24 text-center text-[#F7F4EE]">
@@ -258,7 +268,7 @@ export default function OptionB() {
       </section>
 
       {/* ————— Newsletter / early access ————— */}
-      <section className="bg-[#22333E] text-[#EAF1F2]">
+      <section data-nav-dark className="bg-[#22333E] text-[#EAF1F2]">
         <div className="mx-auto grid max-w-[1240px] gap-12 px-6 py-24 lg:grid-cols-[1fr_1fr] lg:items-end lg:px-10">
           <div>
             <Eyebrow tone="light">First 500 only</Eyebrow>
