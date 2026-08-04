@@ -6,6 +6,7 @@ import { VariantToggle } from "../components/VariantToggle";
 import { SiteFooter } from "../components/SiteFooter";
 import { SiteNav } from "../components/SiteNav";
 import { HeroDeviceRotator } from "../components/HeroDeviceRotator";
+import { ObjectViewToggle } from "../components/ObjectViewToggle";
 
 const anton = Anton({ weight: "400", subsets: ["latin"], variable: "--font-anton" });
 
@@ -150,32 +151,38 @@ export default function OptionA() {
 
       {/* ————— The claim ————— */}
       <section className="bg-[#22333E] text-[#EAF1F2]">
-        <div className="mx-auto max-w-[1240px] px-6 py-28 text-center">
-          <p className="font-mono text-[12px] uppercase tracking-[0.3em] text-[#EAF1F2]/60">the technology</p>
-          <h2 className={`${display} mt-4 text-[clamp(46px,8vw,110px)]`}>265 nm of pure light</h2>
-          <p className="mx-auto mt-5 max-w-[560px] font-serif text-[clamp(19px,2.4vw,26px)] italic text-[#EAF1F2]/80">
-            the wavelength microbial DNA cannot survive
-          </p>
-
-          <div className="mx-auto mt-14 grid max-w-[760px] gap-6 sm:grid-cols-3">
-            {[
-              { k: "99.9%", v: "bacteria, viruses & protozoa" },
-              { k: "60 sec", v: "standard cycle, one shake" },
-              { k: "30", v: "cycles per induction charge" },
-            ].map((s) => (
-              <div key={s.k} className="rounded-2xl bg-white/5 px-6 py-8 ring-1 ring-white/10">
-                <div className={`${display} text-[40px]`}>{s.k}</div>
-                <div className="mt-2 font-serif text-[15px] italic text-[#EAF1F2]/70">{s.v}</div>
-              </div>
-            ))}
+        <div className="mx-auto grid max-w-[1240px] items-center gap-14 px-6 py-28 lg:grid-cols-[0.85fr_1.15fr]">
+          <div className="order-2 flex justify-center lg:order-1 lg:justify-start">
+            <ObjectViewToggle />
           </div>
 
-          <Link
-            href="/technology"
-            className="mt-12 inline-block rounded-full bg-[#EAF1F2] px-7 py-3.5 text-[14px] font-semibold tracking-wide text-[#22333E] transition hover:-translate-y-0.5"
-          >
-            Read the technology page
-          </Link>
+          <div className="order-1 text-left lg:order-2">
+            <p className="font-mono text-[12px] uppercase tracking-[0.3em] text-[#EAF1F2]/60">the technology</p>
+            <h2 className={`${display} mt-4 text-[clamp(44px,6vw,84px)]`}>265 nm of pure light</h2>
+            <p className="mt-5 max-w-[520px] font-serif text-[clamp(19px,2.2vw,25px)] italic text-[#EAF1F2]/80">
+              the wavelength microbial DNA cannot survive
+            </p>
+
+            <div className="mt-12 grid max-w-[640px] gap-5 sm:grid-cols-3">
+              {[
+                { k: "99.9%", v: "bacteria, viruses & protozoa" },
+                { k: "60 sec", v: "standard cycle, one shake" },
+                { k: "30", v: "cycles per induction charge" },
+              ].map((s) => (
+                <div key={s.k} className="rounded-2xl bg-white/5 px-5 py-6 ring-1 ring-white/10">
+                  <div className={`${display} text-[34px]`}>{s.k}</div>
+                  <div className="mt-2 font-serif text-[14px] italic text-[#EAF1F2]/70">{s.v}</div>
+                </div>
+              ))}
+            </div>
+
+            <Link
+              href="/technology"
+              className="mt-12 inline-block rounded-full bg-[#EAF1F2] px-7 py-3.5 text-[14px] font-semibold tracking-wide text-[#22333E] transition hover:-translate-y-0.5"
+            >
+              Read the technology page
+            </Link>
+          </div>
         </div>
       </section>
 
