@@ -102,18 +102,17 @@ export default function OptionA() {
 
       <SiteNav tone="light" />
 
-      {/* ————— Hero: layered highland scene ————— */}
+      {/* ————— Hero: full-bleed Storr scene ————— */}
       <section className="relative overflow-hidden">
-        {/* sky */}
-        <div className="absolute inset-0 bg-[linear-gradient(to_bottom,#EAF1F2_0%,#D8E5E7_38%,#C2D5D8_60%,#9FB9BE_100%)]" />
-        {/* far hills — photo band anchored to horizon */}
+        {/* single continuous backdrop — no seams */}
         <div
-          className="absolute inset-x-0 bottom-[26%] h-[46%] bg-cover bg-[position:center_38%] [mask-image:linear-gradient(to_top,black_72%,transparent_100%)]"
-          style={{ backgroundImage: "url(/photos/rocky-peaks.jpg)" }}
+          className="absolute inset-0 bg-cover bg-[position:center_30%]"
+          style={{ backgroundImage: "url(/photos/storr-hero.jpg)" }}
         />
-        {/* loch water foreground */}
-        <div className="absolute inset-x-0 bottom-0 h-[27%] bg-[linear-gradient(to_bottom,#51707E_0%,#31485680_55%,#22333E_100%)]" />
-        <div className="absolute inset-x-0 bottom-[24%] h-[12%] bg-[linear-gradient(to_bottom,transparent,#EAF1F2cc_55%,transparent)]" />
+        {/* soft scrim behind the headline zone for legibility */}
+        <div className="absolute inset-x-0 top-0 h-[55%] bg-[linear-gradient(to_bottom,#EAF1F2b3_0%,#EAF1F266_45%,transparent_100%)]" />
+        {/* gentle darkening at the very bottom so the device reads */}
+        <div className="absolute inset-x-0 bottom-0 h-[22%] bg-[linear-gradient(to_top,#0F1B2D59,transparent)]" />
 
         <div className="relative mx-auto flex min-h-[92svh] max-w-[1240px] flex-col items-center px-6 pt-10 text-center">
           <p className="font-serif text-[17px] italic tracking-wide text-a-ink/70">the water is fine —</p>
