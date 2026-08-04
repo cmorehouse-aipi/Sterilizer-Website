@@ -1,12 +1,13 @@
 import Link from "next/link";
 import { Anton } from "next/font/google";
 
-import { BRAND, SPECS, PRESS_QUOTES } from "../lib/brand";
+import { BRAND, SPECS, PRESS_QUOTES, USE_CASES } from "../lib/brand";
 import { VariantToggle } from "../components/VariantToggle";
 import { SiteFooter } from "../components/SiteFooter";
 import { SiteNav } from "../components/SiteNav";
 import { HeroDeviceRotator } from "../components/HeroDeviceRotator";
 import { ObjectViewToggle } from "../components/ObjectViewToggle";
+import { UseCaseIcon } from "../components/UseCaseIcons";
 
 const anton = Anton({ weight: "400", subsets: ["latin"], variable: "--font-anton" });
 
@@ -132,15 +133,16 @@ export default function OptionA() {
         <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: "url(/photos/waterfall-divider.jpg)" }} />
         <div className="absolute inset-0 bg-[#0F1B2D]/45" />
         <div className="relative mx-auto flex min-h-[64vh] max-w-[860px] flex-col items-center justify-center px-6 py-24 text-center text-[#F2EFE8]">
-          <p className="font-mono text-[12px] uppercase tracking-[0.3em] text-[#F2EFE8]/70">why it&rsquo;s different</p>
+          <p className="font-mono text-[12px] uppercase tracking-[0.3em] text-[#F2EFE8]/70">designed in the heart of Scotland</p>
           <p className="mt-6 font-serif text-[clamp(24px,3.4vw,38px)] italic leading-snug">
-            Better technology, in a better object, at a fairer price.
+            Engineered and assembled in a workshop above the Firth of Forth. The first water it ever cleaned came out of a
+            Highland burn.
           </p>
           <Link
-            href="/compare"
+            href="/about"
             className="mt-10 rounded-full bg-[#F2EFE8] px-7 py-3.5 text-[14px] font-semibold tracking-wide text-[#0F1B2D] transition hover:-translate-y-0.5"
           >
-            See the full comparison
+            Our story
           </Link>
         </div>
       </section>
@@ -187,22 +189,43 @@ export default function OptionA() {
         <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: "url(/photos/moor-story.jpg)" }} />
         <div className="absolute inset-0 bg-[#0F1B2D]/45" />
         <div className="relative mx-auto flex min-h-[64vh] max-w-[860px] flex-col items-center justify-center px-6 py-24 text-center text-[#F2EFE8]">
-          <p className="font-mono text-[12px] uppercase tracking-[0.3em] text-[#F2EFE8]/70">designed in the heart of Scotland</p>
+          <p className="font-mono text-[12px] uppercase tracking-[0.3em] text-[#F2EFE8]/70">why it&rsquo;s different</p>
           <p className="mt-6 font-serif text-[clamp(24px,3.4vw,38px)] italic leading-snug">
-            Engineered and assembled in a workshop above the Firth of Forth. The first water it ever cleaned came out of a
-            Highland burn.
+            Better technology, in a better object, at a fairer price.
           </p>
           <Link
-            href="/about"
+            href="/compare"
             className="mt-10 rounded-full bg-[#F2EFE8] px-7 py-3.5 text-[14px] font-semibold tracking-wide text-[#0F1B2D] transition hover:-translate-y-0.5"
           >
-            Our story
+            See the full comparison
           </Link>
+        </div>
+      </section>
+
+      {/* ————— Where it lives ————— */}
+      <section className="bg-grain bg-a-bg">
+        <div className="mx-auto max-w-[1240px] px-6 py-24 text-center">
+          <p className="font-mono text-[12px] uppercase tracking-[0.3em] text-a-ink/50">where it lives</p>
+          <h2 className={`${display} mt-4 text-[clamp(44px,6.4vw,82px)]`}>Carried, not stored</h2>
+          <p className="mt-3 font-serif text-[clamp(19px,2.4vw,27px)] italic text-a-ink/75">six places it earns its keep</p>
+
+          <ul className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {USE_CASES.map((u) => (
+              <li key={u.tag} className="flex flex-col items-center gap-3 rounded-2xl bg-white/50 p-7 ring-1 ring-a-ink/10 transition duration-300 hover:-translate-y-1 hover:shadow-md">
+                <span className="text-a-sage"><UseCaseIcon tag={u.tag} /></span>
+                <div className={`${display} text-[20px]`}>{u.tag}</div>
+                <p className="max-w-[300px] font-serif text-[16px] leading-snug text-a-ink/75">{u.line}</p>
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
 
       {/* ————— Colour fields ————— */}
       <section className="bg-a-bg">
+        <div className="border-y border-a-ink/10 bg-a-bg font-serif text-[16px] italic text-a-ink/80">
+          <Ticker dark={false} items={PRESS_QUOTES.map((q) => `“${q.text}”`)} />
+        </div>
         <div className="mx-auto max-w-[1240px] px-6 pt-24 text-center">
           <h2 className={`${display} text-[clamp(44px,7vw,86px)]`}>Pick your colour</h2>
           <p className="mt-3 font-serif text-[clamp(19px,2.4vw,27px)] italic text-a-ink/75">one instrument, three moods</p>
@@ -232,11 +255,6 @@ export default function OptionA() {
           ))}
         </div>
       </section>
-
-      {/* ————— Press ticker ————— */}
-      <div className="border-y border-a-ink/10 bg-a-bg font-serif text-[16px] italic text-a-ink/80">
-        <Ticker dark={false} items={PRESS_QUOTES.map((q) => `“${q.text}” — ${q.source}`)} />
-      </div>
 
       {/* ————— Footer CTA ————— */}
       <section className="bg-grain bg-a-bg">
