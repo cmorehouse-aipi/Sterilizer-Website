@@ -11,7 +11,7 @@ export function PageShell({ children }: { children: ReactNode }) {
       <SiteNav tone="light" />
       <main className="mx-auto max-w-[1240px] border-t border-a-rule px-6 pt-14 pb-24 [&>header]:border-b [&>header]:border-a-rule [&>header]:pb-14 [&>header]:mb-14">{children}</main>
       <SiteFooter tone="light" />
-      <VariantToggle active="a" tone="light" />
+      <VariantToggle active="prev" tone="light" />
     </div>
   );
 }

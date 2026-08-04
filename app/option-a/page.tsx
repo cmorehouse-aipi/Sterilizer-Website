@@ -1,29 +1,29 @@
 import Link from "next/link";
 
-import { BRAND, SPECS, COMPARE_ROWS, FAQS, USE_CASES, PRESS_QUOTES } from "./lib/brand";
+import { BRAND, SPECS, COMPARE_ROWS, FAQS, USE_CASES, PRESS_QUOTES } from "../lib/brand";
 
-import { Logomark } from "./components/Logomark";
+import { Logomark } from "../components/Logomark";
 
-import { VariantToggle } from "./components/VariantToggle";
+import { VariantToggle } from "../components/VariantToggle";
 
-import { SiteFooter } from "./components/SiteFooter";
+import { SiteFooter } from "../components/SiteFooter";
 
-import { ExplodedReveal } from "./components/ExplodedReveal";
+import { ExplodedReveal } from "../components/ExplodedReveal";
 
-import { HeroColorPicker } from "./components/HeroColorPicker";
+import { HeroColorPicker } from "../components/HeroColorPicker";
 
-import { FaqAccordion } from "./components/FaqAccordion";
+import { FaqAccordion } from "../components/FaqAccordion";
 
-import { ObjectViewToggle } from "./components/ObjectViewToggle";
+import { ObjectViewToggle } from "../components/ObjectViewToggle";
 
-import { SiteNav } from "./components/SiteNav";
-import { UseCaseIcon } from "./components/UseCaseIcons";
+import { SiteNav } from "../components/SiteNav";
+import { UseCaseIcon } from "../components/UseCaseIcons";
 
 
 
 export const metadata = {
 
-  title: `${BRAND} — Clean water, in any bottle, in seconds.`,
+  title: `${BRAND} — Option A`,
 
   description: `${BRAND} is a submersible UV-C sterilizer the size of a marker. Designed and assembled in Scotland.`,
 
@@ -33,7 +33,7 @@ export const metadata = {
 
 
 
-export default function HomeA() {
+export default function OptionA() {
 
   return (
 
@@ -1026,7 +1026,7 @@ export default function HomeA() {
 
       <SiteFooter tone="light" />
 
-      <VariantToggle active="prev" tone="light" />
+      <VariantToggle active="a" tone="light" />
 
     </div>
 
