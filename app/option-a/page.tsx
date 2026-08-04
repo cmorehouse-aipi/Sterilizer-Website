@@ -5,6 +5,7 @@ import { BRAND, SPECS, PRESS_QUOTES } from "../lib/brand";
 import { VariantToggle } from "../components/VariantToggle";
 import { SiteFooter } from "../components/SiteFooter";
 import { SiteNav } from "../components/SiteNav";
+import { HeroDeviceRotator } from "../components/HeroDeviceRotator";
 
 const anton = Anton({ weight: "400", subsets: ["latin"], variable: "--font-anton" });
 
@@ -92,37 +93,35 @@ export default function OptionA() {
             </Link>
           </div>
 
-          {/* device floating over the loch */}
-          <div className="relative mt-4 flex w-full flex-1 items-end justify-center">
-            <div className="absolute bottom-6 h-10 w-56 rounded-full bg-[#0F1B2D]/30 blur-2xl" />
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/renderings/forth-device-hero.png"
-              alt={`The ${BRAND} device`}
-              className="relative z-10 w-[190px] max-w-[42vw] drop-shadow-[0_30px_50px_rgba(15,27,45,0.45)] sm:w-[230px]"
-            />
-          </div>
         </div>
       </section>
 
       {/* ————— Three moves ————— */}
       <section className="bg-grain bg-a-bg">
-        <div className="mx-auto max-w-[1240px] px-6 py-24 text-center">
-          <h2 className={`${display} text-[clamp(44px,7vw,86px)]`}>Born of the Highlands</h2>
-          <p className="mt-3 font-serif text-[clamp(20px,2.6vw,30px)] italic text-a-ink/75">purified by light, not by luck</p>
+        <div className="mx-auto grid max-w-[1240px] items-center gap-14 px-6 py-24 lg:grid-cols-[1.15fr_0.85fr]">
+          <div className="text-left">
+            <h2 className={`${display} text-[clamp(44px,6vw,80px)]`}>Born of the Highlands</h2>
+            <p className="mt-3 font-serif text-[clamp(20px,2.4vw,28px)] italic text-a-ink/75">purified by light, not by luck</p>
 
-          <div className="mt-16 grid gap-12 sm:grid-cols-3">
-            {[
-              { n: "01", t: "Drop", d: "Slip it into any bottle with a neck wider than 25 mm. Loch, burn, hotel tap — no ceremony." },
-              { n: "02", t: "Shake", d: "One shake wakes the cycle. Dual UV-C emitters flood the water from every direction." },
-              { n: "03", t: "Drink", d: "Sixty seconds later the light goes out and the water is yours. No taste, no chemicals." },
-            ].map((s) => (
-              <div key={s.n} className="flex flex-col items-center">
-                <span className="font-mono text-[12px] tracking-[0.25em] text-a-ink/50">{s.n}</span>
-                <h3 className={`${display} mt-2 text-[34px]`}>{s.t}</h3>
-                <p className="mt-3 max-w-[300px] font-serif text-[17px] leading-relaxed text-a-ink/75">{s.d}</p>
-              </div>
-            ))}
+            <div className="mt-14 flex flex-col gap-10">
+              {[
+                { n: "01", t: "Drop", d: "Slip it into any bottle with a neck wider than 25 mm. Loch, burn, hotel tap — no ceremony." },
+                { n: "02", t: "Shake", d: "One shake wakes the cycle. Dual UV-C emitters flood the water from every direction." },
+                { n: "03", t: "Drink", d: "Sixty seconds later the light goes out and the water is yours. No taste, no chemicals." },
+              ].map((s) => (
+                <div key={s.n} className="flex items-start gap-5">
+                  <span className="mt-1 font-mono text-[12px] tracking-[0.25em] text-a-ink/50">{s.n}</span>
+                  <div>
+                    <h3 className={`${display} text-[30px]`}>{s.t}</h3>
+                    <p className="mt-2 max-w-[460px] font-serif text-[17px] leading-relaxed text-a-ink/75">{s.d}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="flex justify-center lg:justify-end">
+            <HeroDeviceRotator alt={`The ${BRAND} device, rotating`} />
           </div>
         </div>
       </section>
