@@ -56,7 +56,7 @@ export default function OptionB() {
         </div>
 
         {/* centred caption */}
-        <div className="absolute left-1/2 top-[52%] hidden max-w-[240px] -translate-x-1/2 text-[13px] leading-relaxed text-[#F7F4EE]/85 lg:block">
+        <div className="absolute left-1/2 top-[41%] hidden max-w-[240px] -translate-x-1/2 text-[13px] leading-relaxed text-[#F7F4EE]/85 lg:block">
           A submersible UV-C sterilizer that cleans any bottle in sixty seconds. Designed in Scotland.
         </div>
 
@@ -140,8 +140,13 @@ export default function OptionB() {
             style={{ backgroundImage: "url(/photos/waterfall-divider.jpg)" }}
           />
           <div className="absolute inset-0 bg-[#0F1B2D]/15" />
-          <div className="absolute inset-x-0 top-0 flex flex-col items-center pt-10 text-center text-[#F7F4EE]">
-            <Eyebrow tone="light">The Source</Eyebrow>
+          {/* soft top scrim for label legibility */}
+          <div className="absolute inset-x-0 top-0 h-28 bg-[linear-gradient(to_bottom,#0F1B2D59,transparent)]" />
+          <div className="absolute inset-x-0 top-0 flex flex-col items-center pt-10 text-center">
+            <span className="inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.24em] text-[#F7F4EE] [text-shadow:0_1px_12px_rgba(15,27,45,0.85)]">
+              <span className="text-[7px] leading-none">●</span>
+              The Source
+            </span>
           </div>
         </div>
 
@@ -154,7 +159,7 @@ export default function OptionB() {
       </section>
 
       {/* ————— Break — matches the breathing room above the split panels ————— */}
-      <div aria-hidden className="h-28 bg-[#F7F4EE]" />
+      <div aria-hidden className="h-[233px] bg-[#F7F4EE]" />
 
       {/* ————— Cinematic quote band ————— */}
       <section data-nav-dark className="relative overflow-hidden">

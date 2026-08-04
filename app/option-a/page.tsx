@@ -251,22 +251,27 @@ export default function OptionA() {
         </div>
         <div className="mt-14 grid grid-cols-1 sm:grid-cols-3">
           {[
-            { name: "Midnight", bg: "#C7D4D6", img: "/renderings/forth-device-hero.png" },
-            { name: "Sage", bg: "#DCE4D7", img: "/renderings/forth-device-sage-hero.png" },
-            { name: "Sun", bg: "#F0E3BC", img: "/renderings/forth-device-sun-hero.png" },
+            { name: "Midnight", bg: "#C7D4D6", img: "/renderings/forth-device-hero.png", scene: "/photos/waterfall-divider.jpg", pos: "center 42%", tint: "#51707E" },
+            { name: "Sage", bg: "#DCE4D7", img: "/renderings/forth-device-sage-hero.png", scene: "/photos/moor-story.jpg", pos: "center 55%", tint: "#889E81" },
+            { name: "Sun", bg: "#F0E3BC", img: "/renderings/forth-device-sun-hero.png", scene: "/photos/storr-sunset.jpg", pos: "center 35%", tint: "#F0E3BC" },
           ].map((c) => (
-            <div key={c.name} className="relative flex flex-col items-center px-6 pb-14 pt-12" style={{ backgroundColor: c.bg }}>
-              <span className="font-mono text-[12px] uppercase tracking-[0.3em] text-a-ink/60">{c.name}</span>
+            <div key={c.name} className="group relative flex flex-col items-center overflow-hidden px-6 pb-14 pt-12" style={{ backgroundColor: c.bg }}>
+              {/* scene reveal on hover */}
+              <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-700 group-hover:opacity-100">
+                <div className="absolute inset-0 bg-cover" style={{ backgroundImage: `url(${c.scene})`, backgroundPosition: c.pos }} />
+                <div className="absolute inset-0" style={{ backgroundColor: `${c.tint}30` }} />
+              </div>
+              <span className="relative z-10 font-mono text-[12px] uppercase tracking-[0.3em] text-a-ink/60 transition-colors duration-700 group-hover:text-[#F7F4EE]/85">{c.name}</span>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={c.img}
                 alt={`${BRAND} in ${c.name}`}
-                className="mt-6 w-[150px] drop-shadow-[0_24px_36px_rgba(15,27,45,0.35)] transition duration-300 hover:-translate-y-2 sm:w-[170px]"
+                className="relative z-10 mt-6 w-[150px] drop-shadow-[0_24px_36px_rgba(15,27,45,0.35)] sm:w-[170px]"
               />
-              <div className={`${display} mt-8 text-[26px]`}>From $79</div>
+              <div className={`${display} relative z-10 mt-8 text-[26px] transition-colors duration-700 group-hover:text-[#F7F4EE]`}>From $79</div>
               <Link
                 href="/shop"
-                className="mt-4 rounded-full bg-a-ink px-6 py-3 text-[13px] font-semibold tracking-wide text-a-bg transition hover:-translate-y-0.5"
+                className="relative z-10 mt-4 rounded-full bg-a-ink px-6 py-3 text-[13px] font-semibold tracking-wide text-a-bg transition hover:-translate-y-0.5"
               >
                 Reserve {c.name}
               </Link>
