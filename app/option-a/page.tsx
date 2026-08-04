@@ -8,7 +8,6 @@ import { SiteNav } from "../components/SiteNav";
 import { HeroDeviceRotator } from "../components/HeroDeviceRotator";
 import { ObjectViewToggle } from "../components/ObjectViewToggle";
 import { UseCaseIcon } from "../components/UseCaseIcons";
-import { TransitionTuner } from "../components/TransitionTuner";
 
 const anton = Anton({ weight: "400", subsets: ["latin"], variable: "--font-anton" });
 
@@ -149,28 +148,8 @@ export default function OptionA() {
       </section>
 
       {/* ————— The claim ————— */}
-      <section className="relative overflow-hidden bg-[#22333E] text-[#EAF1F2]">
-        {/* waterfall (above) bleeds down into the navy */}
-        <div
-          className="pointer-events-none absolute inset-x-0 top-0 bg-cover bg-bottom"
-          style={{
-            height: "var(--fade-h, 160px)",
-            backgroundImage: "url(/photos/waterfall-divider.jpg)",
-            maskImage: "linear-gradient(to bottom, black, transparent)",
-            WebkitMaskImage: "linear-gradient(to bottom, black, transparent)",
-          }}
-        />
-        {/* moor (below) bleeds up into the navy */}
-        <div
-          className="pointer-events-none absolute inset-x-0 bottom-0 bg-cover bg-top"
-          style={{
-            height: "var(--fade-h, 160px)",
-            backgroundImage: "url(/photos/moor-story.jpg)",
-            maskImage: "linear-gradient(to top, black, transparent)",
-            WebkitMaskImage: "linear-gradient(to top, black, transparent)",
-          }}
-        />
-        <div className="relative mx-auto grid max-w-[1240px] items-center gap-14 px-6 py-28 lg:grid-cols-[0.85fr_1.15fr]">
+      <section className="bg-[#22333E] text-[#EAF1F2]">
+        <div className="mx-auto grid max-w-[1240px] items-center gap-14 px-6 py-28 lg:grid-cols-[0.85fr_1.15fr]">
           <div className="order-2 flex justify-center lg:order-1 lg:justify-start">
             <ObjectViewToggle />
           </div>
@@ -331,7 +310,6 @@ export default function OptionA() {
 
       <SiteFooter />
       <VariantToggle active="a" tone="light" />
-      <TransitionTuner />
     </div>
   );
 }

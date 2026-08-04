@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const VARIANTS = [
-  { id: "prev", href: "/", label: "A · Previous" },
+  { id: "prev", href: "/", label: "Previous" },
   { id: "a", href: "/option-a", label: "Option A" },
   { id: "b", href: "/option-b", label: "Option B" },
 ] as const;
