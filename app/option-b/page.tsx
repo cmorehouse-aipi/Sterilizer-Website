@@ -6,6 +6,7 @@ import { VariantToggle } from "../components/VariantToggle";
 import { FumeNav } from "../components/FumeNav";
 import { ObjectViewToggle } from "../components/ObjectViewToggle";
 import { HeroDeviceRotator } from "../components/HeroDeviceRotator";
+import { HeroSpinTuner } from "../components/HeroSpinTuner";
 
 const cormorant = Cormorant_Garamond({
   weight: ["300", "400", "500", "600"],
@@ -55,9 +56,12 @@ export default function OptionB() {
           </h1>
         </div>
 
-        {/* centred caption */}
-        <div className="absolute left-1/2 top-[41%] hidden max-w-[240px] -translate-x-1/2 text-[13px] leading-relaxed text-[#F7F4EE]/85 lg:block">
-          A submersible UV-C sterilizer that cleans any bottle in sixty seconds. Designed in Scotland.
+        {/* rotating device — position/size driven by the tuner sliders */}
+        <div
+          className="absolute hidden -translate-x-1/2 -translate-y-1/2 lg:block"
+          style={{ left: "var(--spin-x, 50%)", top: "var(--spin-y, 45%)" }}
+        >
+          <HeroDeviceRotator alt={`The ${BRAND} device, rotating`} heightClass="h-[var(--spin-h,340px)]" />
         </div>
 
         {/* right CTA box */}
@@ -345,6 +349,7 @@ export default function OptionB() {
       </footer>
 
       <VariantToggle active="b" tone="light" />
+      <HeroSpinTuner />
     </div>
   );
 }
