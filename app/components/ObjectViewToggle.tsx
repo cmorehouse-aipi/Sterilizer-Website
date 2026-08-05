@@ -15,8 +15,14 @@ const INTERNAL_SRC = "/renderings/forth-device-glass-frame-00.png";
  * The Internal render (forth-device-glass-frame-00.png) is produced by
  * scripts/render-device-glass.py — same camera/framing as the hero still.
  */
-export function ObjectViewToggle() {
-  const [view, setView] = useState<"device" | "internal">("device");
+export function ObjectViewToggle({
+  defaultView = "device",
+  swapButtons = false,
+}: {
+  defaultView?: "device" | "internal";
+  swapButtons?: boolean;
+} = {}) {
+  const [view, setView] = useState<"device" | "internal">(defaultView);
   const internal = view === "internal";
 
   const activeBtn = "bg-a-bg text-a-ink shadow-sm";
@@ -63,20 +69,16 @@ export function ObjectViewToggle() {
         aria-label="Device view"
         className="z-10 flex items-center gap-1 rounded-full bg-a-bg/10 p-0.5 text-[11px] font-medium tracking-wide"
       >
-        <button
-          aria-pressed={!internal}
-          onClick={() => setView("device")}
-          className={`rounded-full px-3 py-1 transition-all duration-200 ${internal ? inactiveBtn : activeBtn}`}
-        >
-          Device
-        </button>
-        <button
-          aria-pressed={internal}
-          onClick={() => setView("internal")}
-          className={`rounded-full px-3 py-1 transition-all duration-200 ${internal ? activeBtn : inactiveBtn}`}
-        >
-          Internal
-        </button>
+        {(swapButtons ? ["internal", "device"] : ["device", "internal"]).map((v) => (
+          <button
+            key={v}
+            aria-pressed={view === v}
+            onClick={() => setView(v as "device" | "internal")}
+            className={`rounded-full px-3 py-1 capitalize transition-all duration-200 ${view === v ? activeBtn : inactiveBtn}`}
+          >
+            {v}
+          </button>
+        ))}
       </div>
     </div>
   );

@@ -6,7 +6,8 @@ import { VariantToggle } from "../components/VariantToggle";
 import { FumeNav } from "../components/FumeNav";
 import { ObjectViewToggle } from "../components/ObjectViewToggle";
 import { HeroDeviceRotator } from "../components/HeroDeviceRotator";
-import { HeroSpinTuner } from "../components/HeroSpinTuner";
+import { ProductAnimation } from "../components/ProductAnimation";
+import { UseCaseIcon } from "../components/UseCaseIcons";
 
 const cormorant = Cormorant_Garamond({
   weight: ["300", "400", "500", "600"],
@@ -59,9 +60,9 @@ export default function OptionB() {
         {/* rotating device — position/size driven by the tuner sliders */}
         <div
           className="absolute hidden -translate-x-1/2 -translate-y-1/2 lg:block"
-          style={{ left: "var(--spin-x, 50%)", top: "var(--spin-y, 45%)" }}
+          style={{ left: "50%", top: "51%" }}
         >
-          <HeroDeviceRotator alt={`The ${BRAND} device, rotating`} heightClass="h-[var(--spin-h,340px)]" />
+          <HeroDeviceRotator alt={`The ${BRAND} device, rotating`} heightClass="h-[480px]" />
         </div>
 
         {/* right CTA box */}
@@ -79,7 +80,7 @@ export default function OptionB() {
       <section data-nav-dark className="bg-[#22333E] text-[#EAF1F2]">
         <div className="mx-auto grid max-w-[1240px] items-center gap-16 px-6 py-28 lg:grid-cols-[0.9fr_1.1fr] lg:px-10">
           <div className="flex justify-center lg:justify-start">
-            <ObjectViewToggle />
+            <ObjectViewToggle defaultView="internal" swapButtons />
           </div>
           <div>
             <Eyebrow tone="light">The technology</Eyebrow>
@@ -112,7 +113,7 @@ export default function OptionB() {
         </div>
       </section>
 
-      {/* ————— Poured by you — editorial statement + steps ————— */}
+      {/* ————— Poured by you — animation + stacked steps ————— */}
       <section className="mx-auto max-w-[1240px] px-6 py-28 lg:px-10">
         <div className="grid gap-10 lg:grid-cols-[1fr_1.1fr] lg:items-end">
           <Eyebrow>Born of the Highlands</Eyebrow>
@@ -121,18 +122,28 @@ export default function OptionB() {
           </h2>
         </div>
 
-        <div className="mt-16 grid gap-px overflow-hidden rounded-sm border border-[#0F1B2D]/10 bg-[#0F1B2D]/10 sm:grid-cols-3">
-          {[
-            { n: "01", t: "Drop", d: "Slip it into any bottle with a neck wider than 25 mm. Loch, fountain, hotel tap — no worries." },
-            { n: "02", t: "Shake", d: "One shake wakes the cycle. Dual UV-C emitters flood the water from every direction." },
-            { n: "03", t: "Drink", d: "Sixty seconds later the light goes out and the water is yours. Pure as the untouched highlands." },
-          ].map((s) => (
-            <div key={s.n} className="bg-[#F7F4EE] px-8 py-12">
-              <div className={`${serif} text-[40px] font-light text-[#0F1B2D]/35`}>{s.n}</div>
-              <h3 className="mt-4 text-[13px] uppercase tracking-[0.22em]">{s.t}</h3>
-              <p className="mt-4 text-[15px] leading-relaxed text-[#0F1B2D]/70">{s.d}</p>
-            </div>
-          ))}
+        <div className="mt-16 grid items-center gap-14 lg:grid-cols-[1fr_1fr]">
+          {/* device usage animation, from the How It Works page */}
+          <div className="overflow-hidden rounded-sm border border-[#0F1B2D]/10">
+            <ProductAnimation />
+          </div>
+
+          {/* steps, stacked */}
+          <div className="flex flex-col">
+            {[
+              { n: "01", t: "Drop", d: "Slip it into any bottle with a neck wider than 25 mm. Loch, fountain, hotel tap — no worries." },
+              { n: "02", t: "Shake", d: "One shake wakes the cycle. Dual UV-C emitters flood the water from every direction." },
+              { n: "03", t: "Drink", d: "Sixty seconds later the light goes out and the water is yours. Pure as the untouched highlands." },
+            ].map((s) => (
+              <div key={s.n} className="flex items-start gap-8 border-t border-[#0F1B2D]/10 py-9 last:pb-0">
+                <div className={`${serif} text-[38px] font-light leading-none text-[#0F1B2D]/35`}>{s.n}</div>
+                <div>
+                  <h3 className="text-[13px] uppercase tracking-[0.22em]">{s.t}</h3>
+                  <p className="mt-3 max-w-[440px] text-[15px] leading-relaxed text-[#0F1B2D]/70">{s.d}</p>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -190,11 +201,15 @@ export default function OptionB() {
           <Eyebrow>Where it lives</Eyebrow>
           <h2 className={`${serif} text-[clamp(34px,4.4vw,58px)] font-light leading-[1.06]`}>Carried, not stored.</h2>
         </div>
-        <div className="mt-16 grid gap-x-10 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-16 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {USE_CASES.map((u) => (
-            <div key={u.tag} className="border-t border-[#0F1B2D]/15 pt-6">
-              <div className="text-[12px] uppercase tracking-[0.22em] text-[#0F1B2D]/55">{u.tag}</div>
-              <p className={`${serif} mt-3 text-[22px] font-light leading-snug`}>{u.line}</p>
+            <div
+              key={u.tag}
+              className="flex flex-col items-center rounded-sm border border-[#0F1B2D]/10 bg-white/40 px-8 py-10 text-center transition duration-500 hover:-translate-y-1 hover:shadow-[0_18px_40px_rgba(15,27,45,0.08)]"
+            >
+              <span className="text-a-sage"><UseCaseIcon tag={u.tag} /></span>
+              <div className="mt-4 text-[12px] uppercase tracking-[0.22em] text-[#0F1B2D]/55">{u.tag}</div>
+              <p className={`${serif} mt-3 max-w-[280px] text-[21px] font-light leading-snug`}>{u.line}</p>
             </div>
           ))}
         </div>
@@ -349,7 +364,6 @@ export default function OptionB() {
       </footer>
 
       <VariantToggle active="b" tone="light" />
-      <HeroSpinTuner />
     </div>
   );
 }
