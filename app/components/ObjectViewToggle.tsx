@@ -15,8 +15,17 @@ const INTERNAL_SRC = "/renderings/forth-device-glass-frame-00.png";
  * The Internal render (forth-device-glass-frame-00.png) is produced by
  * scripts/render-device-glass.py — same camera/framing as the hero still.
  */
-export function ObjectViewToggle() {
-  const [view, setView] = useState<"device" | "internal">("device");
+export function ObjectViewToggle({
+  defaultView = "device",
+  swapButtons = false,
+  renderHeight,
+}: {
+  defaultView?: "device" | "internal";
+  swapButtons?: boolean;
+  /** CSS height for the render block (e.g. "var(--obj-h, 520px)"). Buttons keep their size and spacing. */
+  renderHeight?: string;
+} = {}) {
+  const [view, setView] = useState<"device" | "internal">(defaultView);
   const internal = view === "internal";
 
   const activeBtn = "bg-a-bg text-a-ink shadow-sm";
@@ -41,7 +50,10 @@ export function ObjectViewToggle() {
           style={{ backgroundColor: "#7FB3FF", opacity: internal ? 0.4 : 0 }}
           aria-hidden
         />
-        <div className="relative z-10 h-[520px] md:h-[620px]" style={{ aspectRatio: "1600 / 2400" }}>
+        <div
+          className={renderHeight ? "relative z-10" : "relative z-10 h-[520px] md:h-[620px]"}
+          style={{ aspectRatio: "1600 / 2400", ...(renderHeight ? { height: renderHeight } : {}) }}
+        >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={DEVICE_SRC}
@@ -63,20 +75,16 @@ export function ObjectViewToggle() {
         aria-label="Device view"
         className="z-10 flex items-center gap-1 rounded-full bg-a-bg/10 p-0.5 text-[11px] font-medium tracking-wide"
       >
-        <button
-          aria-pressed={!internal}
-          onClick={() => setView("device")}
-          className={`rounded-full px-3 py-1 transition-all duration-200 ${internal ? inactiveBtn : activeBtn}`}
-        >
-          Device
-        </button>
-        <button
-          aria-pressed={internal}
-          onClick={() => setView("internal")}
-          className={`rounded-full px-3 py-1 transition-all duration-200 ${internal ? activeBtn : inactiveBtn}`}
-        >
-          Internal
-        </button>
+        {(swapButtons ? ["internal", "device"] : ["device", "internal"]).map((v) => (
+          <button
+            key={v}
+            aria-pressed={view === v}
+            onClick={() => setView(v as "device" | "internal")}
+            className={`rounded-full px-3 py-1 capitalize transition-all duration-200 ${view === v ? activeBtn : inactiveBtn}`}
+          >
+            {v}
+          </button>
+        ))}
       </div>
     </div>
   );
