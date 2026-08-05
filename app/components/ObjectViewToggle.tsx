@@ -18,9 +18,12 @@ const INTERNAL_SRC = "/renderings/forth-device-glass-frame-00.png";
 export function ObjectViewToggle({
   defaultView = "device",
   swapButtons = false,
+  renderHeight,
 }: {
   defaultView?: "device" | "internal";
   swapButtons?: boolean;
+  /** CSS height for the render block (e.g. "var(--obj-h, 520px)"). Buttons keep their size and spacing. */
+  renderHeight?: string;
 } = {}) {
   const [view, setView] = useState<"device" | "internal">(defaultView);
   const internal = view === "internal";
@@ -47,7 +50,10 @@ export function ObjectViewToggle({
           style={{ backgroundColor: "#7FB3FF", opacity: internal ? 0.4 : 0 }}
           aria-hidden
         />
-        <div className="relative z-10 h-[520px] md:h-[620px]" style={{ aspectRatio: "1600 / 2400" }}>
+        <div
+          className={renderHeight ? "relative z-10" : "relative z-10 h-[520px] md:h-[620px]"}
+          style={{ aspectRatio: "1600 / 2400", ...(renderHeight ? { height: renderHeight } : {}) }}
+        >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={DEVICE_SRC}
