@@ -7,7 +7,6 @@ import { FumeNav } from "../components/FumeNav";
 import { ObjectViewToggle } from "../components/ObjectViewToggle";
 import { HeroDeviceRotator } from "../components/HeroDeviceRotator";
 import { ProductAnimation } from "../components/ProductAnimation";
-import { ObjToggleTuner } from "../components/ObjToggleTuner";
 import { UseCaseIcon } from "../components/UseCaseIcons";
 
 const cormorant = Cormorant_Garamond({
@@ -81,9 +80,7 @@ export default function OptionB() {
       <section data-nav-dark className="bg-[#22333E] text-[#EAF1F2]">
         <div className="mx-auto grid max-w-[1240px] items-center gap-16 px-6 py-28 lg:grid-cols-[0.9fr_1.1fr] lg:px-10">
           <div className="flex justify-center lg:justify-start">
-            <div style={{ transform: "translate(var(--obj-x, 0px), var(--obj-y, 0px))" }}>
-              <ObjectViewToggle defaultView="internal" swapButtons renderHeight="var(--obj-h, 520px)" />
-            </div>
+            <ObjectViewToggle defaultView="internal" swapButtons renderHeight="480px" />
           </div>
           <div>
             <Eyebrow tone="light">The technology</Eyebrow>
@@ -367,7 +364,6 @@ export default function OptionB() {
       </footer>
 
       <VariantToggle active="b" tone="light" />
-      <ObjToggleTuner />
     </div>
   );
 }
