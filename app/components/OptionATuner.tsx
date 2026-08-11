@@ -13,7 +13,9 @@ export function OptionATuner() {
   const [cardAlpha, setCardAlpha] = useState(76);
 
   useEffect(() => {
-    document.documentElement.style.setProperty("--uv-glow-intensity", String(glow / 100));
+    // Square-root curve: perceived brightness scales roughly linearly with the
+    // slider, so the low end of the range stays visible (30 ≈ 55% opacity).
+    document.documentElement.style.setProperty("--uv-glow-intensity", String(Math.sqrt(glow / 100)));
   }, [glow]);
 
   useEffect(() => {

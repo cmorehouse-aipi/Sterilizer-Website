@@ -22,21 +22,22 @@ type Props = { alt: string; heightClass?: string; uvGlow?: boolean };
  */
 function DomeGlow({ position }: { position: "top" | "bottom" }) {
   const isTop = position === "top";
-  // Cone sits just outside the dome and points away from the device.
-  const anchor = isTop ? { top: "-26%" } : { bottom: "-26%" };
+  // The cone's base sits flush with the dome/body seam (~15% in from the
+  // container edge) and spans the full width of the opaque body (31%–69% of
+  // container width), widening as it projects away from the device.
+  const anchor = isTop ? { top: "-19%" } : { bottom: "-19%" };
   const coneGradient = isTop
     ? "linear-gradient(to top, rgba(150,205,255,0.85) 0%, rgba(128,182,255,0.35) 48%, transparent 96%)"
     : "linear-gradient(to bottom, rgba(150,205,255,0.85) 0%, rgba(128,182,255,0.35) 48%, transparent 96%)";
-  // Narrow at the dome (where it exits), wide at the far end.
   const coneClip = isTop
-    ? "polygon(35% 100%, 65% 100%, 97% 0%, 3% 0%)"
-    : "polygon(35% 0%, 65% 0%, 97% 100%, 3% 100%)";
-  const coreAnchor = isTop ? { bottom: "-2%" } : { top: "-2%" };
+    ? "polygon(31% 100%, 69% 100%, 92% 0%, 8% 0%)"
+    : "polygon(31% 0%, 69% 0%, 92% 100%, 8% 100%)";
+  const coreAnchor = isTop ? { bottom: "5%" } : { top: "5%" };
   return (
     <div
       aria-hidden
       className="uv-glow pointer-events-none absolute left-1/2 -translate-x-1/2"
-      style={{ ...anchor, width: "88%", height: "28%" }}
+      style={{ ...anchor, width: "100%", height: "34%" }}
     >
       {/* upward/downward cone — blur wraps the clipped shape so edges stay soft */}
       <div className="absolute inset-0" style={{ filter: "blur(9px)" }}>
@@ -47,8 +48,8 @@ function DomeGlow({ position }: { position: "top" | "bottom" }) {
         className="absolute left-1/2 -translate-x-1/2"
         style={{
           ...coreAnchor,
-          width: "34%",
-          height: "30%",
+          width: "38%",
+          height: "34%",
           background:
             "radial-gradient(ellipse 50% 50% at 50% 50%, rgba(228,244,255,0.95) 0%, rgba(145,202,255,0.55) 45%, transparent 72%)",
           filter: "blur(3px)",
