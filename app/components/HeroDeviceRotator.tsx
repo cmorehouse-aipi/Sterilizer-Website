@@ -27,15 +27,19 @@ function DomeGlow({ position }: { position: "top" | "bottom" }) {
   // centre). Everything — cone, core, and blur spill — is clipped along that
   // same arc, so at any intensity the light stops exactly where the dark body
   // begins and appears to come solely from the dome.
-  const anchor = isTop ? { top: "-20.5%" } : { bottom: "-20.5%" };
+  // Anchors measured pixel-exact from forth-device-frame-00.png (1600×2400):
+  // top seam corners at 12.35% container height (apex 10.8%), bottom seam
+  // corners at 88.3% (apex 89.2%). Wrapper is 34% tall, so its seam edge is
+  // pinned to the corner height and the arc apex is drawn inside the viewBox.
+  const anchor = isTop ? { top: "-21.65%" } : { bottom: "-22.3%" };
   // viewBox is 0 0 100 100; the seam edge is y=100 (top cone) / y=0 (bottom).
   // Body rim corners sit at x=33/67; the far end terminates wide at x=7/93.
   const conePath = isTop
-    ? "M 33 100 Q 50 94 67 100 L 93 0 L 7 0 Z"
-    : "M 33 0 Q 50 6 67 0 L 93 100 L 7 100 Z";
+    ? "M 33 100 Q 50 91 67 100 L 93 0 L 7 0 Z"
+    : "M 33 0 Q 50 5.3 67 0 L 93 100 L 7 100 Z";
   const clipPath = isTop
-    ? "M -30 -60 L 130 -60 L 130 100 L 67 100 Q 50 94 33 100 L -30 100 Z"
-    : "M -30 160 L 130 160 L 130 0 L 67 0 Q 50 6 33 0 L -30 0 Z";
+    ? "M -30 -60 L 130 -60 L 130 100 L 67 100 Q 50 91 33 100 L -30 100 Z"
+    : "M -30 160 L 130 160 L 130 0 L 67 0 Q 50 5.3 33 0 L -30 0 Z";
   const grad = isTop
     ? { x1: "0", y1: "1", x2: "0", y2: "0" }
     : { x1: "0", y1: "0", x2: "0", y2: "1" };
