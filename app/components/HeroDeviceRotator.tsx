@@ -22,42 +22,69 @@ type Props = { alt: string; heightClass?: string; uvGlow?: boolean };
  */
 function DomeGlow({ position }: { position: "top" | "bottom" }) {
   const isTop = position === "top";
-  // The cone's base sits flush with the dome/body seam and spans the full
-  // width of the opaque body, widening as it projects away from the device.
-  // overflow:hidden hard-clips the wrapper at the seam edge so no glow (cone,
-  // core, or blur spill) can ever reach the opaque body at any intensity.
-  // Wrapper is 112% wide so sideways blur still has room to breathe.
+  // The cone's base is the dome/body seam itself: an arc matching the curved
+  // rim of the opaque cylinder (bowing ~3 viewBox units toward the dome at
+  // centre). Everything — cone, core, and blur spill — is clipped along that
+  // same arc, so at any intensity the light stops exactly where the dark body
+  // begins and appears to come solely from the dome.
   const anchor = isTop ? { top: "-20.5%" } : { bottom: "-20.5%" };
-  const coneGradient = isTop
-    ? "linear-gradient(to top, rgba(150,205,255,0.85) 0%, rgba(128,182,255,0.35) 48%, transparent 96%)"
-    : "linear-gradient(to bottom, rgba(150,205,255,0.85) 0%, rgba(128,182,255,0.35) 48%, transparent 96%)";
-  // Base (at the seam): body width. Far end: wider spread before termination.
-  const coneClip = isTop
-    ? "polygon(33% 100%, 67% 100%, 93% 0%, 7% 0%)"
-    : "polygon(33% 0%, 67% 0%, 93% 100%, 7% 100%)";
-  const coreAnchor = isTop ? { bottom: "5%" } : { top: "5%" };
+  // viewBox is 0 0 100 100; the seam edge is y=100 (top cone) / y=0 (bottom).
+  // Body rim corners sit at x=33/67; the far end terminates wide at x=7/93.
+  const conePath = isTop
+    ? "M 33 100 Q 50 94 67 100 L 93 0 L 7 0 Z"
+    : "M 33 0 Q 50 6 67 0 L 93 100 L 7 100 Z";
+  const clipPath = isTop
+    ? "M -30 -60 L 130 -60 L 130 100 L 67 100 Q 50 94 33 100 L -30 100 Z"
+    : "M -30 160 L 130 160 L 130 0 L 67 0 Q 50 6 33 0 L -30 0 Z";
+  const grad = isTop
+    ? { x1: "0", y1: "1", x2: "0", y2: "0" }
+    : { x1: "0", y1: "0", x2: "0", y2: "1" };
+  const coreCy = isTop ? 90 : 10;
+  const ids = {
+    cone: `uv-cone-${position}`,
+    core: `uv-core-${position}`,
+    blur: `uv-blur-${position}`,
+    clip: `uv-clip-${position}`,
+  };
   return (
     <div
       aria-hidden
-      className="uv-glow pointer-events-none absolute left-1/2 -translate-x-1/2 overflow-hidden"
+      className="uv-glow pointer-events-none absolute left-1/2 -translate-x-1/2"
       style={{ ...anchor, width: "112%", height: "34%" }}
     >
-      {/* upward/downward cone — blur wraps the clipped shape so edges stay soft */}
-      <div className="absolute inset-0" style={{ filter: "blur(9px)" }}>
-        <div className="absolute inset-0" style={{ background: coneGradient, clipPath: coneClip }} />
-      </div>
-      {/* bright core on the dome where the light exits */}
-      <div
-        className="absolute left-1/2 -translate-x-1/2"
-        style={{
-          ...coreAnchor,
-          width: "34%",
-          height: "34%",
-          background:
-            "radial-gradient(ellipse 50% 50% at 50% 50%, rgba(228,244,255,0.95) 0%, rgba(145,202,255,0.55) 45%, transparent 72%)",
-          filter: "blur(3px)",
-        }}
-      />
+      <svg
+        viewBox="0 0 100 100"
+        preserveAspectRatio="none"
+        className="absolute inset-0 h-full w-full"
+        style={{ overflow: "visible" }}
+      >
+        <defs>
+          <linearGradient id={ids.cone} {...grad}>
+            <stop offset="0" stopColor="rgb(150,205,255)" stopOpacity="0.85" />
+            <stop offset="0.48" stopColor="rgb(128,182,255)" stopOpacity="0.35" />
+            <stop offset="0.96" stopColor="rgb(128,182,255)" stopOpacity="0" />
+          </linearGradient>
+          <radialGradient id={ids.core}>
+            <stop offset="0" stopColor="rgb(228,244,255)" stopOpacity="0.95" />
+            <stop offset="0.45" stopColor="rgb(145,202,255)" stopOpacity="0.55" />
+            <stop offset="0.72" stopColor="rgb(145,202,255)" stopOpacity="0" />
+          </radialGradient>
+          <filter id={ids.blur} x="-30%" y="-30%" width="160%" height="160%">
+            <feGaussianBlur stdDeviation="1.6" />
+          </filter>
+          <clipPath id={ids.clip}>
+            <path d={clipPath} />
+          </clipPath>
+        </defs>
+        {/* blur first, then clip along the seam arc — spill can never cross it */}
+        <g clipPath={`url(#${ids.clip})`}>
+          <g filter={`url(#${ids.blur})`}>
+            <path d={conePath} fill={`url(#${ids.cone})`} />
+          </g>
+          {/* bright core on the dome where the light exits */}
+          <ellipse cx="50" cy={coreCy} rx="17" ry="15" fill={`url(#${ids.core})`} />
+        </g>
+      </svg>
     </div>
   );
 }
