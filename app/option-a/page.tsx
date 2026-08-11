@@ -3,8 +3,7 @@ import { Anton } from "next/font/google";
 
 import { BRAND, PRESS_QUOTES, USE_CASES } from "../lib/brand";
 import { VariantToggle } from "../components/VariantToggle";
-import { SiteFooter } from "../components/SiteFooter";
-import { SiteNav } from "../components/SiteNav";
+import { OptionANav, OptionAFooter } from "./_components/OptionAShell";
 import { HeroDeviceRotator } from "../components/HeroDeviceRotator";
 import { ObjectViewToggle } from "../components/ObjectViewToggle";
 import { UseCaseIcon } from "../components/UseCaseIcons";
@@ -56,7 +55,7 @@ export default function OptionA() {
         />
       </div>
 
-      <SiteNav tone="light" />
+      <OptionANav />
 
       {/* ————— Hero: full-bleed Storr scene ————— */}
       <section className="relative overflow-hidden">
@@ -83,13 +82,13 @@ export default function OptionA() {
 
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
             <Link
-              href="/shop"
+              href="/option-a/shop"
               className="rounded-full bg-a-ink px-7 py-3.5 text-[14px] font-semibold tracking-wide text-a-bg transition hover:-translate-y-0.5 hover:shadow-lg"
             >
               Reserve yours — from $79
             </Link>
             <Link
-              href="/how-it-works"
+              href="/option-a/how-it-works"
               className="rounded-full bg-white/70 px-7 py-3.5 text-[14px] font-semibold tracking-wide ring-1 ring-a-ink/15 backdrop-blur transition hover:bg-white"
             >
               How it works
@@ -140,7 +139,7 @@ export default function OptionA() {
             Highland burn.
           </p>
           <Link
-            href="/about"
+            href="/option-a/about"
             className="mt-10 rounded-full bg-[#F2EFE8] px-7 py-3.5 text-[14px] font-semibold tracking-wide text-[#0F1B2D] transition hover:-translate-y-0.5"
           >
             Our story
@@ -176,7 +175,7 @@ export default function OptionA() {
             </div>
 
             <Link
-              href="/technology"
+              href="/option-a/technology"
               className="mt-12 inline-block rounded-full bg-[#EAF1F2] px-7 py-3.5 text-[14px] font-semibold tracking-wide text-[#22333E] transition hover:-translate-y-0.5"
             >
               Read the technology page
@@ -195,7 +194,7 @@ export default function OptionA() {
             Better technology, in a better object, at a fairer price.
           </p>
           <Link
-            href="/compare"
+            href="/option-a/compare"
             className="mt-10 rounded-full bg-[#F2EFE8] px-7 py-3.5 text-[14px] font-semibold tracking-wide text-[#0F1B2D] transition hover:-translate-y-0.5"
           >
             See the full comparison
@@ -233,7 +232,7 @@ export default function OptionA() {
             device operates within.
           </p>
           <Link
-            href="/technology"
+            href="/option-a/technology"
             className="mt-10 rounded-full bg-[#F2EFE8] px-7 py-3.5 text-[14px] font-semibold tracking-wide text-[#0F1B2D] transition hover:-translate-y-0.5"
           >
             Read the science
@@ -273,7 +272,7 @@ export default function OptionA() {
               />
               <div className={`${display} relative z-10 mt-8 text-[26px] transition-colors duration-700 group-hover:text-[#F7F4EE]`}>From $79</div>
               <Link
-                href="/shop"
+                href="/option-a/shop"
                 className="relative z-10 mt-4 rounded-full bg-a-ink px-6 py-3 text-[13px] font-semibold tracking-wide text-a-bg transition hover:-translate-y-0.5"
               >
                 Reserve {c.name}
@@ -316,7 +315,7 @@ export default function OptionA() {
         </div>
       </section>
 
-      <SiteFooter />
+      <OptionAFooter />
       <OptionATuner />
       <VariantToggle active="a" tone="light" />
     </div>
