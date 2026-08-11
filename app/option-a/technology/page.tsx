@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 import { BRAND } from "../../lib/brand";
-import { ObjectViewToggle } from "../../components/ObjectViewToggle";
+import { ExplodedReveal } from "../../components/ExplodedReveal";
 import { OptionAShell } from "../_components/OptionAShell";
 import { display } from "../_components/display";
 
@@ -19,27 +19,30 @@ const STATS = [
 export default function OptionATechnology() {
   return (
     <OptionAShell>
-      {/* ————— Navy hero with the internal render ————— */}
+      {/* ————— Navy intro ————— */}
       <section className="bg-[#22333E] text-[#EAF1F2]">
-        <div className="mx-auto grid max-w-[1240px] items-center gap-14 px-6 py-24 lg:grid-cols-[0.85fr_1.15fr]">
-          <div className="order-2 flex justify-center lg:order-1 lg:justify-start">
-            <ObjectViewToggle defaultView="internal" swapButtons />
-          </div>
-          <div className="order-1 text-left lg:order-2">
-            <p className="font-mono text-[12px] uppercase tracking-[0.3em] text-[#EAF1F2]/60">the technology</p>
-            <h1 className={`${display} mt-4 text-[clamp(44px,6vw,84px)]`}>265 nanometres</h1>
-            <p className="mt-5 max-w-[520px] font-serif text-[clamp(19px,2.2vw,25px)] italic text-[#EAF1F2]/80">
-              the wavelength microbial DNA cannot survive
-            </p>
-            <p className="mt-8 max-w-[560px] font-serif text-[16.5px] leading-relaxed text-[#EAF1F2]/70">
-              It is the same mechanism municipalities use to treat drinking water at scale, miniaturised
-              into a 32-gram cylinder. Independent of bottle material, clarity, or temperature, the
-              dose-to-kill relationship is well characterised: above 40 mJ/cm² across the bottle&rsquo;s
-              interior, you achieve a ≥ 3-log reduction across bacteria, viruses, and protozoa.
-            </p>
-          </div>
+        <div className="mx-auto max-w-[860px] px-6 py-20 text-center">
+          <p className="font-mono text-[12px] uppercase tracking-[0.3em] text-[#EAF1F2]/60">the technology</p>
+          <h1 className={`${display} mt-4 text-[clamp(44px,6vw,84px)]`}>265 nanometres</h1>
+          <p className="mx-auto mt-5 max-w-[520px] font-serif text-[clamp(19px,2.2vw,25px)] italic text-[#EAF1F2]/80">
+            the wavelength microbial DNA cannot survive
+          </p>
+          <p className="mx-auto mt-8 max-w-[620px] font-serif text-[16.5px] leading-relaxed text-[#EAF1F2]/70">
+            It is the same mechanism municipalities use to treat drinking water at scale, miniaturised
+            into a 32-gram cylinder. Independent of bottle material, clarity, or temperature, the
+            dose-to-kill relationship is well characterised: above 40 mJ/cm² across the bottle&rsquo;s
+            interior, you achieve a ≥ 3-log reduction across bacteria, viruses, and protozoa.
+          </p>
         </div>
       </section>
+
+      {/* ————— Blueprint: scroll-driven exploded view ————— */}
+      <ExplodedReveal
+        tone="blueprint"
+        eyebrow={`Fig. 01 — inside the ${BRAND.toLowerCase()}`}
+        title="Six parts. One sealed instrument."
+        description="Scroll to disassemble. The cylinder resolves into its components — every part engineered to never need replacing."
+      />
 
       {/* ————— Engineering + patent ————— */}
       <section className="bg-grain bg-a-bg">

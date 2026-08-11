@@ -2,7 +2,11 @@
 
 import { Fragment, useEffect, useRef, useState } from "react";
 
-type Tone = "light" | "dark";
+import { display } from "../option-a/_components/display";
+
+// "blueprint" tone: Option A technology page — deep engineering-blueprint blue,
+// near-white line work, Anton display title, warm cream callout accents.
+type Tone = "light" | "dark" | "blueprint";
 
 interface Props {
   tone?: Tone;
@@ -355,17 +359,27 @@ export function ExplodedReveal({
   const p = progress;
 
   const isDark = tone === "dark";
-  const accentHex = isDark ? "#E89B7C" : "#5F7A57";
-  const inkHex = isDark ? "#F5F2EC" : "#0F1B2D";
-  const ruleHex = isDark ? "rgba(245,242,236,0.14)" : "rgba(15,27,45,0.14)";
-  const gridColor = isDark ? "rgba(245,242,236,0.06)" : "rgba(15,27,45,0.05)";
-  const dotColor = isDark ? "rgba(245,242,236,0.16)" : "rgba(15,27,45,0.11)";
-  const partFill = isDark ? "#13151A" : "#FAF8F2";
-  const surfaceClass = isDark ? "bg-b-surface" : "bg-white/65";
-  const wrapClass = isDark ? "bg-b-bg text-b-ink" : "bg-a-bg text-a-ink";
-  const muteClass = isDark ? "text-b-mute" : "text-a-ink/55";
+  const isBp = tone === "blueprint";
+  const accentHex = isBp ? "#F0E3BC" : isDark ? "#E89B7C" : "#5F7A57";
+  const inkHex = isBp ? "#E8F1F8" : isDark ? "#F5F2EC" : "#0F1B2D";
+  const ruleHex = isBp
+    ? "rgba(232,241,248,0.22)"
+    : isDark ? "rgba(245,242,236,0.14)" : "rgba(15,27,45,0.14)";
+  const gridColor = isBp
+    ? "rgba(232,241,248,0.09)"
+    : isDark ? "rgba(245,242,236,0.06)" : "rgba(15,27,45,0.05)";
+  const dotColor = isBp
+    ? "rgba(232,241,248,0.16)"
+    : isDark ? "rgba(245,242,236,0.16)" : "rgba(15,27,45,0.11)";
+  const partFill = isBp ? "#16395F" : isDark ? "#13151A" : "#FAF8F2";
+  const surfaceClass = isBp ? "bg-white/[0.07]" : isDark ? "bg-b-surface" : "bg-white/65";
+  const wrapClass = isBp
+    ? "bg-[#16395F] text-[#E8F1F8]"
+    : isDark ? "bg-b-bg text-b-ink" : "bg-a-bg text-a-ink";
+  const muteClass = isBp ? "text-[#E8F1F8]/55" : isDark ? "text-b-mute" : "text-a-ink/55";
   const captionFont = "font-mono";
-  const titleFont = isDark ? "font-display" : "font-serif";
+  const titleFont = isBp ? display : isDark ? "font-display" : "font-serif";
+  const badgeTextColor = isBp ? "#16395F" : "white";
 
   const housingPart = PARTS.find((p) => p.id === "housing")!;
   const housingT = ease(sm(housingPart.phase[0], housingPart.phase[1], p));
@@ -461,13 +475,13 @@ export function ExplodedReveal({
           aria-hidden
           style={{
             background: `radial-gradient(55% 55% at 50% 55%, ${
-              isDark ? "rgba(232,155,124,0.10)" : "rgba(136,158,129,0.16)"
+              isBp ? "rgba(232,241,248,0.07)" : isDark ? "rgba(232,155,124,0.10)" : "rgba(136,158,129,0.16)"
             } 0%, transparent 70%)`,
           }}
         />
 
-        {/* Header */}
-        <div className="relative z-10 mx-auto w-full max-w-[1280px] flex-shrink-0 px-6 pt-6 md:px-10 md:pt-8">
+        {/* Header — blueprint tone leaves room for Option A's sticky nav */}
+        <div className={`relative z-10 mx-auto w-full max-w-[1280px] flex-shrink-0 px-6 md:px-10 ${isBp ? "pt-20 md:pt-24" : "pt-6 md:pt-8"}`}>
           <div className="flex items-start justify-between gap-6">
             <div>
               <div className={`${captionFont} text-[11px] uppercase tracking-[0.22em] ${muteClass}`}>
@@ -651,7 +665,7 @@ export function ExplodedReveal({
                         transform: "translate(-50%, -50%)",
                         opacity: calloutOpacity,
                         backgroundColor: accentHex,
-                        color: "white",
+                        color: badgeTextColor,
                         fontFamily: "ui-monospace, monospace",
                       }}
                     >
