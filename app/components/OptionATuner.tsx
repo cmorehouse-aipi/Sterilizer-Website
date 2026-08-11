@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
  */
 export function OptionATuner() {
   const [glow, setGlow] = useState(65);
-  const [cardAlpha, setCardAlpha] = useState(85);
+  const [cardAlpha, setCardAlpha] = useState(76);
 
   useEffect(() => {
     document.documentElement.style.setProperty("--uv-glow-intensity", String(glow / 100));

@@ -14,35 +14,43 @@ const HERO_TURN_MS = 10000;
 type Props = { alt: string; heightClass?: string; uvGlow?: boolean };
 
 /**
- * Soft UV-C emission rendered at a dome. Two layers: a wide bloom and a tight
- * bright core, blended with `screen` so they read as light, not paint.
+ * UV-C emission through a transparent dome. The source sits inside the opaque
+ * housing, so the light projects axially — a cone that leaves the dome narrow
+ * and widens as it travels away from the device, fading with distance. A tight
+ * bright core sits on the dome itself where the light exits.
  * Overall strength follows --uv-glow-intensity (0–1).
  */
 function DomeGlow({ position }: { position: "top" | "bottom" }) {
-  const anchor = position === "top" ? { top: "-4%" } : { bottom: "-4%" };
+  const isTop = position === "top";
+  // Cone sits just outside the dome and points away from the device.
+  const anchor = isTop ? { top: "-26%" } : { bottom: "-26%" };
+  const coneGradient = isTop
+    ? "linear-gradient(to top, rgba(150,205,255,0.85) 0%, rgba(128,182,255,0.35) 48%, transparent 96%)"
+    : "linear-gradient(to bottom, rgba(150,205,255,0.85) 0%, rgba(128,182,255,0.35) 48%, transparent 96%)";
+  // Narrow at the dome (where it exits), wide at the far end.
+  const coneClip = isTop
+    ? "polygon(35% 100%, 65% 100%, 97% 0%, 3% 0%)"
+    : "polygon(35% 0%, 65% 0%, 97% 100%, 3% 100%)";
+  const coreAnchor = isTop ? { bottom: "-2%" } : { top: "-2%" };
   return (
     <div
       aria-hidden
       className="uv-glow pointer-events-none absolute left-1/2 -translate-x-1/2"
-      style={{ ...anchor, width: "150%", height: "26%" }}
+      style={{ ...anchor, width: "88%", height: "28%" }}
     >
-      {/* wide bloom */}
+      {/* upward/downward cone — blur wraps the clipped shape so edges stay soft */}
+      <div className="absolute inset-0" style={{ filter: "blur(9px)" }}>
+        <div className="absolute inset-0" style={{ background: coneGradient, clipPath: coneClip }} />
+      </div>
+      {/* bright core on the dome where the light exits */}
       <div
-        className="absolute inset-0"
+        className="absolute left-1/2 -translate-x-1/2"
         style={{
+          ...coreAnchor,
+          width: "34%",
+          height: "30%",
           background:
-            "radial-gradient(ellipse 50% 50% at 50% 50%, rgba(112,178,255,0.8) 0%, rgba(112,168,255,0.32) 45%, transparent 72%)",
-          filter: "blur(10px)",
-        }}
-      />
-      {/* tight core at the dome itself */}
-      <div
-        className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
-        style={{
-          width: "40%",
-          height: "48%",
-          background:
-            "radial-gradient(ellipse 50% 50% at 50% 50%, rgba(228,244,255,0.98) 0%, rgba(140,200,255,0.6) 45%, transparent 72%)",
+            "radial-gradient(ellipse 50% 50% at 50% 50%, rgba(228,244,255,0.95) 0%, rgba(145,202,255,0.55) 45%, transparent 72%)",
           filter: "blur(3px)",
         }}
       />
