@@ -64,7 +64,7 @@ export const FAQS = [
 export const USE_CASES = [
   { tag: "At home", line: "Tap-to-bottle peace of mind for the morning rush." },
   { tag: "The office", line: "Building tap, communal kitchen, water cooler. Done while the kettle boils." },
-  { tag: "The gym", line: "Clean refills at the fountain. No more plastic." },
+  { tag: "The gym", line: "Shaker bottles get grim. Powder builds up — make sure bacteria doesn't." },
   { tag: "Hotels", line: "Mini-bar water adds up. Tap water costs nothing." },
   { tag: "Travel", line: "Mexico City to Marrakech — your bottle, your water, no drama." },
   { tag: "Outdoors", line: "Streams, lakes, refill stops — disinfected in sixty seconds." },

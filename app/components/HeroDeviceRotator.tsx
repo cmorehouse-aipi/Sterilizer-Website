@@ -11,7 +11,44 @@ const POSTER_SRC = "/renderings/forth-device-frame-00.png";
 // ~31fps effective frame rate at display speed.
 const HERO_TURN_MS = 10000;
 
-type Props = { alt: string; heightClass?: string };
+type Props = { alt: string; heightClass?: string; uvGlow?: boolean };
+
+/**
+ * Soft UV-C emission rendered at a dome. Two layers: a wide bloom and a tight
+ * bright core, blended with `screen` so they read as light, not paint.
+ * Overall strength follows --uv-glow-intensity (0–1).
+ */
+function DomeGlow({ position }: { position: "top" | "bottom" }) {
+  const anchor = position === "top" ? { top: "-4%" } : { bottom: "-4%" };
+  return (
+    <div
+      aria-hidden
+      className="uv-glow pointer-events-none absolute left-1/2 -translate-x-1/2"
+      style={{ ...anchor, width: "150%", height: "26%" }}
+    >
+      {/* wide bloom */}
+      <div
+        className="absolute inset-0"
+        style={{
+          background:
+            "radial-gradient(ellipse 50% 50% at 50% 50%, rgba(112,178,255,0.8) 0%, rgba(112,168,255,0.32) 45%, transparent 72%)",
+          filter: "blur(10px)",
+        }}
+      />
+      {/* tight core at the dome itself */}
+      <div
+        className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+        style={{
+          width: "40%",
+          height: "48%",
+          background:
+            "radial-gradient(ellipse 50% 50% at 50% 50%, rgba(228,244,255,0.98) 0%, rgba(140,200,255,0.6) 45%, transparent 72%)",
+          filter: "blur(3px)",
+        }}
+      />
+    </div>
+  );
+}
 
 /**
  * Slow continuous 360° spin. Preferred path: native loop playback slowed via
@@ -19,7 +56,7 @@ type Props = { alt: string; heightClass?: string };
  * (autoplay refused): rAF scrubbing quantized to frame boundaries so we only
  * seek when the displayed frame actually changes.
  */
-export function HeroDeviceRotator({ alt, heightClass = "h-[460px] md:h-[560px]" }: Props) {
+export function HeroDeviceRotator({ alt, heightClass = "h-[460px] md:h-[560px]", uvGlow = false }: Props) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const rafRef = useRef<number | null>(null);
 
@@ -94,6 +131,12 @@ export function HeroDeviceRotator({ alt, heightClass = "h-[460px] md:h-[560px]" 
         <source src={VIDEO_WEBM} type="video/webm" />
         <source src={VIDEO_MP4} type="video/mp4" />
       </video>
+      {uvGlow && (
+        <>
+          <DomeGlow position="top" />
+          <DomeGlow position="bottom" />
+        </>
+      )}
     </div>
   );
 }

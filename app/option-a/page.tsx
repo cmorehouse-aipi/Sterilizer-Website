@@ -8,6 +8,7 @@ import { SiteNav } from "../components/SiteNav";
 import { HeroDeviceRotator } from "../components/HeroDeviceRotator";
 import { ObjectViewToggle } from "../components/ObjectViewToggle";
 import { UseCaseIcon } from "../components/UseCaseIcons";
+import { OptionATuner } from "../components/OptionATuner";
 
 const anton = Anton({ weight: "400", subsets: ["latin"], variable: "--font-anton" });
 
@@ -123,7 +124,7 @@ export default function OptionA() {
           </div>
 
           <div className="flex justify-center lg:justify-end">
-            <HeroDeviceRotator alt={`The ${BRAND} device, rotating`} />
+            <HeroDeviceRotator alt={`The ${BRAND} device, rotating`} uvGlow />
           </div>
         </div>
       </section>
@@ -151,7 +152,7 @@ export default function OptionA() {
       <section className="bg-[#22333E] text-[#EAF1F2]">
         <div className="mx-auto grid max-w-[1240px] items-center gap-14 px-6 py-28 lg:grid-cols-[0.85fr_1.15fr]">
           <div className="order-2 flex justify-center lg:order-1 lg:justify-start">
-            <ObjectViewToggle />
+            <ObjectViewToggle defaultView="internal" swapButtons />
           </div>
 
           <div className="order-1 text-left lg:order-2">
@@ -255,12 +256,14 @@ export default function OptionA() {
             { name: "Sage", bg: "#DCE4D7", img: "/renderings/forth-device-sage-hero.png", scene: "/photos/moor-story.jpg", pos: "center 55%", tint: "#889E81" },
             { name: "Sun", bg: "#F0E3BC", img: "/renderings/forth-device-sun-hero.png", scene: "/photos/storr-sunset.jpg", pos: "center 35%", tint: "#F0E3BC" },
           ].map((c) => (
-            <div key={c.name} className="group relative flex flex-col items-center overflow-hidden px-6 pb-14 pt-12" style={{ backgroundColor: c.bg }}>
-              {/* scene reveal on hover */}
-              <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-700 group-hover:opacity-100">
+            <div key={c.name} className="group relative flex flex-col items-center overflow-hidden px-6 pb-14 pt-12">
+              {/* scene sits underneath at all times */}
+              <div className="pointer-events-none absolute inset-0">
                 <div className="absolute inset-0 bg-cover" style={{ backgroundImage: `url(${c.scene})`, backgroundPosition: c.pos }} />
                 <div className="absolute inset-0" style={{ backgroundColor: `${c.tint}30` }} />
               </div>
+              {/* solid colour overlay — mildly transparent, clears fully on hover */}
+              <div className="colour-overlay pointer-events-none absolute inset-0" style={{ backgroundColor: c.bg }} />
               <span className="relative z-10 font-mono text-[12px] uppercase tracking-[0.3em] text-a-ink/60 transition-colors duration-700 group-hover:text-[#F7F4EE]/85">{c.name}</span>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
@@ -290,7 +293,7 @@ export default function OptionA() {
             Don&rsquo;t miss the drop
           </h2>
           <p className="mx-auto mt-5 max-w-[560px] font-serif text-[clamp(18px,2.4vw,24px)] italic text-[#EAF1F2]/80">
-            The founding run ships first, with founder exclusives. Everyone else waits for round two — leave your email and
+            The founding run ships first. Get founder exclusives. Everyone else waits for round two — leave your email and
             be first through the door.
           </p>
           <form className="mx-auto mt-10 flex max-w-[500px] flex-col items-center gap-3 sm:flex-row">
@@ -314,6 +317,7 @@ export default function OptionA() {
       </section>
 
       <SiteFooter />
+      <OptionATuner />
       <VariantToggle active="a" tone="light" />
     </div>
   );
