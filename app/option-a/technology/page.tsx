@@ -13,29 +13,12 @@ const STATS = [
   { k: "Cycle time", v: "60 sec", note: "standard cycle, app-adjustable" },
   { k: "Power draw", v: "0.3 Wh", note: "per cycle, induction-charged Li-ion" },
   { k: "Materials", v: "Alu + PETG", note: "recycled body, user-replaceable domes" },
-  { k: "Compliance", v: "EPA · NSF 55", note: "third-party validated" },
+  { k: "Compliance", v: "Coming Soon", note: "third-party validation in progress" },
 ];
 
 export default function OptionATechnology() {
   return (
     <OptionAShell>
-      {/* ————— Navy intro ————— */}
-      <section className="bg-[#22333E] text-[#EAF1F2]">
-        <div className="mx-auto max-w-[860px] px-6 py-20 text-center">
-          <p className="font-mono text-[12px] uppercase tracking-[0.3em] text-[#EAF1F2]/60">the technology</p>
-          <h1 className={`${display} mt-4 text-[clamp(44px,6vw,84px)]`}>265 nanometres</h1>
-          <p className="mx-auto mt-5 max-w-[520px] font-serif text-[clamp(19px,2.2vw,25px)] italic text-[#EAF1F2]/80">
-            the wavelength microbial DNA cannot survive
-          </p>
-          <p className="mx-auto mt-8 max-w-[620px] font-serif text-[16.5px] leading-relaxed text-[#EAF1F2]/70">
-            It is the same mechanism municipalities use to treat drinking water at scale, miniaturised
-            into a 32-gram cylinder. Independent of bottle material, clarity, or temperature, the
-            dose-to-kill relationship is well characterised: above 40 mJ/cm² across the bottle&rsquo;s
-            interior, you achieve a ≥ 3-log reduction across bacteria, viruses, and protozoa.
-          </p>
-        </div>
-      </section>
-
       {/* ————— Blueprint: scroll-driven exploded view ————— */}
       <ExplodedReveal
         tone="blueprint"

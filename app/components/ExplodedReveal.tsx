@@ -371,10 +371,10 @@ export function ExplodedReveal({
   const dotColor = isBp
     ? "rgba(232,241,248,0.16)"
     : isDark ? "rgba(245,242,236,0.16)" : "rgba(15,27,45,0.11)";
-  const partFill = isBp ? "#16395F" : isDark ? "#13151A" : "#FAF8F2";
+  const partFill = isBp ? "#22333E" : isDark ? "#13151A" : "#FAF8F2";
   const surfaceClass = isBp ? "bg-white/[0.07]" : isDark ? "bg-b-surface" : "bg-white/65";
   const wrapClass = isBp
-    ? "bg-[#16395F] text-[#E8F1F8]"
+    ? "bg-[#22333E] text-[#E8F1F8]"
     : isDark ? "bg-b-bg text-b-ink" : "bg-a-bg text-a-ink";
   const muteClass = isBp ? "text-[#E8F1F8]/55" : isDark ? "text-b-mute" : "text-a-ink/55";
   const captionFont = "font-mono";
