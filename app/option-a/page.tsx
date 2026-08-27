@@ -7,7 +7,6 @@ import { OptionANav, OptionAFooter } from "./_components/OptionAShell";
 import { HeroDeviceRotator } from "../components/HeroDeviceRotator";
 import { ObjectViewToggle } from "../components/ObjectViewToggle";
 import { UseCaseIcon } from "../components/UseCaseIcons";
-import { OptionATuner } from "../components/OptionATuner";
 
 const anton = Anton({ weight: "400", subsets: ["latin"], variable: "--font-anton" });
 
@@ -148,16 +147,24 @@ export default function OptionA() {
       </section>
 
       {/* ————— The claim ————— */}
-      <section className="bg-[#22333E] text-[#EAF1F2]">
+      <section className="bg-grain bg-a-bg">
         <div className="mx-auto grid max-w-[1240px] items-center gap-14 px-6 py-28 lg:grid-cols-[0.85fr_1.15fr]">
           <div className="order-2 flex justify-center lg:order-1 lg:justify-start">
-            <ObjectViewToggle defaultView="internal" swapButtons />
+            <ObjectViewToggle
+              defaultView="internal"
+              swapButtons
+              tone="light"
+              deviceSrc="/renderings/forth-device-coral-frame-00.png"
+              deviceAlt={`${BRAND} device — Coral`}
+              glowColor="#F0876B"
+              deviceScale={0.968}
+            />
           </div>
 
           <div className="order-1 text-left lg:order-2">
-            <p className="font-mono text-[12px] uppercase tracking-[0.3em] text-[#EAF1F2]/60">the technology</p>
+            <p className="font-mono text-[12px] uppercase tracking-[0.3em] text-a-ink/50">the technology</p>
             <h2 className={`${display} mt-4 text-[clamp(44px,6vw,84px)]`}>Purified by light</h2>
-            <p className="mt-5 max-w-[520px] font-serif text-[clamp(19px,2.2vw,25px)] italic text-[#EAF1F2]/80">
+            <p className="mt-5 max-w-[520px] font-serif text-[clamp(19px,2.2vw,25px)] italic text-a-ink/75">
               emission at 265 nm - the wavelength microbial DNA cannot survive
             </p>
 
@@ -167,16 +174,16 @@ export default function OptionA() {
                 { k: "60 sec", v: "standard cycle, one shake" },
                 { k: "30", v: "cycles per induction charge" },
               ].map((s) => (
-                <div key={s.k} className="rounded-2xl bg-white/5 px-5 py-6 ring-1 ring-white/10">
+                <div key={s.k} className="rounded-2xl bg-white/50 px-5 py-6 ring-1 ring-a-ink/10">
                   <div className={`${display} text-[34px]`}>{s.k}</div>
-                  <div className="mt-2 font-serif text-[14px] italic text-[#EAF1F2]/70">{s.v}</div>
+                  <div className="mt-2 font-serif text-[14px] italic text-a-ink/65">{s.v}</div>
                 </div>
               ))}
             </div>
 
             <Link
               href="/option-a/technology"
-              className="mt-12 inline-block rounded-full bg-[#EAF1F2] px-7 py-3.5 text-[14px] font-semibold tracking-wide text-[#22333E] transition hover:-translate-y-0.5"
+              className="mt-12 inline-block rounded-full bg-a-ink px-7 py-3.5 text-[14px] font-semibold tracking-wide text-a-bg transition hover:-translate-y-0.5"
             >
               Read the technology page
             </Link>
@@ -316,7 +323,6 @@ export default function OptionA() {
       </section>
 
       <OptionAFooter />
-      <OptionATuner />
       <VariantToggle active="a" tone="light" />
     </div>
   );

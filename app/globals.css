@@ -34,8 +34,8 @@ body { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; 
 
 /* UV-C dome glow (Option A hero device) */
 :root {
-  --uv-glow-intensity: 0.65; /* 0–1, tuned via slider */
-  --colour-card-alpha: 0.76; /* Pick-your-colour solid overlay opacity */
+  --uv-glow-intensity: 0.837; /* locked: slider 70 through the sqrt curve */
+  --colour-card-alpha: 0.76;  /* locked: slider 76 */
 }
 @keyframes uvBreathe {
   0%, 100% { opacity: calc(var(--uv-glow-intensity) * 0.82); }
