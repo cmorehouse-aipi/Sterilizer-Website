@@ -19,17 +19,27 @@ export function ObjectViewToggle({
   defaultView = "device",
   swapButtons = false,
   renderHeight,
+  deviceSrc = DEVICE_SRC,
+  deviceAlt = "Forth device — Midnight",
+  tone = "dark",
 }: {
   defaultView?: "device" | "internal";
   swapButtons?: boolean;
   /** CSS height for the render block (e.g. "var(--obj-h, 520px)"). Buttons keep their size and spacing. */
   renderHeight?: string;
+  /** Override the "Device" view render (same camera/framing expected). */
+  deviceSrc?: string;
+  deviceAlt?: string;
+  /** Background the toggle sits on: "dark" (navy sections) or "light" (cream sections). */
+  tone?: "dark" | "light";
 } = {}) {
   const [view, setView] = useState<"device" | "internal">(defaultView);
   const internal = view === "internal";
 
-  const activeBtn = "bg-a-bg text-a-ink shadow-sm";
-  const inactiveBtn = "text-a-bg/50 hover:text-a-bg/75";
+  const onLight = tone === "light";
+  const groupBg = onLight ? "bg-a-ink/10" : "bg-a-bg/10";
+  const activeBtn = onLight ? "bg-a-ink text-a-bg shadow-sm" : "bg-a-bg text-a-ink shadow-sm";
+  const inactiveBtn = onLight ? "text-a-ink/50 hover:text-a-ink/75" : "text-a-bg/50 hover:text-a-bg/75";
 
   return (
     <div className="flex flex-col items-center gap-6">
@@ -56,8 +66,8 @@ export function ObjectViewToggle({
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src={DEVICE_SRC}
-            alt="Forth device — Midnight"
+            src={deviceSrc}
+            alt={deviceAlt}
             className="absolute inset-0 m-auto h-full w-auto object-contain transition-opacity duration-500"
             style={{ opacity: internal ? 0 : 1 }}
           />
@@ -73,7 +83,7 @@ export function ObjectViewToggle({
       <div
         role="group"
         aria-label="Device view"
-        className="z-10 flex items-center gap-1 rounded-full bg-a-bg/10 p-0.5 text-[11px] font-medium tracking-wide"
+        className={`z-10 flex items-center gap-1 rounded-full ${groupBg} p-0.5 text-[11px] font-medium tracking-wide`}
       >
         {(swapButtons ? ["internal", "device"] : ["device", "internal"]).map((v) => (
           <button
