@@ -22,6 +22,8 @@ export function ObjectViewToggle({
   deviceSrc = DEVICE_SRC,
   deviceAlt = "Forth device — Midnight",
   tone = "dark",
+  glowColor = "#7FB3FF",
+  deviceScale = 1,
 }: {
   defaultView?: "device" | "internal";
   swapButtons?: boolean;
@@ -32,6 +34,11 @@ export function ObjectViewToggle({
   deviceAlt?: string;
   /** Background the toggle sits on: "dark" (navy sections) or "light" (cream sections). */
   tone?: "dark" | "light";
+  /** Colour of the ambient/core glows behind the renders. */
+  glowColor?: string;
+  /** Uniform scale on the Device render so its silhouette matches the Internal render
+   *  (e.g. the coral still is framed ~3.3% larger than the glass still → 0.968). */
+  deviceScale?: number;
 } = {}) {
   const [view, setView] = useState<"device" | "internal">(defaultView);
   const internal = view === "internal";
@@ -46,18 +53,18 @@ export function ObjectViewToggle({
       <div className="relative flex items-center justify-center">
         <div
           className="animate-glow pointer-events-none absolute left-1/2 top-0 h-44 w-44 -translate-x-1/2 -translate-y-1/3 rounded-full"
-          style={{ backgroundColor: "#7FB3FF" }}
+          style={{ backgroundColor: glowColor }}
           aria-hidden
         />
         <div
           className="animate-glow pointer-events-none absolute bottom-0 left-1/2 h-44 w-44 -translate-x-1/2 translate-y-1/3 rounded-full"
-          style={{ backgroundColor: "#7FB3FF" }}
+          style={{ backgroundColor: glowColor }}
           aria-hidden
         />
         {/* core glow — only visible in the Internal view */}
         <div
           className="pointer-events-none absolute left-1/2 top-1/2 h-80 w-80 -translate-x-1/2 -translate-y-1/2 rounded-full blur-3xl transition-opacity duration-500"
-          style={{ backgroundColor: "#7FB3FF", opacity: internal ? 0.4 : 0 }}
+          style={{ backgroundColor: glowColor, opacity: internal ? 0.4 : 0 }}
           aria-hidden
         />
         <div
@@ -69,7 +76,7 @@ export function ObjectViewToggle({
             src={deviceSrc}
             alt={deviceAlt}
             className="absolute inset-0 m-auto h-full w-auto object-contain transition-opacity duration-500"
-            style={{ opacity: internal ? 0 : 1 }}
+            style={{ opacity: internal ? 0 : 1, transform: `scale(${deviceScale})`, transformOrigin: "center" }}
           />
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img

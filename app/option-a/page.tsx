@@ -156,6 +156,8 @@ export default function OptionA() {
               tone="light"
               deviceSrc="/renderings/forth-device-coral-frame-00.png"
               deviceAlt={`${BRAND} device — Coral`}
+              glowColor="#F0876B"
+              deviceScale={0.968}
             />
           </div>
 
