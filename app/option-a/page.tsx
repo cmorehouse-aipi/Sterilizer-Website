@@ -2,7 +2,6 @@ import Link from "next/link";
 import { Anton } from "next/font/google";
 
 import { BRAND, PRESS_QUOTES, USE_CASES } from "../lib/brand";
-import { VariantToggle } from "../components/VariantToggle";
 import { OptionANav, OptionAFooter } from "./_components/OptionAShell";
 import { HeroDeviceRotator } from "../components/HeroDeviceRotator";
 import { ObjectViewToggle } from "../components/ObjectViewToggle";
@@ -323,7 +322,6 @@ export default function OptionA() {
       </section>
 
       <OptionAFooter />
-      <VariantToggle active="a" tone="light" />
     </div>
   );
 }
