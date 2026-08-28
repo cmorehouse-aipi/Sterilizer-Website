@@ -2,7 +2,6 @@ import Link from "next/link";
 import { Cormorant_Garamond } from "next/font/google";
 
 import { BRAND, PRESS_QUOTES, USE_CASES } from "../lib/brand";
-import { VariantToggle } from "../components/VariantToggle";
 import { FumeNav } from "../components/FumeNav";
 import { ObjectViewToggle } from "../components/ObjectViewToggle";
 import { HeroDeviceRotator } from "../components/HeroDeviceRotator";
@@ -363,7 +362,6 @@ export default function OptionB() {
         </div>
       </footer>
 
-      <VariantToggle active="b" tone="light" />
     </div>
   );
 }

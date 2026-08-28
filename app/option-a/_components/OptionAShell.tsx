@@ -6,7 +6,6 @@ import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 
 import { BRAND } from "../../lib/brand";
-import { VariantToggle } from "../../components/VariantToggle";
 
 const anton = Anton({ weight: "400", subsets: ["latin"], variable: "--font-anton" });
 
@@ -164,14 +163,13 @@ export function OptionAFooter() {
   );
 }
 
-/** Page chrome for every Option A subpage: nav, footer, concept toggle. */
+/** Page chrome for every Option A subpage: nav and footer. */
 export function OptionAShell({ children }: { children: React.ReactNode }) {
   return (
     <div className={`${anton.variable} bg-a-bg text-a-ink`}>
       <OptionANav />
       {children}
       <OptionAFooter />
-      <VariantToggle active="a" tone="light" />
     </div>
   );
 }
