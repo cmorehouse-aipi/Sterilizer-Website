@@ -37,11 +37,11 @@ const NEED: Record<string, string> = {
 
 // Scene photo per case (strip + spotlight treatments).
 const SCENE: Record<string, { img: string; pos: string }> = {
-  "At home":    { img: "/photos/storr-hero.jpg",        pos: "center 35%" },
-  "The office": { img: "/photos/triptych-blue.jpg",     pos: "center 45%" },
-  "The gym":    { img: "/photos/triptych-green.jpg",    pos: "center 50%" },
-  "Hotels":     { img: "/photos/storr-sunset.jpg",      pos: "center 35%" },
-  "Travel":     { img: "/photos/moor-story.jpg",        pos: "center 55%" },
+  "At home":    { img: "/photos/cns-home.jpg",          pos: "center 45%" },
+  "The office": { img: "/photos/cns-office.jpg",        pos: "center 50%" },
+  "The gym":    { img: "/photos/cns-gym.jpg",           pos: "center 45%" },
+  "Hotels":     { img: "/photos/cns-hotel.jpg",         pos: "center 55%" },
+  "Travel":     { img: "/photos/cns-travel.jpg",        pos: "center 50%" },
   "Outdoors":   { img: "/photos/waterfall-divider.jpg", pos: "center 42%" },
 };
 
