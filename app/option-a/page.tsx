@@ -1,11 +1,11 @@
 import Link from "next/link";
 import { Anton } from "next/font/google";
 
-import { BRAND, PRESS_QUOTES, USE_CASES } from "../lib/brand";
+import { BRAND, PRESS_QUOTES } from "../lib/brand";
 import { OptionANav, OptionAFooter } from "./_components/OptionAShell";
+import { CarriedNotStored } from "./_components/CarriedNotStored";
 import { HeroDeviceRotator } from "../components/HeroDeviceRotator";
 import { ObjectViewToggle } from "../components/ObjectViewToggle";
-import { UseCaseIcon } from "../components/UseCaseIcons";
 
 const anton = Anton({ weight: "400", subsets: ["latin"], variable: "--font-anton" });
 
@@ -68,7 +68,7 @@ export default function OptionA() {
         <div className="absolute inset-x-0 bottom-0 h-[22%] bg-[linear-gradient(to_top,#0F1B2D59,transparent)]" />
 
         <div className="relative mx-auto flex min-h-[92svh] max-w-[1240px] flex-col items-center px-6 pt-10 text-center">
-          <p className="font-serif text-[17px] italic tracking-wide text-a-ink/70">the water is fine —</p>
+          <p className="font-serif text-[17px] italic tracking-wide text-a-ink/70">drink like a local —</p>
           <h1 className={`${display} mt-3 text-[19vw] leading-[0.88] sm:text-[13vw] lg:text-[150px]`}>
             Any water.
             <br />
@@ -209,23 +209,7 @@ export default function OptionA() {
       </section>
 
       {/* ————— Where it lives ————— */}
-      <section className="bg-grain bg-a-bg">
-        <div className="mx-auto max-w-[1240px] px-6 py-24 text-center">
-          <p className="font-mono text-[12px] uppercase tracking-[0.3em] text-a-ink/50">where it lives</p>
-          <h2 className={`${display} mt-4 text-[clamp(44px,6.4vw,82px)]`}>Carried, not stored</h2>
-          <p className="mt-3 font-serif text-[clamp(19px,2.4vw,27px)] italic text-a-ink/75">six places it earns its keep</p>
-
-          <ul className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {USE_CASES.map((u) => (
-              <li key={u.tag} className="flex flex-col items-center gap-3 rounded-2xl bg-white/50 p-7 ring-1 ring-a-ink/10 transition duration-300 hover:-translate-y-1 hover:shadow-md">
-                <span className="text-a-sage"><UseCaseIcon tag={u.tag} /></span>
-                <div className={`${display} text-[20px]`}>{u.tag}</div>
-                <p className="max-w-[300px] font-serif text-[16px] leading-snug text-a-ink/75">{u.line}</p>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
+      <CarriedNotStored />
 
       {/* ————— Sunset band: cited on the record ————— */}
       <section className="relative overflow-hidden">
