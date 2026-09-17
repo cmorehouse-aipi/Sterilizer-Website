@@ -45,9 +45,27 @@ const SCENE: Record<string, { img: string; pos: string }> = {
   "Outdoors":   { img: "/photos/waterfall-divider.jpg", pos: "center 42%" },
 };
 
-type Style = "hover" | "strip" | "spotlight";
+type Style = "strip" | "spotlight" | "hover" | "original";
 
-/* ————— Treatment 1: hover-expand cards ————— */
+/* ————— Treatment 4: the original static grid ————— */
+function OriginalGrid() {
+  return (
+    <ul className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {USE_CASES.map((u) => (
+        <li
+          key={u.tag}
+          className="flex flex-col items-center gap-3 rounded-2xl bg-white/50 p-7 ring-1 ring-a-ink/10 transition duration-300 hover:-translate-y-1 hover:shadow-md"
+        >
+          <span className="text-a-sage"><UseCaseIcon tag={u.tag} /></span>
+          <div className={`${display} text-[20px]`}>{u.tag}</div>
+          <p className="max-w-[300px] font-serif text-[16px] leading-snug text-a-ink/75">{u.line}</p>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+/* ————— Treatment 3: hover-expand cards ————— */
 function HoverGrid() {
   return (
     <ul className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -232,7 +250,7 @@ function Spotlight() {
 
 /* ————— Section wrapper with the style toggle ————— */
 export function CarriedNotStored() {
-  const [style, setStyle] = useState<Style>("hover");
+  const [style, setStyle] = useState<Style>("strip");
   return (
     <section className="bg-grain bg-a-bg">
       <div className="mx-auto max-w-[1240px] px-6 py-24 text-center">
@@ -246,7 +264,7 @@ export function CarriedNotStored() {
           aria-label="Section style"
           className="mt-7 inline-flex items-center gap-1 rounded-full bg-a-ink/10 p-0.5 text-[11px] font-medium tracking-wide"
         >
-          {(["hover", "strip", "spotlight"] as Style[]).map((s) => (
+          {(["strip", "spotlight", "hover", "original"] as Style[]).map((s) => (
             <button
               key={s}
               aria-pressed={style === s}
@@ -260,9 +278,10 @@ export function CarriedNotStored() {
           ))}
         </div>
 
-        {style === "hover" && <HoverGrid />}
         {style === "strip" && <AccordionStrip />}
         {style === "spotlight" && <Spotlight />}
+        {style === "hover" && <HoverGrid />}
+        {style === "original" && <OriginalGrid />}
       </div>
 
       <style jsx global>{`
