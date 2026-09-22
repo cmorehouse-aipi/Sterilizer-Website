@@ -94,8 +94,14 @@ function HoverGrid() {
   );
 }
 
+/* ————— Overlay opacity: slider-tuned scrim over the scene photos —————
+ * `overlay` is the resting scrim opacity in percent; the other states are
+ * offsets from it, clamped to [0, 100]. 62 reproduces the original values. */
+const scrim = (overlay: number, offset: number) =>
+  `rgba(15,27,45,${Math.min(100, Math.max(0, overlay + offset)) / 100})`;
+
 /* ————— Treatment 2: horizontal accordion strip ————— */
-function AccordionStrip() {
+function AccordionStrip({ overlay }: { overlay: number }) {
   const [active, setActive] = useState<string | null>(null);
   return (
     <div className="mt-14">
@@ -123,7 +129,7 @@ function AccordionStrip() {
               />
               <div
                 className="absolute inset-0 transition-colors duration-500"
-                style={{ backgroundColor: open ? "rgba(15,27,45,0.50)" : dim ? "rgba(15,27,45,0.72)" : "rgba(15,27,45,0.62)" }}
+                style={{ backgroundColor: open ? scrim(overlay, -12) : dim ? scrim(overlay, 10) : scrim(overlay, 0) }}
               />
               {/* collapsed label — vertical */}
               <div
@@ -157,7 +163,7 @@ function AccordionStrip() {
         {USE_CASES.map((u) => (
           <li key={u.tag} className="relative overflow-hidden rounded-2xl">
             <div className="absolute inset-0 bg-cover" style={{ backgroundImage: `url(${SCENE[u.tag].img})`, backgroundPosition: SCENE[u.tag].pos }} />
-            <div className="absolute inset-0 bg-[#0F1B2D]/60" />
+            <div className="absolute inset-0" style={{ backgroundColor: scrim(overlay, -2) }} />
             <div className="relative p-6 text-left">
               <h3 className={`${display} text-[24px] text-[#F2EFE8]`}>{u.tag}</h3>
               <p className="mt-2 font-serif text-[14px] italic leading-relaxed text-[#F2EFE8]/85">{NEED[u.tag]}</p>
@@ -172,7 +178,7 @@ function AccordionStrip() {
 /* ————— Treatment 3: auto-advancing spotlight ————— */
 const HOLD_MS = 5000;
 
-function Spotlight() {
+function Spotlight({ overlay }: { overlay: number }) {
   const [idx, setIdx] = useState(0);
   const [paused, setPaused] = useState(false);
   const [tick, setTick] = useState(0); // restarts the progress bar animation
@@ -209,7 +215,7 @@ function Spotlight() {
             }}
           />
         ))}
-        <div className="absolute inset-0 bg-[#0F1B2D]/55" />
+        <div className="absolute inset-0" style={{ backgroundColor: scrim(overlay, -7) }} />
         <div className="relative flex min-h-[440px] flex-col items-center justify-center px-6 py-16 text-center">
           <span className="text-[#C7D4D6]"><UseCaseIcon tag={u.tag} /></span>
           <h3 key={`t-${idx}`} className={`${display} cns-rise mt-4 text-[clamp(34px,4.6vw,58px)] text-[#F2EFE8]`}>
@@ -251,6 +257,7 @@ function Spotlight() {
 /* ————— Section wrapper with the style toggle ————— */
 export function CarriedNotStored() {
   const [style, setStyle] = useState<Style>("strip");
+  const [overlay, setOverlay] = useState(62); // resting scrim opacity, %
   return (
     <section className="bg-grain bg-a-bg">
       <div className="mx-auto max-w-[1240px] px-6 py-24 text-center">
@@ -278,8 +285,25 @@ export function CarriedNotStored() {
           ))}
         </div>
 
-        {style === "strip" && <AccordionStrip />}
-        {style === "spotlight" && <Spotlight />}
+        {/* overlay tuner — only meaningful where scenes carry a scrim */}
+        {(style === "strip" || style === "spotlight") && (
+          <div className="mx-auto mt-5 flex max-w-[420px] items-center gap-3">
+            <span className="font-mono text-[10.5px] uppercase tracking-[0.2em] text-a-ink/45">overlay</span>
+            <input
+              type="range"
+              min={20}
+              max={90}
+              value={overlay}
+              onChange={(e) => setOverlay(Number(e.target.value))}
+              className="h-1 flex-1 cursor-pointer appearance-none rounded-full bg-a-ink/15 accent-a-ink"
+              aria-label="Scene overlay opacity"
+            />
+            <span className="w-8 text-left font-mono text-[11px] tabular-nums text-a-ink/60">{overlay}</span>
+          </div>
+        )}
+
+        {style === "strip" && <AccordionStrip overlay={overlay} />}
+        {style === "spotlight" && <Spotlight overlay={overlay} />}
         {style === "hover" && <HoverGrid />}
         {style === "original" && <OriginalGrid />}
       </div>
