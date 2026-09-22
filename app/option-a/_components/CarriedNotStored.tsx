@@ -255,9 +255,10 @@ function Spotlight({ overlay }: { overlay: number }) {
 }
 
 /* ————— Section wrapper with the style toggle ————— */
+/** Locked design decisions: strip treatment, overlay opacity 40. */
+const OVERLAY = 40;
+
 export function CarriedNotStored() {
-  const [style, setStyle] = useState<Style>("strip");
-  const [overlay, setOverlay] = useState(62); // resting scrim opacity, %
   return (
     <section className="bg-grain bg-a-bg">
       <div className="mx-auto max-w-[1240px] px-6 py-24 text-center">
@@ -265,47 +266,7 @@ export function CarriedNotStored() {
         <h2 className={`${display} mt-4 text-[clamp(44px,6.4vw,82px)]`}>Carried, not stored</h2>
         <p className="mt-3 font-serif text-[clamp(19px,2.4vw,27px)] italic text-a-ink/75">six places it earns its keep</p>
 
-        {/* style toggle — review tool while the treatment is being chosen */}
-        <div
-          role="group"
-          aria-label="Section style"
-          className="mt-7 inline-flex items-center gap-1 rounded-full bg-a-ink/10 p-0.5 text-[11px] font-medium tracking-wide"
-        >
-          {(["strip", "spotlight", "hover", "original"] as Style[]).map((s) => (
-            <button
-              key={s}
-              aria-pressed={style === s}
-              onClick={() => setStyle(s)}
-              className={`rounded-full px-3 py-1 capitalize transition-all duration-200 ${
-                style === s ? "bg-a-ink text-a-bg shadow-sm" : "text-a-ink/50 hover:text-a-ink/75"
-              }`}
-            >
-              {s}
-            </button>
-          ))}
-        </div>
-
-        {/* overlay tuner — only meaningful where scenes carry a scrim */}
-        {(style === "strip" || style === "spotlight") && (
-          <div className="mx-auto mt-5 flex max-w-[420px] items-center gap-3">
-            <span className="font-mono text-[10.5px] uppercase tracking-[0.2em] text-a-ink/45">overlay</span>
-            <input
-              type="range"
-              min={20}
-              max={90}
-              value={overlay}
-              onChange={(e) => setOverlay(Number(e.target.value))}
-              className="h-1 flex-1 cursor-pointer appearance-none rounded-full bg-a-ink/15 accent-a-ink"
-              aria-label="Scene overlay opacity"
-            />
-            <span className="w-8 text-left font-mono text-[11px] tabular-nums text-a-ink/60">{overlay}</span>
-          </div>
-        )}
-
-        {style === "strip" && <AccordionStrip overlay={overlay} />}
-        {style === "spotlight" && <Spotlight overlay={overlay} />}
-        {style === "hover" && <HoverGrid />}
-        {style === "original" && <OriginalGrid />}
+        <AccordionStrip overlay={OVERLAY} />
       </div>
 
       <style jsx global>{`
