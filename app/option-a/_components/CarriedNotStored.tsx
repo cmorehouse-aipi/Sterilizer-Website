@@ -94,8 +94,14 @@ function HoverGrid() {
   );
 }
 
+/* ————— Overlay opacity: slider-tuned scrim over the scene photos —————
+ * `overlay` is the resting scrim opacity in percent; the other states are
+ * offsets from it, clamped to [0, 100]. 62 reproduces the original values. */
+const scrim = (overlay: number, offset: number) =>
+  `rgba(15,27,45,${Math.min(100, Math.max(0, overlay + offset)) / 100})`;
+
 /* ————— Treatment 2: horizontal accordion strip ————— */
-function AccordionStrip() {
+function AccordionStrip({ overlay }: { overlay: number }) {
   const [active, setActive] = useState<string | null>(null);
   return (
     <div className="mt-14">
@@ -123,7 +129,7 @@ function AccordionStrip() {
               />
               <div
                 className="absolute inset-0 transition-colors duration-500"
-                style={{ backgroundColor: open ? "rgba(15,27,45,0.50)" : dim ? "rgba(15,27,45,0.72)" : "rgba(15,27,45,0.62)" }}
+                style={{ backgroundColor: open ? scrim(overlay, -12) : dim ? scrim(overlay, 10) : scrim(overlay, 0) }}
               />
               {/* collapsed label — vertical */}
               <div
@@ -157,7 +163,7 @@ function AccordionStrip() {
         {USE_CASES.map((u) => (
           <li key={u.tag} className="relative overflow-hidden rounded-2xl">
             <div className="absolute inset-0 bg-cover" style={{ backgroundImage: `url(${SCENE[u.tag].img})`, backgroundPosition: SCENE[u.tag].pos }} />
-            <div className="absolute inset-0 bg-[#0F1B2D]/60" />
+            <div className="absolute inset-0" style={{ backgroundColor: scrim(overlay, -2) }} />
             <div className="relative p-6 text-left">
               <h3 className={`${display} text-[24px] text-[#F2EFE8]`}>{u.tag}</h3>
               <p className="mt-2 font-serif text-[14px] italic leading-relaxed text-[#F2EFE8]/85">{NEED[u.tag]}</p>
@@ -172,7 +178,7 @@ function AccordionStrip() {
 /* ————— Treatment 3: auto-advancing spotlight ————— */
 const HOLD_MS = 5000;
 
-function Spotlight() {
+function Spotlight({ overlay }: { overlay: number }) {
   const [idx, setIdx] = useState(0);
   const [paused, setPaused] = useState(false);
   const [tick, setTick] = useState(0); // restarts the progress bar animation
@@ -209,7 +215,7 @@ function Spotlight() {
             }}
           />
         ))}
-        <div className="absolute inset-0 bg-[#0F1B2D]/55" />
+        <div className="absolute inset-0" style={{ backgroundColor: scrim(overlay, -7) }} />
         <div className="relative flex min-h-[440px] flex-col items-center justify-center px-6 py-16 text-center">
           <span className="text-[#C7D4D6]"><UseCaseIcon tag={u.tag} /></span>
           <h3 key={`t-${idx}`} className={`${display} cns-rise mt-4 text-[clamp(34px,4.6vw,58px)] text-[#F2EFE8]`}>
@@ -249,8 +255,10 @@ function Spotlight() {
 }
 
 /* ————— Section wrapper with the style toggle ————— */
+/** Locked design decisions: strip treatment, overlay opacity 40. */
+const OVERLAY = 40;
+
 export function CarriedNotStored() {
-  const [style, setStyle] = useState<Style>("strip");
   return (
     <section className="bg-grain bg-a-bg">
       <div className="mx-auto max-w-[1240px] px-6 py-24 text-center">
@@ -258,30 +266,7 @@ export function CarriedNotStored() {
         <h2 className={`${display} mt-4 text-[clamp(44px,6.4vw,82px)]`}>Carried, not stored</h2>
         <p className="mt-3 font-serif text-[clamp(19px,2.4vw,27px)] italic text-a-ink/75">six places it earns its keep</p>
 
-        {/* style toggle — review tool while the treatment is being chosen */}
-        <div
-          role="group"
-          aria-label="Section style"
-          className="mt-7 inline-flex items-center gap-1 rounded-full bg-a-ink/10 p-0.5 text-[11px] font-medium tracking-wide"
-        >
-          {(["strip", "spotlight", "hover", "original"] as Style[]).map((s) => (
-            <button
-              key={s}
-              aria-pressed={style === s}
-              onClick={() => setStyle(s)}
-              className={`rounded-full px-3 py-1 capitalize transition-all duration-200 ${
-                style === s ? "bg-a-ink text-a-bg shadow-sm" : "text-a-ink/50 hover:text-a-ink/75"
-              }`}
-            >
-              {s}
-            </button>
-          ))}
-        </div>
-
-        {style === "strip" && <AccordionStrip />}
-        {style === "spotlight" && <Spotlight />}
-        {style === "hover" && <HoverGrid />}
-        {style === "original" && <OriginalGrid />}
+        <AccordionStrip overlay={OVERLAY} />
       </div>
 
       <style jsx global>{`
