@@ -79,14 +79,14 @@ export default function Gate() {
 
       {/* ————— content ————— */}
       <div className="relative z-10 flex flex-col items-center">
-        <p className="gate-rise font-mono text-[11px] uppercase tracking-[0.42em] text-[#C7D4D6]/80" style={{ animationDelay: "150ms" }}>
+        <p className="gate-rise relative -top-10 font-mono text-[11px] uppercase tracking-[0.42em] text-[#E5EDEF]/95" style={{ animationDelay: "150ms", textShadow: "0 1px 14px rgba(15,27,45,0.55)" }}>
           private preview · founding run
         </p>
 
         {/* wordmark + device share one width: the device's ends align with the title's */}
         <div className="inline-flex w-fit flex-col items-stretch">
-          {/* wordmark: staggered letter rise + periodic UV sweep */}
-          <h1 aria-label="FORTH" className="gate-sweep relative mt-6 flex justify-center overflow-hidden">
+          {/* wordmark: staggered letter rise + a shine clipped to the glyphs */}
+          <h1 aria-label="FORTH" className="relative mt-6 flex justify-center overflow-hidden">
             {LETTERS.map((l, i) => (
               <span
                 key={i}
@@ -96,6 +96,15 @@ export default function Gate() {
                 {l}
               </span>
             ))}
+            {/* shine layer: same glyphs, gradient clipped to the text so the
+                sweep follows the letterforms and glides off the H edge */}
+            <span aria-hidden className="gate-shine pointer-events-none absolute inset-0 flex justify-center">
+              {LETTERS.map((l, i) => (
+                <span key={i} className={`${display} inline-block text-[clamp(88px,17vw,220px)] leading-[0.85]`}>
+                  {l}
+                </span>
+              ))}
+            </span>
           </h1>
 
           {/* floating horizontal device with breathing UV glow */}
@@ -181,17 +190,21 @@ export default function Gate() {
         }
         .gate-letter { animation: gate-letter 0.7s cubic-bezier(0.16, 1, 0.3, 1) both; }
 
-        @keyframes gate-sweep {
-          0%, 78% { transform: translateX(-130%) skewX(-18deg); }
-          92%, 100% { transform: translateX(230%) skewX(-18deg); }
+        .gate-shine {
+          background-image: linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.98) 48%, #dbeeff 50%, rgba(255,255,255,0.98) 52%, transparent 60%);
+          background-size: 260% 100%;
+          background-repeat: no-repeat;
+          background-position: 115% 0;
+          -webkit-background-clip: text;
+          background-clip: text;
+          color: transparent;
+          -webkit-text-fill-color: transparent;
+          animation: gate-shine 5s infinite 1.8s;
         }
-        .gate-sweep::after {
-          content: "";
-          position: absolute;
-          inset: 0 auto 0 0;
-          width: 34%;
-          background: linear-gradient(100deg, transparent, rgba(199,212,214,0.32), transparent);
-          animation: gate-sweep 6.5s ease-in-out 1.6s infinite;
+        @keyframes gate-shine {
+          0%   { background-position: 115% 0; animation-timing-function: cubic-bezier(0.55, 0, 0.3, 1); }
+          52%  { background-position: -15% 0; }
+          100% { background-position: -15% 0; }
         }
 
         @keyframes gate-rise {
@@ -227,7 +240,7 @@ export default function Gate() {
         .gate-flood { animation: gate-flood 0.95s ease-in both; }
 
         @media (prefers-reduced-motion: reduce) {
-          .gate-kenburns, .gate-mist, .gate-mote, .gate-letter, .gate-sweep::after,
+          .gate-kenburns, .gate-mist, .gate-mote, .gate-letter, .gate-shine,
           .gate-rise, .gate-float, .gate-pulse { animation: none; }
           .gate-letter, .gate-rise { opacity: 1; transform: none; }
         }
