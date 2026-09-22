@@ -28,6 +28,7 @@ const MOTES = [
 export default function Gate() {
   const [pw, setPw] = useState("");
   const [status, setStatus] = useState<"idle" | "checking" | "error" | "open">("idle");
+  const [size, setSize] = useState(100); // device width, % of the wordmark's width
 
   const submit = async (e: FormEvent) => {
     e.preventDefault();
@@ -99,7 +100,7 @@ export default function Gate() {
           </h1>
 
           {/* floating horizontal device with breathing UV glow */}
-          <div className="gate-rise relative mt-10 w-full" style={{ animationDelay: "900ms" }}>
+          <div className="gate-rise relative mx-auto mt-10" style={{ animationDelay: "900ms", width: `${size}%` }}>
             <div
               className="gate-pulse absolute left-1/2 top-1/2 h-[260%] w-[104%] -translate-x-1/2 -translate-y-1/2 rounded-[50%]"
               style={{ background: "radial-gradient(ellipse, rgba(127,179,255,0.45) 0%, rgba(127,179,255,0.12) 45%, transparent 70%)" }}
@@ -145,6 +146,21 @@ export default function Gate() {
         <p className="gate-rise mt-12 font-mono text-[10px] uppercase tracking-[0.3em] text-[#F2EFE8]/35" style={{ animationDelay: "1350ms" }}>
           © Forth — private demonstration build
         </p>
+
+        {/* device-size tuner — review tool, removed once a value is locked */}
+        <div className="mt-6 flex w-full max-w-[360px] items-center gap-3">
+          <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#F2EFE8]/40">device size</span>
+          <input
+            type="range"
+            min={25}
+            max={100}
+            value={size}
+            onChange={(e) => setSize(Number(e.target.value))}
+            className="h-1 flex-1 cursor-pointer appearance-none rounded-full bg-white/20 accent-[#C7D4D6]"
+            aria-label="Device size"
+          />
+          <span className="w-8 text-left font-mono text-[11px] tabular-nums text-[#F2EFE8]/60">{size}</span>
+        </div>
       </div>
 
       {/* unlock: UV light flood */}
