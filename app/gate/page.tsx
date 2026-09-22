@@ -67,7 +67,7 @@ export default function Gate() {
       {MOTES.map((m, i) => (
         <span
           key={i}
-          className="gate-mote absolute bottom-[-4%] rounded-full bg-[#C7D4D6]"
+          className="gate-mote pointer-events-none absolute bottom-[-4%] rounded-full bg-[#C7D4D6]"
           style={{
             left: m.left,
             width: m.size,
@@ -102,7 +102,7 @@ export default function Gate() {
           {/* floating horizontal device with breathing UV glow */}
           <div className="gate-rise relative mx-auto mt-10" style={{ animationDelay: "900ms", width: `${size}%` }}>
             <div
-              className="gate-pulse absolute left-1/2 top-1/2 h-[260%] w-[104%] -translate-x-1/2 -translate-y-1/2 rounded-[50%]"
+              className="gate-pulse pointer-events-none absolute left-1/2 top-1/2 h-[260%] w-[104%] -translate-x-1/2 -translate-y-1/2 rounded-[50%]"
               style={{ background: "radial-gradient(ellipse, rgba(127,179,255,0.45) 0%, rgba(127,179,255,0.12) 45%, transparent 70%)" }}
             />
             {/* eslint-disable-next-line @next/next/no-img-element */}
