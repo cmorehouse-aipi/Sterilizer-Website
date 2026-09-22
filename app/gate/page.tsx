@@ -83,33 +83,34 @@ export default function Gate() {
           private preview · founding run
         </p>
 
-        {/* wordmark: staggered letter rise + periodic UV sweep */}
-        <h1 aria-label="FORTH" className="gate-sweep relative mt-6 flex overflow-hidden">
-          {LETTERS.map((l, i) => (
-            <span
-              key={i}
-              className={`${display} gate-letter inline-block text-[clamp(88px,17vw,220px)] leading-[0.85] text-[#F2EFE8]`}
-              style={{ animationDelay: `${260 + i * 90}ms` }}
-            >
-              {l}
-            </span>
-          ))}
-        </h1>
+        {/* wordmark + device share one width: the device's ends align with the title's */}
+        <div className="inline-flex w-fit flex-col items-stretch">
+          {/* wordmark: staggered letter rise + periodic UV sweep */}
+          <h1 aria-label="FORTH" className="gate-sweep relative mt-6 flex justify-center overflow-hidden">
+            {LETTERS.map((l, i) => (
+              <span
+                key={i}
+                className={`${display} gate-letter inline-block text-[clamp(88px,17vw,220px)] leading-[0.85] text-[#F2EFE8]`}
+                style={{ animationDelay: `${260 + i * 90}ms` }}
+              >
+                {l}
+              </span>
+            ))}
+          </h1>
 
-        <p className="gate-rise mt-5 max-w-[440px] font-serif text-[clamp(17px,2.2vw,22px)] italic leading-snug text-[#F2EFE8]/85" style={{ animationDelay: "820ms" }}>
-          the loch is quiet. the light is ready.
-        </p>
-
-        {/* floating device with breathing UV glow */}
-        <div className="gate-rise relative mt-10 h-[150px] w-[150px]" style={{ animationDelay: "1000ms" }}>
-          <div className="gate-pulse absolute left-1/2 top-1/2 h-[190px] w-[190px] -translate-x-1/2 -translate-y-1/2 rounded-full"
-               style={{ background: "radial-gradient(circle, rgba(127,179,255,0.5) 0%, rgba(127,179,255,0.12) 45%, transparent 70%)" }} />
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/renderings/forth-device-frame-00.png"
-            alt="Forth UV-C sterilizer"
-            className="gate-float relative h-full w-full object-contain drop-shadow-[0_0_24px_rgba(127,179,255,0.35)]"
-          />
+          {/* floating horizontal device with breathing UV glow */}
+          <div className="gate-rise relative mt-10 w-full" style={{ animationDelay: "900ms" }}>
+            <div
+              className="gate-pulse absolute left-1/2 top-1/2 h-[260%] w-[104%] -translate-x-1/2 -translate-y-1/2 rounded-[50%]"
+              style={{ background: "radial-gradient(ellipse, rgba(127,179,255,0.45) 0%, rgba(127,179,255,0.12) 45%, transparent 70%)" }}
+            />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/renderings/forth-device-horizontal.png"
+              alt="Forth UV-C sterilizer"
+              className="gate-float relative w-full drop-shadow-[0_0_28px_rgba(127,179,255,0.35)]"
+            />
+          </div>
         </div>
 
         {/* password */}
