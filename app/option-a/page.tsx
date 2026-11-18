@@ -72,7 +72,7 @@ export default function OptionA() {
           <h1 className={`${display} mt-3 text-[19vw] leading-[0.88] sm:text-[13vw] lg:text-[150px]`}>
             Any water.
             <br />
-            <span className="text-a-loch">Any bottle.</span>
+            Any bottle.
           </h1>
           <p className="mt-5 font-serif text-[clamp(19px,2.4vw,27px)] italic text-a-ink/80">
             from loch to sip, in sixty seconds
