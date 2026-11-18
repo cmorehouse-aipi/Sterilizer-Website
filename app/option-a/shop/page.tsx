@@ -90,7 +90,7 @@ export default function OptionAShop() {
       {/* ————— Header ————— */}
       <section className="bg-grain bg-a-bg">
         <div className="mx-auto max-w-[1240px] px-6 pb-16 pt-20 text-center">
-          <p className="font-mono text-[12px] uppercase tracking-[0.3em] text-a-ink/50">the lineup</p>
+          <p className="font-mono text-[12px] uppercase tracking-[0.3em] text-a-ink/65">the lineup</p>
           <h1 className={`${display} mt-4 text-[clamp(48px,7vw,92px)]`}>One instrument</h1>
           <p className="mt-3 font-serif text-[clamp(19px,2.4vw,27px)] italic text-a-ink/75">
             three moods, and the pieces that travel with it
@@ -134,7 +134,7 @@ export default function OptionAShop() {
       {/* ————— Accessories ————— */}
       <section className="bg-grain bg-a-bg">
         <div className="mx-auto max-w-[1240px] px-6 py-24 text-center">
-          <p className="font-mono text-[12px] uppercase tracking-[0.3em] text-a-ink/50">alongside it</p>
+          <p className="font-mono text-[12px] uppercase tracking-[0.3em] text-a-ink/65">alongside it</p>
           <h2 className={`${display} mt-4 text-[clamp(38px,5.4vw,68px)]`}>The kit</h2>
           <p className="mt-3 font-serif text-[clamp(18px,2.2vw,24px)] italic text-a-ink/75">
             small things that keep it working for years
@@ -169,7 +169,7 @@ export default function OptionAShop() {
           </p>
           <Link
             href="/option-a"
-            className="mt-9 inline-block rounded-full bg-[#C7D4D6] px-8 py-4 text-[14px] font-bold uppercase tracking-wide text-[#22333E] shadow-lg transition hover:-translate-y-0.5 hover:bg-[#d6e0e1]"
+            className="mt-9 inline-block rounded-full bg-a-sun px-8 py-4 text-[14px] font-bold uppercase tracking-wide text-a-ink shadow-lg transition hover:-translate-y-0.5 hover:bg-[#f6c868]"
           >
             Claim my spot
           </Link>

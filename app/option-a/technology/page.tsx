@@ -31,7 +31,7 @@ export default function OptionATechnology() {
       <section className="bg-grain bg-a-bg">
         <div className="mx-auto grid max-w-[1240px] gap-14 px-6 py-24 lg:grid-cols-2">
           <div>
-            <p className="font-mono text-[12px] uppercase tracking-[0.3em] text-a-ink/50">the engineering</p>
+            <p className="font-mono text-[12px] uppercase tracking-[0.3em] text-a-ink/65">the engineering</p>
             <h2 className={`${display} mt-4 text-[clamp(34px,4.4vw,56px)]`}>Twelve faces, no shadows</h2>
             <p className="mt-5 max-w-[520px] font-serif text-[17px] leading-relaxed text-a-ink/75">
               Twin geodesic emitters at each end of the device project UV-C through twelve refractive
@@ -41,7 +41,7 @@ export default function OptionATechnology() {
             </p>
           </div>
           <div>
-            <p className="font-mono text-[12px] uppercase tracking-[0.3em] text-a-ink/50">the patent</p>
+            <p className="font-mono text-[12px] uppercase tracking-[0.3em] text-a-ink/65">the patent</p>
             <h2 className={`${display} mt-4 text-[clamp(34px,4.4vw,56px)]`}>On the record</h2>
             <p className="mt-5 max-w-[520px] font-serif text-[17px] leading-relaxed text-a-ink/75">
               Patent application <span className="font-mono text-[14.5px] not-italic">GB 24/00000.0</span> —
@@ -52,15 +52,15 @@ export default function OptionATechnology() {
         </div>
       </section>
 
-      {/* ————— Stats grid ————— */}
-      <section className="bg-grain bg-a-bg">
-        <div className="mx-auto max-w-[1240px] px-6 pb-24">
+      {/* ————— Stats grid: dark band ————— */}
+      <section className="bg-a-nocturne text-a-bg">
+        <div className="mx-auto max-w-[1240px] px-6 py-24">
           <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {STATS.map((s) => (
-              <li key={s.k} className="rounded-2xl bg-white/50 px-6 py-7 ring-1 ring-a-ink/10">
-                <div className="font-mono text-[11px] uppercase tracking-[0.2em] text-a-ink/50">{s.k}</div>
+              <li key={s.k} className="rounded-2xl bg-white/5 px-6 py-7 ring-1 ring-white/15">
+                <div className="font-mono text-[11px] uppercase tracking-[0.2em] text-a-lumen">{s.k}</div>
                 <div className={`${display} mt-3 text-[32px]`}>{s.v}</div>
-                <p className="mt-2 font-serif text-[14px] italic text-a-ink/65">{s.note}</p>
+                <p className="mt-2 font-serif text-[14px] italic text-a-bg/75">{s.note}</p>
               </li>
             ))}
           </ul>

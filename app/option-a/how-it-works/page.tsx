@@ -36,7 +36,7 @@ export default function OptionAHowItWorks() {
       {/* ————— Header ————— */}
       <section className="bg-grain bg-a-bg">
         <div className="mx-auto max-w-[1240px] px-6 pb-16 pt-20 text-center">
-          <p className="font-mono text-[12px] uppercase tracking-[0.3em] text-a-ink/50">how it works</p>
+          <p className="font-mono text-[12px] uppercase tracking-[0.3em] text-a-ink/65">how it works</p>
           <h1 className={`${display} mt-4 text-[clamp(44px,6.6vw,88px)]`}>
             Drop. Shake. Drink.
           </h1>
@@ -52,7 +52,7 @@ export default function OptionAHowItWorks() {
           <div className="flex flex-col gap-10">
             {STEPS.map((s) => (
               <div key={s.n} className="flex items-start gap-5">
-                <span className="mt-1 font-mono text-[12px] tracking-[0.25em] text-a-ink/50">{s.n}</span>
+                <span className="mt-1 font-mono text-[12px] tracking-[0.25em] text-a-ink/65">{s.n}</span>
                 <div>
                   <h2 className={`${display} text-[34px]`}>{s.h}</h2>
                   <p className="mt-2 max-w-[520px] font-serif text-[17px] leading-relaxed text-a-ink/75">{s.b}</p>
@@ -67,7 +67,7 @@ export default function OptionAHowItWorks() {
               <dl className="mt-6 space-y-2.5 text-[13.5px]">
                 {Object.entries(SPECS).map(([k, v]) => (
                   <div key={k} className="flex justify-between gap-4 border-t border-a-ink/5 pt-2 first:border-0 first:pt-0">
-                    <dt className="font-mono text-[11px] uppercase tracking-[0.14em] text-a-ink/45">{k}</dt>
+                    <dt className="font-mono text-[11px] uppercase tracking-[0.14em] text-a-ink/65">{k}</dt>
                     <dd className="text-right text-a-ink/85">{v}</dd>
                   </div>
                 ))}
@@ -106,7 +106,7 @@ export default function OptionAHowItWorks() {
           </p>
           <Link
             href="/option-a/shop"
-            className="mt-8 inline-block rounded-full bg-[#C7D4D6] px-8 py-4 text-[14px] font-bold uppercase tracking-wide text-[#22333E] shadow-lg transition hover:-translate-y-0.5 hover:bg-[#d6e0e1]"
+            className="mt-8 inline-block rounded-full bg-a-sun px-8 py-4 text-[14px] font-bold uppercase tracking-wide text-a-ink shadow-lg transition hover:-translate-y-0.5 hover:bg-[#f6c868]"
           >
             Reserve yours — from $79
           </Link>

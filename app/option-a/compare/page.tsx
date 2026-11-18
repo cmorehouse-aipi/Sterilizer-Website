@@ -17,7 +17,7 @@ export default function OptionACompare() {
       {/* ————— Header ————— */}
       <section className="bg-grain bg-a-bg">
         <div className="mx-auto max-w-[1240px] px-6 pb-16 pt-20 text-center">
-          <p className="font-mono text-[12px] uppercase tracking-[0.3em] text-a-ink/50">compare</p>
+          <p className="font-mono text-[12px] uppercase tracking-[0.3em] text-a-ink/65">compare</p>
           <h1 className={`${display} mt-4 text-[clamp(40px,6vw,84px)]`}>Side by side</h1>
           <p className="mt-3 font-serif text-[clamp(19px,2.4vw,27px)] italic text-a-ink/75">
             we&rsquo;re honest about where the others win a row — credibility compounds
@@ -31,7 +31,7 @@ export default function OptionACompare() {
           <div className="overflow-x-auto rounded-2xl bg-white/50 ring-1 ring-a-ink/10">
             <table className="w-full min-w-[620px] text-left text-[14.5px]">
               <thead>
-                <tr className="font-mono text-[11px] uppercase tracking-[0.18em] text-a-ink/50">
+                <tr className="font-mono text-[11px] uppercase tracking-[0.18em] text-a-ink/65">
                   <th className="px-6 py-5"></th>
                   <th className="border-l-2 border-r-2 border-t-2 border-a-sage/50 bg-a-sage/15 px-6 py-5 text-a-ink">
                     {BRAND}

@@ -12,7 +12,7 @@ export default function OptionAHelp() {
       {/* ————— Header ————— */}
       <section className="bg-grain bg-a-bg">
         <div className="mx-auto max-w-[1240px] px-6 pb-16 pt-20 text-center">
-          <p className="font-mono text-[12px] uppercase tracking-[0.3em] text-a-ink/50">help &amp; faq</p>
+          <p className="font-mono text-[12px] uppercase tracking-[0.3em] text-a-ink/65">help &amp; faq</p>
           <h1 className={`${display} mt-4 text-[clamp(44px,6.4vw,88px)]`}>Answers, briefly</h1>
           <p className="mt-3 font-serif text-[clamp(19px,2.4vw,27px)] italic text-a-ink/75">
             most things people ask, in under fifty words
@@ -47,7 +47,7 @@ export default function OptionAHelp() {
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
             <a
               href="mailto:support@forth.co"
-              className="rounded-full bg-[#C7D4D6] px-8 py-4 text-[14px] font-bold uppercase tracking-wide text-[#22333E] shadow-lg transition hover:-translate-y-0.5 hover:bg-[#d6e0e1]"
+              className="rounded-full bg-a-sun px-8 py-4 text-[14px] font-bold uppercase tracking-wide text-a-ink shadow-lg transition hover:-translate-y-0.5 hover:bg-[#f6c868]"
             >
               Email support
             </a>
