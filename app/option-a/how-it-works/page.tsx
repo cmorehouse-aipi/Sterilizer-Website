@@ -81,8 +81,8 @@ export default function OptionAHowItWorks() {
       <section className="relative overflow-hidden">
         <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: "url(/photos/moor-story.jpg)" }} />
         <div className="absolute inset-0 bg-[#0F1B2D]/45" />
-        <div className="relative mx-auto flex min-h-[56vh] max-w-[860px] flex-col items-center justify-center px-6 py-24 text-center text-[#F2EFE8]">
-          <p className="font-mono text-[12px] uppercase tracking-[0.3em] text-[#F2EFE8]/70">what it doesn&rsquo;t do</p>
+        <div className="relative mx-auto flex min-h-[56vh] max-w-[860px] flex-col items-center justify-center px-6 py-24 text-center text-a-bg">
+          <p className="font-mono text-[12px] uppercase tracking-[0.3em] text-a-bg/70">what it doesn&rsquo;t do</p>
           <p className="mt-6 font-serif text-[clamp(22px,3vw,34px)] italic leading-snug">
             UV-C disinfects — it doesn&rsquo;t filter. {BRAND} won&rsquo;t remove sediment, heavy metals, or
             PFAS. For cloudy or chemically contaminated water, pair it with a sediment filter. We build
@@ -90,7 +90,7 @@ export default function OptionAHowItWorks() {
           </p>
           <Link
             href="/option-a/technology"
-            className="mt-10 rounded-full bg-[#F2EFE8] px-7 py-3.5 text-[14px] font-semibold tracking-wide text-[#0F1B2D] transition hover:-translate-y-0.5"
+            className="mt-10 rounded-full bg-a-bg px-7 py-3.5 text-[14px] font-semibold tracking-wide text-a-ink transition hover:-translate-y-0.5"
           >
             Read the technology page
           </Link>
@@ -98,10 +98,10 @@ export default function OptionAHowItWorks() {
       </section>
 
       {/* ————— CTA ————— */}
-      <section className="bg-[#22333E] text-[#EAF1F2]">
+      <section className="bg-a-ink text-a-bg">
         <div className="mx-auto max-w-[760px] px-6 py-20 text-center">
           <h2 className={`${display} text-[clamp(30px,5vw,58px)]`}>Ready when you are</h2>
-          <p className="mx-auto mt-4 max-w-[480px] font-serif text-[clamp(17px,2.2vw,22px)] italic text-[#EAF1F2]/80">
+          <p className="mx-auto mt-4 max-w-[480px] font-serif text-[clamp(17px,2.2vw,22px)] italic text-a-bg/80">
             from loch to sip, in sixty seconds
           </p>
           <Link

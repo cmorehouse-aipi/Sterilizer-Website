@@ -106,7 +106,7 @@ export default function OptionAShop() {
               <div className="absolute inset-0 bg-cover" style={{ backgroundImage: `url(${c.scene})`, backgroundPosition: c.pos }} />
             </div>
             <div className="colour-overlay pointer-events-none absolute inset-0 bg-a-bg" />
-            <span className="relative z-10 font-mono text-[12px] uppercase tracking-[0.3em] text-a-ink/60 transition-colors duration-700 group-hover:text-[#F7F4EE]/85">
+            <span className="relative z-10 font-mono text-[12px] uppercase tracking-[0.3em] text-a-ink/60 transition-colors duration-700 group-hover:text-a-bg/85">
               {c.name}
             </span>
             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -115,10 +115,10 @@ export default function OptionAShop() {
               alt={`${BRAND} in ${c.name}`}
               className="relative z-10 mt-6 w-[150px] drop-shadow-[0_24px_36px_rgba(15,27,45,0.35)] sm:w-[170px]"
             />
-            <p className="relative z-10 mt-6 max-w-[280px] text-center font-serif text-[15px] italic text-a-ink/70 transition-colors duration-700 group-hover:text-[#F7F4EE]/85">
+            <p className="relative z-10 mt-6 max-w-[280px] text-center font-serif text-[15px] italic text-a-ink/70 transition-colors duration-700 group-hover:text-a-bg/85">
               {c.line}
             </p>
-            <div className={`${display} relative z-10 mt-5 text-[26px] transition-colors duration-700 group-hover:text-[#F7F4EE]`}>
+            <div className={`${display} relative z-10 mt-5 text-[26px] transition-colors duration-700 group-hover:text-a-bg`}>
               {c.price}
             </div>
             <Link
@@ -157,13 +157,13 @@ export default function OptionAShop() {
       </section>
 
       {/* ————— Early access band ————— */}
-      <section className="bg-[#22333E] text-[#EAF1F2]">
+      <section className="bg-a-ink text-a-bg">
         <div className="mx-auto max-w-[760px] px-6 py-24 text-center">
-          <span className="inline-block rounded-full bg-[#C7D4D6] px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.22em] text-[#22333E]">
+          <span className="inline-block rounded-full bg-[#C7D4D6] px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.22em] text-a-ink">
             First 500 only · founding batch
           </span>
           <h2 className={`${display} mt-6 text-[clamp(30px,5vw,64px)]`}>Reserve before the drop</h2>
-          <p className="mx-auto mt-5 max-w-[540px] font-serif text-[clamp(17px,2.2vw,22px)] italic text-[#EAF1F2]/80">
+          <p className="mx-auto mt-5 max-w-[540px] font-serif text-[clamp(17px,2.2vw,22px)] italic text-a-bg/80">
             The founding run ships first. Get founder exclusives — leave your email on the front page
             and be first through the door.
           </p>

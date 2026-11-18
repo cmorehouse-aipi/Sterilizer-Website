@@ -53,7 +53,7 @@ export default function OptionATechnology() {
       </section>
 
       {/* ————— Stats grid: dark band ————— */}
-      <section className="bg-a-nocturne text-a-bg">
+      <section className="bg-a-ink text-a-bg">
         <div className="mx-auto max-w-[1240px] px-6 py-24">
           <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {STATS.map((s) => (
@@ -71,15 +71,15 @@ export default function OptionATechnology() {
       <section className="relative overflow-hidden">
         <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: "url(/photos/storr-sunset.jpg)" }} />
         <div className="absolute inset-0 bg-[#0F1B2D]/45" />
-        <div className="relative mx-auto flex min-h-[56vh] max-w-[860px] flex-col items-center justify-center px-6 py-24 text-center text-[#F2EFE8]">
-          <p className="font-mono text-[12px] uppercase tracking-[0.3em] text-[#F2EFE8]/70">cited, on the record</p>
+        <div className="relative mx-auto flex min-h-[56vh] max-w-[860px] flex-col items-center justify-center px-6 py-24 text-center text-a-bg">
+          <p className="font-mono text-[12px] uppercase tracking-[0.3em] text-a-bg/70">cited, on the record</p>
           <p className="mt-6 font-serif text-[clamp(22px,3vw,34px)] italic leading-snug">
             Three peer-reviewed papers on the same band the device operates within. UV light at 265 nm
             disrupts microbial DNA — the science has been settled for decades; we made it pocketable.
           </p>
           <Link
             href="/option-a/compare"
-            className="mt-10 rounded-full bg-[#F2EFE8] px-7 py-3.5 text-[14px] font-semibold tracking-wide text-[#0F1B2D] transition hover:-translate-y-0.5"
+            className="mt-10 rounded-full bg-a-bg px-7 py-3.5 text-[14px] font-semibold tracking-wide text-a-ink transition hover:-translate-y-0.5"
           >
             See how it compares
           </Link>

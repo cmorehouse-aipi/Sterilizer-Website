@@ -137,7 +137,7 @@ function AccordionStrip({ overlay }: { overlay: number }) {
                 style={{ opacity: open ? 0 : 1 }}
               >
                 <span
-                  className="font-mono text-[12px] uppercase tracking-[0.3em] text-[#F2EFE8]/85"
+                  className="font-mono text-[12px] uppercase tracking-[0.3em] text-a-bg/85"
                   style={{ writingMode: "vertical-rl", transform: "rotate(180deg)" }}
                 >
                   {u.tag}
@@ -149,8 +149,8 @@ function AccordionStrip({ overlay }: { overlay: number }) {
                 style={{ opacity: open ? 1 : 0 }}
               >
                 <span className="text-[#C7D4D6]"><UseCaseIcon tag={u.tag} /></span>
-                <h3 className={`${display} mt-3 whitespace-nowrap text-[30px] text-[#F2EFE8]`}>{u.tag}</h3>
-                <p className="mt-2 max-w-[380px] font-serif text-[15px] italic leading-relaxed text-[#F2EFE8]/85">
+                <h3 className={`${display} mt-3 whitespace-nowrap text-[30px] text-a-bg`}>{u.tag}</h3>
+                <p className="mt-2 max-w-[380px] font-serif text-[15px] italic leading-relaxed text-a-bg/85">
                   {NEED[u.tag]}
                 </p>
               </div>
@@ -165,8 +165,8 @@ function AccordionStrip({ overlay }: { overlay: number }) {
             <div className="absolute inset-0 bg-cover" style={{ backgroundImage: `url(${SCENE[u.tag].img})`, backgroundPosition: SCENE[u.tag].pos }} />
             <div className="absolute inset-0" style={{ backgroundColor: scrim(overlay, -2) }} />
             <div className="relative p-6 text-left">
-              <h3 className={`${display} text-[24px] text-[#F2EFE8]`}>{u.tag}</h3>
-              <p className="mt-2 font-serif text-[14px] italic leading-relaxed text-[#F2EFE8]/85">{NEED[u.tag]}</p>
+              <h3 className={`${display} text-[24px] text-a-bg`}>{u.tag}</h3>
+              <p className="mt-2 font-serif text-[14px] italic leading-relaxed text-a-bg/85">{NEED[u.tag]}</p>
             </div>
           </li>
         ))}
@@ -218,10 +218,10 @@ function Spotlight({ overlay }: { overlay: number }) {
         <div className="absolute inset-0" style={{ backgroundColor: scrim(overlay, -7) }} />
         <div className="relative flex min-h-[440px] flex-col items-center justify-center px-6 py-16 text-center">
           <span className="text-[#C7D4D6]"><UseCaseIcon tag={u.tag} /></span>
-          <h3 key={`t-${idx}`} className={`${display} cns-rise mt-4 text-[clamp(34px,4.6vw,58px)] text-[#F2EFE8]`}>
+          <h3 key={`t-${idx}`} className={`${display} cns-rise mt-4 text-[clamp(34px,4.6vw,58px)] text-a-bg`}>
             {u.tag}
           </h3>
-          <p key={`p-${idx}`} className="cns-rise mx-auto mt-4 max-w-[620px] font-serif text-[clamp(16px,1.9vw,20px)] italic leading-relaxed text-[#F2EFE8]/90" style={{ animationDelay: "80ms" }}>
+          <p key={`p-${idx}`} className="cns-rise mx-auto mt-4 max-w-[620px] font-serif text-[clamp(16px,1.9vw,20px)] italic leading-relaxed text-a-bg/90" style={{ animationDelay: "80ms" }}>
             {NEED[u.tag]}
           </p>
         </div>
@@ -234,7 +234,7 @@ function Spotlight({ overlay }: { overlay: number }) {
                 type="button"
                 onClick={() => go(i)}
                 className={`rounded-full px-3.5 py-1.5 font-mono text-[10.5px] uppercase tracking-[0.18em] transition-colors duration-300 ${
-                  i === idx ? "bg-[#F2EFE8] text-[#0F1B2D]" : "bg-white/10 text-[#F2EFE8]/75 hover:bg-white/20"
+                  i === idx ? "bg-a-bg text-a-ink" : "bg-white/10 text-a-bg/75 hover:bg-white/20"
                 }`}
               >
                 {c.tag}

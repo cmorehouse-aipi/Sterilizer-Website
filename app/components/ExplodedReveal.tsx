@@ -361,7 +361,7 @@ export function ExplodedReveal({
   const isDark = tone === "dark";
   const isBp = tone === "blueprint";
   const accentHex = isBp ? "#F0E3BC" : isDark ? "#E89B7C" : "#5F7A57";
-  const inkHex = isBp ? "#E8F1F8" : isDark ? "#F5F2EC" : "#0F1B2D";
+  const inkHex = isBp ? "#F7F4EE" : isDark ? "#F5F2EC" : "#0F1B2D";
   const ruleHex = isBp
     ? "rgba(232,241,248,0.22)"
     : isDark ? "rgba(245,242,236,0.14)" : "rgba(15,27,45,0.14)";
@@ -371,12 +371,12 @@ export function ExplodedReveal({
   const dotColor = isBp
     ? "rgba(232,241,248,0.16)"
     : isDark ? "rgba(245,242,236,0.16)" : "rgba(15,27,45,0.11)";
-  const partFill = isBp ? "#22333E" : isDark ? "#13151A" : "#FAF8F2";
+  const partFill = isBp ? "#0F1B2D" : isDark ? "#13151A" : "#FAF8F2";
   const surfaceClass = isBp ? "bg-white/[0.07]" : isDark ? "bg-b-surface" : "bg-white/65";
   const wrapClass = isBp
-    ? "bg-[#22333E] text-[#E8F1F8]"
+    ? "bg-[#0F1B2D] text-[#F7F4EE]"
     : isDark ? "bg-b-bg text-b-ink" : "bg-a-bg text-a-ink";
-  const muteClass = isBp ? "text-[#E8F1F8]/55" : isDark ? "text-b-mute" : "text-a-ink/55";
+  const muteClass = isBp ? "text-[#F7F4EE]/55" : isDark ? "text-b-mute" : "text-a-ink/55";
   const captionFont = "font-mono";
   const titleFont = isBp ? display : isDark ? "font-display" : "font-serif";
   const badgeTextColor = isBp ? "#16395F" : "white";

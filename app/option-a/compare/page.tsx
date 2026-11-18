@@ -63,14 +63,14 @@ export default function OptionACompare() {
       <section className="relative overflow-hidden">
         <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: "url(/photos/moor-story.jpg)" }} />
         <div className="absolute inset-0 bg-[#0F1B2D]/45" />
-        <div className="relative mx-auto flex min-h-[52vh] max-w-[860px] flex-col items-center justify-center px-6 py-24 text-center text-[#F2EFE8]">
-          <p className="font-mono text-[12px] uppercase tracking-[0.3em] text-[#F2EFE8]/70">why it&rsquo;s different</p>
+        <div className="relative mx-auto flex min-h-[52vh] max-w-[860px] flex-col items-center justify-center px-6 py-24 text-center text-a-bg">
+          <p className="font-mono text-[12px] uppercase tracking-[0.3em] text-a-bg/70">why it&rsquo;s different</p>
           <p className="mt-6 font-serif text-[clamp(24px,3.4vw,38px)] italic leading-snug">
             Better technology, in a better object, at a fairer price.
           </p>
           <Link
             href="/option-a/shop"
-            className="mt-10 rounded-full bg-[#F2EFE8] px-7 py-3.5 text-[14px] font-semibold tracking-wide text-[#0F1B2D] transition hover:-translate-y-0.5"
+            className="mt-10 rounded-full bg-a-bg px-7 py-3.5 text-[14px] font-semibold tracking-wide text-a-ink transition hover:-translate-y-0.5"
           >
             Reserve yours — from $79
           </Link>

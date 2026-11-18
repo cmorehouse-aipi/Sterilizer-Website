@@ -130,15 +130,15 @@ export default function OptionA() {
       <section className="relative overflow-hidden">
         <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: "url(/photos/waterfall-divider.jpg)" }} />
         <div className="absolute inset-0 bg-[#0F1B2D]/45" />
-        <div className="relative mx-auto flex min-h-[64vh] max-w-[860px] flex-col items-center justify-center px-6 py-24 text-center text-[#F2EFE8]">
-          <p className="font-mono text-[12px] uppercase tracking-[0.3em] text-[#F2EFE8]/70">designed in the heart of Scotland</p>
+        <div className="relative mx-auto flex min-h-[64vh] max-w-[860px] flex-col items-center justify-center px-6 py-24 text-center text-a-bg">
+          <p className="font-mono text-[12px] uppercase tracking-[0.3em] text-a-bg/70">designed in the heart of Scotland</p>
           <p className="mt-6 font-serif text-[clamp(24px,3.4vw,38px)] italic leading-snug">
             Engineered and assembled in a workshop above the Firth of Forth. The first water it ever cleaned came out of a
             Highland burn.
           </p>
           <Link
             href="/option-a/about"
-            className="mt-10 rounded-full bg-[#F2EFE8] px-7 py-3.5 text-[14px] font-semibold tracking-wide text-[#0F1B2D] transition hover:-translate-y-0.5"
+            className="mt-10 rounded-full bg-a-bg px-7 py-3.5 text-[14px] font-semibold tracking-wide text-a-ink transition hover:-translate-y-0.5"
           >
             Our story
           </Link>
@@ -146,7 +146,7 @@ export default function OptionA() {
       </section>
 
       {/* ————— The claim: dark band, UV-C glow ————— */}
-      <section className="bg-a-nocturne text-a-bg">
+      <section className="bg-a-ink text-a-bg">
         <div className="mx-auto grid max-w-[1240px] items-center gap-14 px-6 py-28 lg:grid-cols-[0.85fr_1.15fr]">
           <div className="order-2 flex justify-center lg:order-1 lg:justify-start">
             <ObjectViewToggle
@@ -194,14 +194,14 @@ export default function OptionA() {
       <section className="relative overflow-hidden">
         <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: "url(/photos/moor-story.jpg)" }} />
         <div className="absolute inset-0 bg-[#0F1B2D]/45" />
-        <div className="relative mx-auto flex min-h-[64vh] max-w-[860px] flex-col items-center justify-center px-6 py-24 text-center text-[#F2EFE8]">
-          <p className="font-mono text-[12px] uppercase tracking-[0.3em] text-[#F2EFE8]/70">why it&rsquo;s different</p>
+        <div className="relative mx-auto flex min-h-[64vh] max-w-[860px] flex-col items-center justify-center px-6 py-24 text-center text-a-bg">
+          <p className="font-mono text-[12px] uppercase tracking-[0.3em] text-a-bg/70">why it&rsquo;s different</p>
           <p className="mt-6 font-serif text-[clamp(24px,3.4vw,38px)] italic leading-snug">
             Better technology, in a better object, at a fairer price.
           </p>
           <Link
             href="/option-a/compare"
-            className="mt-10 rounded-full bg-[#F2EFE8] px-7 py-3.5 text-[14px] font-semibold tracking-wide text-[#0F1B2D] transition hover:-translate-y-0.5"
+            className="mt-10 rounded-full bg-a-bg px-7 py-3.5 text-[14px] font-semibold tracking-wide text-a-ink transition hover:-translate-y-0.5"
           >
             See the full comparison
           </Link>
@@ -215,15 +215,15 @@ export default function OptionA() {
       <section className="relative overflow-hidden">
         <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: "url(/photos/storr-sunset.jpg)" }} />
         <div className="absolute inset-0 bg-[#0F1B2D]/45" />
-        <div className="relative mx-auto flex min-h-[64vh] max-w-[860px] flex-col items-center justify-center px-6 py-24 text-center text-[#F2EFE8]">
-          <p className="font-mono text-[12px] uppercase tracking-[0.3em] text-[#F2EFE8]/70">cited, on the record</p>
+        <div className="relative mx-auto flex min-h-[64vh] max-w-[860px] flex-col items-center justify-center px-6 py-24 text-center text-a-bg">
+          <p className="font-mono text-[12px] uppercase tracking-[0.3em] text-a-bg/70">cited, on the record</p>
           <p className="mt-6 font-serif text-[clamp(24px,3.4vw,38px)] italic leading-snug">
             Built on a wavelength microbiology has studied for sixty years — three peer-reviewed papers on the same band the
             device operates within.
           </p>
           <Link
             href="/option-a/technology"
-            className="mt-10 rounded-full bg-[#F2EFE8] px-7 py-3.5 text-[14px] font-semibold tracking-wide text-[#0F1B2D] transition hover:-translate-y-0.5"
+            className="mt-10 rounded-full bg-a-bg px-7 py-3.5 text-[14px] font-semibold tracking-wide text-a-ink transition hover:-translate-y-0.5"
           >
             Read the science
           </Link>
@@ -253,14 +253,14 @@ export default function OptionA() {
               </div>
               {/* solid colour overlay — mildly transparent, clears fully on hover */}
               <div className="colour-overlay pointer-events-none absolute inset-0" style={{ backgroundColor: c.bg }} />
-              <span className="relative z-10 font-mono text-[12px] uppercase tracking-[0.3em] text-a-ink/60 transition-colors duration-700 group-hover:text-[#F7F4EE]/85">{c.name}</span>
+              <span className="relative z-10 font-mono text-[12px] uppercase tracking-[0.3em] text-a-ink/60 transition-colors duration-700 group-hover:text-a-bg/85">{c.name}</span>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={c.img}
                 alt={`${BRAND} in ${c.name}`}
                 className="relative z-10 mt-6 w-[150px] drop-shadow-[0_24px_36px_rgba(15,27,45,0.35)] sm:w-[170px]"
               />
-              <div className={`${display} relative z-10 mt-8 text-[26px] transition-colors duration-700 group-hover:text-[#F7F4EE]`}>From $79</div>
+              <div className={`${display} relative z-10 mt-8 text-[26px] transition-colors duration-700 group-hover:text-a-bg`}>From $79</div>
               <Link
                 href="/option-a/shop"
                 className="relative z-10 mt-4 rounded-full bg-a-ink px-6 py-3 text-[13px] font-semibold tracking-wide text-a-bg transition hover:-translate-y-0.5"
@@ -273,15 +273,15 @@ export default function OptionA() {
       </section>
 
       {/* ————— Footer CTA — early access ————— */}
-      <section className="bg-[#22333E] text-[#EAF1F2]">
+      <section className="bg-a-ink text-a-bg">
         <div className="mx-auto max-w-[760px] px-6 py-28 text-center">
-          <span className="inline-block rounded-full bg-[#C7D4D6] px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.22em] text-[#22333E]">
+          <span className="inline-block rounded-full bg-[#C7D4D6] px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.22em] text-a-ink">
             First 500 only · founding batch
           </span>
           <h2 className={`${display} mt-6 whitespace-nowrap text-[clamp(30px,6vw,80px)]`}>
             Don&rsquo;t miss the drop
           </h2>
-          <p className="mx-auto mt-5 max-w-[560px] font-serif text-[clamp(18px,2.4vw,24px)] italic text-[#EAF1F2]/80">
+          <p className="mx-auto mt-5 max-w-[560px] font-serif text-[clamp(18px,2.4vw,24px)] italic text-a-bg/80">
             The founding run ships first. Get founder exclusives. Everyone else waits for round two — leave your email and
             be first through the door.
           </p>
@@ -290,7 +290,7 @@ export default function OptionA() {
               type="email"
               required
               placeholder="you@example.com"
-              className="w-full rounded-full border border-white/20 bg-white/10 px-6 py-4 text-[15px] text-[#EAF1F2] outline-none backdrop-blur placeholder:text-[#EAF1F2]/50 focus:border-white/60"
+              className="w-full rounded-full border border-white/20 bg-white/10 px-6 py-4 text-[15px] text-a-bg outline-none backdrop-blur placeholder:text-a-bg/50 focus:border-white/60"
             />
             <button
               type="submit"
@@ -299,7 +299,7 @@ export default function OptionA() {
               Claim my spot
             </button>
           </form>
-          <p className="mt-5 font-mono text-[12px] uppercase tracking-[0.2em] text-[#EAF1F2]/70">
+          <p className="mt-5 font-mono text-[12px] uppercase tracking-[0.2em] text-a-bg/70">
             No spam · unsubscribe anytime · just the launch
           </p>
         </div>

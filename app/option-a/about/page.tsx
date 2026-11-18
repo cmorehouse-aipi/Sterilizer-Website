@@ -13,8 +13,8 @@ export default function OptionAAbout() {
       <section className="relative overflow-hidden">
         <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: "url(/photos/waterfall-divider.jpg)" }} />
         <div className="absolute inset-0 bg-[#0F1B2D]/45" />
-        <div className="relative mx-auto flex min-h-[62vh] max-w-[860px] flex-col items-center justify-center px-6 py-24 text-center text-[#F2EFE8]">
-          <p className="font-mono text-[12px] uppercase tracking-[0.3em] text-[#F2EFE8]/70">our story</p>
+        <div className="relative mx-auto flex min-h-[62vh] max-w-[860px] flex-col items-center justify-center px-6 py-24 text-center text-a-bg">
+          <p className="font-mono text-[12px] uppercase tracking-[0.3em] text-a-bg/70">our story</p>
           <h1 className={`${display} mt-5 text-[clamp(40px,6vw,80px)]`}>Born of the Highlands</h1>
           <p className="mt-6 font-serif text-[clamp(20px,2.8vw,30px)] italic leading-snug">
             Engineered and assembled in a workshop above the Firth of Forth. The first water it ever
@@ -70,9 +70,9 @@ export default function OptionAAbout() {
       </section>
 
       {/* ————— Mission band ————— */}
-      <section className="bg-[#22333E] text-[#EAF1F2]">
+      <section className="bg-a-ink text-a-bg">
         <div className="mx-auto max-w-[860px] px-6 py-24 text-center">
-          <p className="font-mono text-[12px] uppercase tracking-[0.3em] text-[#EAF1F2]/60">the mission</p>
+          <p className="font-mono text-[12px] uppercase tracking-[0.3em] text-a-bg/60">the mission</p>
           <p className="mt-6 font-serif text-[clamp(22px,3vw,34px)] italic leading-snug">
             Make safe drinking water available wherever a bottle is.
           </p>

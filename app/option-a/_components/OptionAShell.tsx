@@ -101,12 +101,12 @@ export function OptionANav() {
 
 export function OptionAFooter() {
   return (
-    <footer className="bg-[#0F1B2D] text-[#EAF1F2]">
+    <footer className="border-t border-white/10 bg-a-ink text-a-bg">
       <div className="mx-auto max-w-[1240px] px-6 py-16">
         <div className="grid gap-10 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
           <div>
             <div className={`${display} text-[28px]`}>{BRAND}</div>
-            <p className="mt-4 max-w-sm font-serif text-[15px] italic leading-relaxed text-[#EAF1F2]/70">
+            <p className="mt-4 max-w-sm font-serif text-[15px] italic leading-relaxed text-a-bg/70">
               A submersible UV-C water sterilizer. Drops into any bottle and disinfects in sixty
               seconds. Designed and assembled in Scotland.
             </p>
@@ -136,7 +136,7 @@ export function OptionAFooter() {
             },
           ].map((col) => (
             <div key={col.title}>
-              <div className="font-mono text-[11px] uppercase tracking-[0.24em] text-[#EAF1F2]/50">
+              <div className="font-mono text-[11px] uppercase tracking-[0.24em] text-a-bg/50">
                 {col.title}
               </div>
               <ul className="mt-4 space-y-2.5">
@@ -151,7 +151,7 @@ export function OptionAFooter() {
             </div>
           ))}
         </div>
-        <div className="mt-12 flex flex-wrap items-center justify-between gap-4 border-t border-white/10 pt-6 font-mono text-[11px] uppercase tracking-[0.16em] text-[#EAF1F2]/45">
+        <div className="mt-12 flex flex-wrap items-center justify-between gap-4 border-t border-white/10 pt-6 font-mono text-[11px] uppercase tracking-[0.16em] text-a-bg/45">
           <div>© {new Date().getFullYear()} {BRAND}, Ltd · Patent-pending</div>
           <div className="flex gap-5">
             <Link href="#" className="hover:opacity-60">Terms</Link>

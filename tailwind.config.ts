@@ -24,7 +24,6 @@ const config: Config = {
         "a-ice": "#EAF1F2",
         "a-paper": "#F2EFE8",
         "a-sun": "#F2B84B",
-        "a-nocturne": "#0A1220",
         "a-lumen": "#8B7CFF",
         // Variant B — Engineered (dark)
         "b-bg": "#0A0B0D",

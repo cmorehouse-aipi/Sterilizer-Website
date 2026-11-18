@@ -38,10 +38,10 @@ export default function OptionAHelp() {
       </section>
 
       {/* ————— Support band ————— */}
-      <section className="bg-[#22333E] text-[#EAF1F2]">
+      <section className="bg-a-ink text-a-bg">
         <div className="mx-auto max-w-[760px] px-6 py-20 text-center">
           <h2 className={`${display} text-[clamp(30px,5vw,58px)]`}>Still stuck?</h2>
-          <p className="mx-auto mt-4 max-w-[480px] font-serif text-[clamp(17px,2.2vw,22px)] italic text-[#EAF1F2]/80">
+          <p className="mx-auto mt-4 max-w-[480px] font-serif text-[clamp(17px,2.2vw,22px)] italic text-a-bg/80">
             email support@forth.co — typical response is under four hours
           </p>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
@@ -53,7 +53,7 @@ export default function OptionAHelp() {
             </a>
             <Link
               href="/option-a/how-it-works"
-              className="rounded-full bg-white/10 px-8 py-4 text-[14px] font-semibold tracking-wide text-[#EAF1F2] ring-1 ring-white/20 transition hover:-translate-y-0.5 hover:bg-white/15"
+              className="rounded-full bg-white/10 px-8 py-4 text-[14px] font-semibold tracking-wide text-a-bg ring-1 ring-white/20 transition hover:-translate-y-0.5 hover:bg-white/15"
             >
               How {BRAND} works
             </Link>
