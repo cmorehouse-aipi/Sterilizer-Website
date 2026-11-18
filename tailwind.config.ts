@@ -17,6 +17,15 @@ const config: Config = {
         "a-ink": "#0F1B2D",
         "a-sage": "#889E81",
         "a-rule": "#E5DFD2",
+        // Extended brand palette (Nov 2026 brand sheet)
+        "a-slate": "#22333E",
+        "a-loch": "#3F6477",
+        "a-mist": "#C7D4D6",
+        "a-ice": "#EAF1F2",
+        "a-paper": "#F2EFE8",
+        "a-sun": "#F2B84B",
+        "a-nocturne": "#0A1220",
+        "a-lumen": "#8B7CFF",
         // Variant B — Engineered (dark)
         "b-bg": "#0A0B0D",
         "b-surface": "#13151A",

@@ -72,7 +72,7 @@ export default function OptionA() {
           <h1 className={`${display} mt-3 text-[19vw] leading-[0.88] sm:text-[13vw] lg:text-[150px]`}>
             Any water.
             <br />
-            Any bottle.
+            <span className="text-a-loch">Any bottle.</span>
           </h1>
           <p className="mt-5 font-serif text-[clamp(19px,2.4vw,27px)] italic text-a-ink/80">
             from loch to sip, in sixty seconds
@@ -110,7 +110,7 @@ export default function OptionA() {
                 { n: "03", t: "Drink", d: "Sixty seconds later the light goes out and the water is yours. Pure as the untouched highlands." },
               ].map((s) => (
                 <div key={s.n} className="flex items-start gap-5">
-                  <span className="mt-1 font-mono text-[12px] tracking-[0.25em] text-a-ink/50">{s.n}</span>
+                  <span className="mt-1 font-mono text-[12px] tracking-[0.25em] text-a-ink/65">{s.n}</span>
                   <div>
                     <h3 className={`${display} text-[30px]`}>{s.t}</h3>
                     <p className="mt-2 max-w-[460px] font-serif text-[17px] leading-relaxed text-a-ink/75">{s.d}</p>
@@ -145,25 +145,25 @@ export default function OptionA() {
         </div>
       </section>
 
-      {/* ————— The claim ————— */}
-      <section className="bg-grain bg-a-bg">
+      {/* ————— The claim: dark band, UV-C glow ————— */}
+      <section className="bg-a-nocturne text-a-bg">
         <div className="mx-auto grid max-w-[1240px] items-center gap-14 px-6 py-28 lg:grid-cols-[0.85fr_1.15fr]">
           <div className="order-2 flex justify-center lg:order-1 lg:justify-start">
             <ObjectViewToggle
               defaultView="internal"
               swapButtons
-              tone="light"
+              tone="dark"
               deviceSrc="/renderings/forth-device-coral-frame-00.png"
               deviceAlt={`${BRAND} device — Coral`}
-              glowColor="#F0876B"
+              glowColor="#8B7CFF"
               deviceScale={0.968}
             />
           </div>
 
           <div className="order-1 text-left lg:order-2">
-            <p className="font-mono text-[12px] uppercase tracking-[0.3em] text-a-ink/50">the technology</p>
+            <p className="font-mono text-[12px] uppercase tracking-[0.3em] text-a-lumen">the technology</p>
             <h2 className={`${display} mt-4 text-[clamp(44px,6vw,84px)]`}>Purified by light</h2>
-            <p className="mt-5 max-w-[520px] font-serif text-[clamp(19px,2.2vw,25px)] italic text-a-ink/75">
+            <p className="mt-5 max-w-[520px] font-serif text-[clamp(19px,2.2vw,25px)] italic text-a-bg/80">
               emission at 265 nm - the wavelength microbial DNA cannot survive
             </p>
 
@@ -173,16 +173,16 @@ export default function OptionA() {
                 { k: "60 sec", v: "standard cycle, one shake" },
                 { k: "30", v: "cycles per induction charge" },
               ].map((s) => (
-                <div key={s.k} className="rounded-2xl bg-white/50 px-5 py-6 ring-1 ring-a-ink/10">
+                <div key={s.k} className="rounded-2xl bg-white/5 px-5 py-6 ring-1 ring-white/15">
                   <div className={`${display} text-[34px]`}>{s.k}</div>
-                  <div className="mt-2 font-serif text-[14px] italic text-a-ink/65">{s.v}</div>
+                  <div className="mt-2 font-serif text-[14px] italic text-a-bg/75">{s.v}</div>
                 </div>
               ))}
             </div>
 
             <Link
               href="/option-a/technology"
-              className="mt-12 inline-block rounded-full bg-a-ink px-7 py-3.5 text-[14px] font-semibold tracking-wide text-a-bg transition hover:-translate-y-0.5"
+              className="mt-12 inline-block rounded-full bg-a-bg px-7 py-3.5 text-[14px] font-semibold tracking-wide text-a-ink transition hover:-translate-y-0.5"
             >
               Read the technology page
             </Link>
@@ -294,12 +294,12 @@ export default function OptionA() {
             />
             <button
               type="submit"
-              className="w-full shrink-0 rounded-full bg-[#C7D4D6] px-8 py-4 text-[15px] font-bold uppercase tracking-wide text-[#22333E] shadow-lg transition hover:-translate-y-0.5 hover:bg-[#d6e0e1] sm:w-auto"
+              className="w-full shrink-0 rounded-full bg-a-sun px-8 py-4 text-[15px] font-bold uppercase tracking-wide text-a-ink shadow-lg transition hover:-translate-y-0.5 hover:bg-[#f6c868] sm:w-auto"
             >
               Claim my spot
             </button>
           </form>
-          <p className="mt-5 font-mono text-[12px] uppercase tracking-[0.2em] text-[#EAF1F2]/50">
+          <p className="mt-5 font-mono text-[12px] uppercase tracking-[0.2em] text-[#EAF1F2]/70">
             No spam · unsubscribe anytime · just the launch
           </p>
         </div>
